@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GameConfig, Stage } from '@/types';
 import { loadGameConfig } from '@/utils/storage/storage';
 import { EDITOR_SAMPLE_CONFIG } from '@/constants';
-import TopNav, { EditorView } from '@/components/TopNav';
+import TopNav, { EditorView } from '@/components/shared/TopNav';
 // @ts-ignore
 import CrisisConfigPage from '@/components/editor/CrisisConfigPage';
 import TimelineEditor from '@/components/editor/TimelineEditor';

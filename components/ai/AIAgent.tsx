@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { searchSimilarCases, getCasesFromSupabase } from '@/services/database/supabase';
+import { searchSimilarCases, getCasesFromSupabase, KnowledgeBaseCase } from '@/services/database/supabase';
 import { generateResponseWithRAG } from '@/services/ai/aiAgent';
-import { KnowledgeBaseCase, StatKey } from '@/types';
+import { StatKey } from '@/types';
 
 interface AIAgentProps {
   onBack: () => void;
@@ -66,7 +66,7 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
       const errorMessage: Message = {
         id: `msg_${Date.now() + 1}`,
         role: 'assistant',
-        content: `抱歉，处理您的请求时出现错误：{error.message}\n\n请稍后重试或尝试重新表述您的问题。`,
+        content: `抱歉，处理您的请求时出现错误：${error.message}\n\n请稍后重试或尝试重新表述您的问题。`,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);

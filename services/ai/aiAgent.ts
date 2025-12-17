@@ -1,19 +1,7 @@
 // AI 智能体服务：RAG 检索增强 + Prompt Engineering
-import { searchSimilarCases, getCasesFromSupabase } from '../database/supabase';
+import { searchSimilarCases, getCasesFromSupabase, KnowledgeBaseCase } from '../database/supabase';
 import { callSilicoFlowAPI } from './aiService';
 import { StatKey } from '@/types';
-
-interface KnowledgeBaseCase {
-  id: string;
-  title: string;
-  tags: string[];
-  category: StatKey;
-  context_summary: string;
-  conflict_detail: string;
-  resolution_outcome: string;
-  expert_comment?: string;
-  status?: string;
-}
 
 export interface AIResponse {
   content: string;

@@ -18,7 +18,7 @@ const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPrev
       </div>
 
       <div className="flex items-center gap-4">
-        {/* 工作区切�?- 简洁风�?*/}
+        {/* 工作区切换 - 简洁风格 */}
         <div className="flex gap-2">
           <button
             onClick={() => onViewChange('timeline')}
@@ -48,7 +48,7 @@ const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPrev
                 : 'text-ink hover:bg-ink-light/20'
             }`}
           >
-            👁�?预览导出
+            👁️ 预览导出
           </button>
         </div>
 
@@ -57,7 +57,7 @@ const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPrev
             onClick={onBack}
             className="text-xs text-ink hover:text-primary-red px-3 py-1 bg-ink-light/30 rounded-md hover:bg-ink-light/50 transition-colors"
           >
-            �?返回首页
+            ← 返回首页
           </button>
         )}
       </div>
@@ -66,4 +66,3 @@ const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPrev
 };
 
 export default TopNav;
-

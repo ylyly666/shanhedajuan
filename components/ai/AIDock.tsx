@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CardDraft, generateCardsFromDocMock } from '../utils/aiMocks';
+import { CardDraft, generateCardsFromDocMock } from '@/services/ai/aiMocks';
 import { Card, GameConfig } from '@/types';
 
 interface AIDockProps {
@@ -25,7 +25,7 @@ const AIDock: React.FC<AIDockProps> = ({ isOpen, onToggle, onAddCardToStage, con
     try {
       let textToProcess = pasteText;
       
-      // 如果有文件，读取文件内容（简化版，实际应使用parseFile�?
+      // 如果有文件，读取文件内容（简化版，实际应使用parseFile�?
       if (selectedFile) {
         const reader = new FileReader();
         reader.onload = async (e) => {
@@ -71,7 +71,7 @@ const AIDock: React.FC<AIDockProps> = ({ isOpen, onToggle, onAddCardToStage, con
         }`}
       >
         <span className="writing-vertical-rl text-xs font-bold">
-          {isOpen ? '收起 �? : 'AI助手 ◀'}
+          {isOpen ? '收起 �? : 'AI助手 ◀'}
         </span>
       </button>
 
@@ -104,7 +104,7 @@ const AIDock: React.FC<AIDockProps> = ({ isOpen, onToggle, onAddCardToStage, con
           </div>
 
           <div className="border-t border-ink-light pt-4">
-            <label className="block text-xs font-bold text-ink-medium mb-2">或上传文档文�?/label>
+            <label className="block text-xs font-bold text-ink-medium mb-2">或上传文档文�?/label>
             <input
               type="file"
               accept=".pdf,.doc,.docx,.txt"
@@ -119,13 +119,13 @@ const AIDock: React.FC<AIDockProps> = ({ isOpen, onToggle, onAddCardToStage, con
             disabled={isGenerating || (!pasteText.trim() && !selectedFile)}
             className="w-full py-2 bg-primary-red/10 hover:bg-primary-red/20 text-primary-red border border-primary-red/30 rounded-md text-xs font-bold transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isGenerating ? '生成�?..' : '🤖 AI解析生成'}
+            {isGenerating ? '生成�?..' : '🤖 AI解析生成'}
           </button>
 
-          {/* 生成的草稿列�?*/}
+          {/* 生成的草稿列�?*/}
           {drafts.length > 0 && (
             <div className="border-t border-ink-light pt-4">
-              <h3 className="text-xs font-bold text-ink-medium mb-3">生成的卡牌草�?({drafts.length})</h3>
+              <h3 className="text-xs font-bold text-ink-medium mb-3">生成的卡牌草�?({drafts.length})</h3>
               <div className="space-y-3">
                 {drafts.map((draft) => (
                   <div
@@ -145,7 +145,7 @@ const AIDock: React.FC<AIDockProps> = ({ isOpen, onToggle, onAddCardToStage, con
                     </div>
                     {draft.confidence && (
                       <div className="text-[10px] text-ink-medium mb-2">
-                        可信�? {Math.round(draft.confidence * 100)}%
+                        可信�? {Math.round(draft.confidence * 100)}%
                       </div>
                     )}
                     <div className="flex gap-2">

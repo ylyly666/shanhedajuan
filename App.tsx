@@ -13,14 +13,30 @@ import AdminCaseUpload from './components/admin/AdminCaseUpload';
 import AdminReview from './components/admin/AdminReview';
 // @ts-ignore
 import AIAgent from './components/ai/AIAgent';
+// @ts-ignore
+import LoginModal from './components/auth/LoginModal';
+// @ts-ignore
+import AboutPage from './components/about/AboutPage';
+// @ts-ignore
+import ProfilePage from './components/profile/ProfilePage';
 import { GameConfig } from './types';
 import { EDITOR_SAMPLE_CONFIG } from './constants';
 
-type AppMode = 'landing' | 'editor' | 'game' | 'game-preview' | 'library' | 'ugc' | 'admin' | 'admin-review' | 'ai-agent';
+type AppMode = 'landing' | 'editor' | 'game' | 'game-preview' | 'library' | 'ugc' | 'admin' | 'admin-review' | 'ai-agent' | 'about' | 'profile';
+
+interface User {
+  email: string;
+  name?: string;
+  avatar?: string;
+  bio?: string;
+  createdAt?: string;
+}
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<AppMode>('landing');
   const [config, setConfig] = useState<GameConfig>(EDITOR_SAMPLE_CONFIG);
+  const [user, setUser] = useState<User | null>(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleLaunchGame = () => setMode('game');
   const handleLaunchEditor = () => setMode('editor');
@@ -30,6 +46,67 @@ const App: React.FC = () => {
   const handleShowAdmin = () => setMode('admin');
   const handleShowAdminReview = () => setMode('admin-review');
   const handleShowAIAgent = () => setMode('ai-agent');
+  const handleShowAbout = () => setMode('about');
+  const handleShowProfile = () => setMode('profile');
+
+  // 登录处理（演示模式：本地存储）
+  const handleLogin = async (email: string, password: string) => {
+    // 演示模式：简单验证后存储到localStorage
+    if (!email || !password) {
+      throw new Error('请输入邮箱和密码');
+    }
+    if (password.length < 6) {
+      throw new Error('密码至少需要6位');
+    }
+    
+    // 模拟登录延迟
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const userData: User = { 
+      email, 
+      name: email.split('@')[0],
+      createdAt: new Date().toISOString()
+    };
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  // 注册处理（演示模式）
+  const handleSignUp = async (email: string, password: string) => {
+    // 演示模式：与登录相同
+    await handleLogin(email, password);
+  };
+
+  // 更新用户信息
+  const handleUpdateUser = (updatedUser: User) => {
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
+  // 登出处理
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  // 初始化：从localStorage恢复登录状态
+  React.useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        // 忽略解析错误
+      }
+    }
+  }, []);
+
+  // 如果访问个人主页但未登录，重定向到首页
+  React.useEffect(() => {
+    if (mode === 'profile' && !user) {
+      setMode('landing');
+    }
+  }, [mode, user]);
 
   if (mode === 'editor') {
     return (
@@ -135,39 +212,90 @@ const App: React.FC = () => {
     return <AIAgent onBack={() => setMode('landing')} />;
   }
 
+  if (mode === 'about') {
+    return <AboutPage onBack={() => setMode('landing')} />;
+  }
+
+  if (mode === 'profile') {
+    if (!user) {
+      // 如果未登录，显示登录提示或返回null（useEffect会处理重定向）
+      return null;
+    }
+    return <ProfilePage user={user} onBack={() => setMode('landing')} onUpdate={handleUpdateUser} />;
+  }
+
   return (
     <div className="min-h-screen bg-paper">
-      <nav className="glass shadow-paper border-b border-ink-light sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-primary-red tracking-wider flex items-center gap-2 font-serif">
-            <span className="text-3xl">⛰️</span>
-            <span>山河答卷</span>
-          </div>
-          <div className="flex gap-6 items-center">
-            <button 
-              onClick={handleShowLibrary}
-              className="text-sm font-bold text-ink-medium hover:text-primary-red transition-colors"
+      <nav className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-stone-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-3">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <button
+              onClick={() => setMode('landing')}
+              className="text-2xl font-bold text-primary-red tracking-wider flex items-center gap-2 font-serif hover:opacity-80 transition-opacity"
             >
-              📚 资料库
+              <span className="text-3xl">⛰️</span>
+              <span>山河答卷</span>
             </button>
-            <button 
-              onClick={handleShowUGC}
-              className="text-sm font-bold text-ink-medium hover:text-primary-red transition-colors"
-            >
-              📝 投稿
-            </button>
-            <button 
-              onClick={handleShowAdmin}
-              className="text-sm font-bold text-ink-medium hover:text-primary-red transition-colors"
-            >
-              🔧 管理员
-            </button>
-            <button className="text-sm font-bold text-ink-medium hover:text-primary-red transition-colors">
-              关于
-            </button>
-            <button className="px-4 py-2 bg-primary-red text-white rounded-md hover:bg-[#A0353C] transition-all text-sm font-bold shadow-paper">
-              登录
-            </button>
+
+            {/* 导航链接 */}
+            <div className="flex items-center gap-1">
+              <button 
+                onClick={handleShowLibrary}
+                className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all"
+              >
+                资料库
+              </button>
+              <button 
+                onClick={handleShowUGC}
+                className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all"
+              >
+                投稿
+              </button>
+              <button 
+                onClick={handleShowAdmin}
+                className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all"
+              >
+                管理员
+              </button>
+              <button 
+                onClick={handleShowAbout}
+                className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all"
+              >
+                关于
+              </button>
+              
+              {/* 分隔线 */}
+              <div className="h-6 w-px bg-stone-300 mx-2"></div>
+
+              {/* 用户操作区 */}
+              {user ? (
+                <>
+                  <button
+                    onClick={handleShowProfile}
+                    className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all flex items-center gap-2"
+                  >
+                    <span className="w-6 h-6 rounded-full bg-primary-red/10 text-primary-red flex items-center justify-center text-xs font-bold">
+                      {user.name ? user.name[0].toUpperCase() : user.email[0].toUpperCase()}
+                    </span>
+                    <span className="hidden sm:inline">{user.name || user.email.split('@')[0]}</span>
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-sm font-medium text-stone-600 hover:text-stone-800 hover:bg-stone-100 rounded-lg transition-all"
+                  >
+                    登出
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="px-5 py-2 bg-primary-red text-white rounded-lg hover:bg-[#A0353C] transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                >
+                  登录
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </nav>
@@ -287,6 +415,14 @@ const App: React.FC = () => {
               <p>© 2024 山河答卷 - 基层治理沉浸式策略学习平台</p>
             </div>
           </footer>
+
+      {/* 登录模态框 */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLogin={handleLogin}
+        onSignUp={handleSignUp}
+      />
     </div>
   );
 }

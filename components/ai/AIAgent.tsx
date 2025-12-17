@@ -15,6 +15,20 @@ interface Message {
   timestamp: Date;
 }
 
+const categoryMap: Record<StatKey, string> = {
+  economy: '经济发展',
+  people: '民生保障',
+  environment: '生态环保',
+  governance: '党建治理',
+};
+
+const sourceMap: Record<string, string> = {
+  official_report: '官方报告',
+  field_experience: '实地经验',
+  user_upload: '用户上传',
+  expert_contribution: '专家贡献',
+};
+
 const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -26,6 +40,7 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedCase, setSelectedCase] = useState<KnowledgeBaseCase | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -143,11 +158,8 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
                       {message.relatedCases.map((caseItem) => (
                         <div
                           key={caseItem.id}
-                          className="bg-stone-50 rounded-lg p-3 border border-stone-200 hover:bg-stone-100 transition-colors cursor-pointer"
-                          onClick={() => {
-                            // 可以展开查看详情
-                            alert(`案例：${caseItem.title}\n\n${caseItem.context_summary.substring(0, 200)}...`);
-                          }}
+                          className="bg-stone-50 rounded-lg p-3 border border-stone-200 hover:bg-stone-100 hover:border-red-300 transition-colors cursor-pointer"
+                          onClick={() => setSelectedCase(caseItem)}
                         >
                           <div className="font-bold text-sm text-stone-900 mb-1">
                             {caseItem.title}
@@ -185,6 +197,74 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
+
+      {/* 案例详情模态框 */}
+      {selectedCase && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-stone-200 flex flex-col">
+            <div className="p-6 border-b border-stone-200 flex items-center justify-between flex-shrink-0">
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-stone-900 mb-2">{selectedCase.title}</h2>
+                <div className="flex gap-2 flex-wrap text-xs text-stone-500">
+                  <span className="bg-stone-100 px-2 py-1 rounded">
+                    {categoryMap[selectedCase.category] || selectedCase.category}
+                  </span>
+                  <span className="bg-stone-100 px-2 py-1 rounded">
+                    {sourceMap[selectedCase.source] || selectedCase.source}
+                  </span>
+                  {selectedCase.tags && selectedCase.tags.map((tag, idx) => (
+                    <span key={idx} className="bg-red-50 text-red-700 px-2 py-1 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedCase(null)}
+                className="text-stone-400 hover:text-stone-600 text-2xl ml-4 transition-colors flex-shrink-0"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div>
+                <h3 className="text-sm font-bold text-stone-700 mb-2">背景摘要</h3>
+                <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                  {selectedCase.context_summary}
+                </p>
+              </div>
+
+              {selectedCase.conflict_detail && (
+                <div>
+                  <h3 className="text-sm font-bold text-stone-700 mb-2">冲突详情</h3>
+                  <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                    {selectedCase.conflict_detail}
+                  </p>
+                </div>
+              )}
+
+              {selectedCase.resolution_outcome && (
+                <div>
+                  <h3 className="text-sm font-bold text-stone-700 mb-2">解决方案与结果</h3>
+                  <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                    {selectedCase.resolution_outcome}
+                  </p>
+                </div>
+              )}
+
+              {selectedCase.expert_comment && (
+                <div className="bg-stone-50 border-l-4 border-red-800 p-4 rounded">
+                  <h3 className="text-sm font-bold text-stone-700 mb-2">专家点评</h3>
+                  <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                    {selectedCase.expert_comment}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Quick Questions - 固定在输入框上方 */}
       {messages.length === 1 && (

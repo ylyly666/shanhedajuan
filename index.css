@@ -1,0 +1,279 @@
+/* 山河答卷 - 新中式极简主义全局样式 */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+/* 全局变量 */
+:root {
+  --color-paper: #F7F4ED;
+  --color-ink: #2C2C2C;
+  --color-primary-red: #B94047;
+  --color-accent-green: #567C73;
+  --color-ink-light: rgba(44, 44, 44, 0.1);
+  --color-ink-medium: rgba(44, 44, 44, 0.3);
+}
+
+/* 基础重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  background-image: 
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='1200' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,400 L200,300 L400,320 L600,280 L800,300 L1000,250 L1200,280 L1200,400 Z' fill='%232C2C2C' opacity='0.03'/%3E%3Cpath d='M0,400 L150,350 L300,360 L450,340 L600,360 L750,320 L900,340 L1050,300 L1200,320 L1200,400 Z' fill='%232C2C2C' opacity='0.02'/%3E%3C/svg%3E");
+  background-position: 0 0, center bottom;
+  background-repeat: repeat, no-repeat;
+  background-attachment: fixed, fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* 标题使用衬线体 */
+h1, h2, h3, h4, h5, h6,
+.font-serif,
+.title {
+  font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-medium);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink);
+}
+
+/* 输入框下划线样式 */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  border: none;
+  border-bottom: 2px solid var(--color-ink-light);
+  background: transparent;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-bottom-color: var(--color-ink);
+  border-bottom-width: 3px;
+}
+
+/* 按钮样式 */
+button {
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary-red);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(185, 64, 71, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: #A0353C;
+  box-shadow: 0 4px 12px rgba(185, 64, 71, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 毛玻璃效果 */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-ink-light);
+}
+
+/* 水墨晕染效果 */
+.ink-splash {
+  position: relative;
+}
+
+.ink-splash::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--color-ink-medium) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  animation: inkSplash 0.6s ease-out;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+@keyframes inkSplash {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* 印章动画 */
+.stamp {
+  animation: stamp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes stamp {
+  0% {
+    transform: scale(0) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* 卡片堆叠效果 */
+.card-stack {
+  position: relative;
+}
+
+.card-stack::before,
+.card-stack::after {
+  content: '';
+  position: absolute;
+  width: 95%;
+  height: 95%;
+  background: var(--color-paper);
+  border: 1px solid var(--color-ink-light);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(44, 44, 44, 0.08);
+  pointer-events: none;
+}
+
+.card-stack::before {
+  top: 4px;
+  left: 4px;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.card-stack::after {
+  top: 8px;
+  left: 8px;
+  z-index: -2;
+  opacity: 0.4;
+}
+
+/* 水墨山水背景 */
+.mountain-bg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  background-image: url("data:image/svg+xml,%3Csvg width='1200' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,400 L200,300 L400,320 L600,280 L800,300 L1000,250 L1200,280 L1200,400 Z' fill='%232C2C2C' opacity='0.03'/%3E%3Cpath d='M0,400 L150,350 L300,360 L450,340 L600,360 L750,320 L900,340 L1050,300 L1200,320 L1200,400 Z' fill='%232C2C2C' opacity='0.02'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 游戏UI样式 (适配新UI组件) */
+.gov-gray {
+  background-color: #2c2c2c;
+}
+
+.bg-gov-gray {
+  background-color: #2c2c2c;
+}
+
+.bg-gov-paper {
+  background-color: #f0e6d2;
+}
+
+.text-gov-gray {
+  color: #2c2c2c;
+}
+
+.text-gov-paper {
+  color: #f0e6d2;
+}
+
+.bg-gov-red {
+  background-color: #b91c1c;
+}
+
+.text-gov-red {
+  color: #b91c1c;
+}
+
+.font-song {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.font-fangsong {
+  font-family: "STFangsong", "FangSong", "仿宋", serif;
+}
+
+.font-typewriter {
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: -1px;
+  font-weight: bold;
+}
+
+.cloud-pattern {
+  background-image: radial-gradient(circle at 100% 100%, transparent 8px, #d4c4a8 8px, #d4c4a8 9px, transparent 9px), 
+                    radial-gradient(circle at 0 100%, transparent 8px, #d4c4a8 8px, #d4c4a8 9px, transparent 9px), 
+                    radial-gradient(circle at 100% 0, transparent 8px, #d4c4a8 8px, #d4c4a8 9px, transparent 9px), 
+                    radial-gradient(circle at 0 0, transparent 8px, #d4c4a8 8px, #d4c4a8 9px, transparent 9px);
+  background-size: 16px 16px;
+  opacity: 0.05;
+}
+
+.bg-paper-texture {
+  background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+

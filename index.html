@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山河答卷 - 基层治理沉浸式策略平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Font Imports if needed, using generic serif/sans for now */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        /* Custom Scrollbar for Editor */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e; 
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0"
+  }
+}
+</script>
+    <link rel="stylesheet" href="/index.css">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'paper': '#F7F4ED',
+              'ink': '#2C2C2C',
+              'primary-red': '#B94047',
+              'accent-green': '#567C73',
+              'ink-light': 'rgba(44, 44, 44, 0.1)',
+              'ink-medium': 'rgba(44, 44, 44, 0.3)',
+            },
+            fontFamily: {
+              'serif': ['Noto Serif SC', 'STSong', 'SimSun', 'serif'],
+              'sans': ['Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

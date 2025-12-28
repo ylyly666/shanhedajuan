@@ -170,7 +170,7 @@ export const GameLoopEnhanced: React.FC<GameLoopEnhancedProps> = ({ config, onEx
           economy: finalState.metrics.economy,
           people: finalState.metrics.people,
           environment: finalState.metrics.environment,
-          governance: finalState.metrics.culture // culture -> governance
+          civility: finalState.metrics.culture // culture -> civility
         },
         currentStageIndex: finalState.currentPhase,
         cardQueue: [],

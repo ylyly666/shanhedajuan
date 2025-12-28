@@ -60,7 +60,7 @@ const OptionEditor: React.FC<OptionEditorProps> = ({
       />
 
       <div className="grid grid-cols-2 gap-2">
-        {(['economy', 'people', 'environment', 'governance'] as StatKey[]).map((key) => (
+        {(['economy', 'people', 'environment', 'civility'] as StatKey[]).map((key) => (
           <div key={key} className="flex items-center gap-2">
             <span className="text-[10px] uppercase text-ink-medium w-8 font-serif">{key.substring(0, 4)}</span>
             <input

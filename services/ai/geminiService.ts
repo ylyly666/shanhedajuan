@@ -33,7 +33,7 @@ export const generateCardsFromDoc = async (text: string): Promise<Card[]> => {
                     economy: { type: Type.NUMBER },
                     people: { type: Type.NUMBER },
                     environment: { type: Type.NUMBER },
-                    governance: { type: Type.NUMBER },
+                    civility: { type: Type.NUMBER },
                   }
                 }
               }
@@ -48,7 +48,7 @@ export const generateCardsFromDoc = async (text: string): Promise<Card[]> => {
                     economy: { type: Type.NUMBER },
                     people: { type: Type.NUMBER },
                     environment: { type: Type.NUMBER },
-                    governance: { type: Type.NUMBER },
+                    civility: { type: Type.NUMBER },
                   }
                 }
               }
@@ -126,7 +126,7 @@ export const evaluateNegotiation = async (
   };
 
   const prompt = `
-    Context: You are the AI Judge and the NPC for a crisis negotiation in a Chinese village governance game.
+    Context: You are the AI Judge and the NPC for a crisis negotiation in a Chinese village civility game.
     The player is the Village Secretary.
     The specific crisis is regarding: ${statType} (Value dropped to 0).
     NPC Personality/Context: ${npcContext}.
@@ -188,7 +188,7 @@ export const generateGameReport = async (
     1. **Governance Profile**: (e.g., "Radical Developer", "Balanced Peacemaker").
     2. **Key Decisions Review**: Analyze 2-3 specific choices and their ripple effects.
     3. **Expert Advice**: What could be improved? 
-    4. **Case Study Recommendation**: Recommend a real-world Chinese rural governance case study (e.g., Anji, Shibadong Village) that matches their playstyle or failure point.
+    4. **Case Study Recommendation**: Recommend a real-world Chinese rural civility case study (e.g., Anji, Shibadong Village) that matches their playstyle or failure point.
   `;
 
   try {

@@ -16,7 +16,7 @@ const CrisisConfigPage: React.FC<CrisisConfigPageProps> = ({ config, setConfig, 
     economy: '💰 经济发展',
     people: '👥 民生福祉',
     environment: '🌲 生态环保',
-    governance: '🚩 乡风民俗',
+    civility: '🚩 乡风民俗',
   };
   const judgeLabels: Record<string, string> = {
     empathy: '共情度',
@@ -112,7 +112,7 @@ const CrisisConfigPage: React.FC<CrisisConfigPageProps> = ({ config, setConfig, 
         {/* 指标切换器：做成类似Tab的列表，清晰展示当前在编辑谁 */}
         <div className="flex-1 space-y-2">
           <label className="text-xs font-bold text-ink-medium uppercase">选择要配置的指标</label>
-          {(['economy', 'people', 'environment', 'governance'] as StatKey[]).map(stat => (
+          {(['economy', 'people', 'environment', 'civility'] as StatKey[]).map(stat => (
             <button
               key={stat}
               onClick={() => setActiveStat(stat)}

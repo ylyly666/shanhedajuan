@@ -23,12 +23,12 @@ const getAPIKey = (): string => {
          '';
 };
 
-// 危机提示词（适配governance）
+// 危机提示词（适配civility）
 const CRISIS_PROMPTS: Record<string, string> = {
   economy: "你是一个愤怒的村民代表。村集体账上没钱了，分红也没了，大家日子过不下去了。你现在非常愤怒，要求书记给个说法！",
   people: "你是一个哭诉的老大娘。村里的卫生所没药，路也烂得没人修，孙子生病都送不出去。你觉得被政府抛弃了。",
   environment: "你是一个养鱼专业户。河水黑得发臭，你的鱼全翻白肚死了！你手里拿着死鱼，情绪极度激动，认为是书记引进的工厂害的。",
-  governance: "你是一个德高望重的族长。现在的年轻人整天打牌赌博，也不尊老爱幼，村里的风气坏透了。你对书记的工作非常失望。"
+  civility: "你是一个德高望重的族长。现在的年轻人整天打牌赌博，也不尊老爱幼，村里的风气坏透了。你对书记的工作非常失望。"
 };
 
 // Response schema for negotiation logic
@@ -52,7 +52,7 @@ const NegotiationSchema = {
 };
 
 export const startCrisisNegotiation = async (
-  metric: StatKey, // 使用StatKey (governance)
+  metric: StatKey, // 使用StatKey (civility)
   currentAnger: number,
   userMessage: string,
   history: { role: string; text: string }[]

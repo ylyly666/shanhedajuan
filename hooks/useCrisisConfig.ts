@@ -12,7 +12,7 @@ export const useCrisisConfig = ({ config, setConfig }: UseCrisisConfigParams) =>
       economy: '💰 经济发展',
       people: '👥 民生福祉',
       environment: '🌲 生态环境',
-      governance: '🚩 乡风民俗',
+      civility: '🚩 乡风民俗',
     }),
     [],
   );

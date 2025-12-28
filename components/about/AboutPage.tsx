@@ -41,7 +41,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
           <section className="glass rounded-lg shadow-paper p-8 border border-ink-light">
             <h2 className="text-2xl font-bold text-ink mb-4 font-serif">项目简介</h2>
             <p className="text-ink-medium leading-relaxed mb-4">
-              《山河答卷》是一款专为选调生与基层干部培训设计的AI原生策略卡牌叙事游戏与可视化编辑器。平台通过沉浸式交互体验，帮助学员在虚拟环境中面对真实基层治理中的两难抉择，平衡经济、民生、生态与党建等多重因素。
+              《山河答卷》是一款专为选调生与基层干部培训设计的AI原生策略卡牌叙事游戏与可视化编辑器。平台通过沉浸式交互体验，帮助学员在虚拟环境中面对真实基层治理中的两难抉择，平衡经济、民生、生态与乡风等多重因素。
             </p>
             <p className="text-ink-medium leading-relaxed">
               在这里，你不仅是观察者，更是决策者。通过决策卡牌游戏的形式，体验真实基层工作的复杂与温度，培养综合决策能力。

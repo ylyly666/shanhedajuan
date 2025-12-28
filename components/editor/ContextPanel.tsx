@@ -213,7 +213,7 @@ const StageEditor: React.FC<{
     economy: '💰 经济发展',
     people: '👥 民生福祉',
     environment: '🌲 生态环境',
-    governance: '🚩 乡风民俗',
+    civility: '🚩 乡风民俗',
   };
 
   return (
@@ -261,7 +261,7 @@ const StageEditor: React.FC<{
           <h3 className="text-sm font-bold text-stone-700 mb-3">📊 阶段考核 KPI 设置</h3>
           <p className="text-xs text-stone-500 mb-4">设置本阶段结束时需要达到的指标目标值。未达标将获得行政警告。</p>
 
-          {(['economy', 'people', 'environment', 'governance'] as StatKey[]).map((stat) => (
+          {(['economy', 'people', 'environment', 'civility'] as StatKey[]).map((stat) => (
             <div key={stat} className="mb-4 p-3 bg-stone-50 rounded border border-stone-200">
               <div className="flex items-center justify-between mb-2">
                 <label className="flex items-center gap-2 text-sm font-bold">

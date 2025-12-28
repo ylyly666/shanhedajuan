@@ -117,7 +117,7 @@ const AssetsDrawer: React.FC<AssetsDrawerProps> = ({
           economy: delta.economy ?? 0,
           people: delta.people ?? 0,
           environment: delta.environment ?? 0,
-          governance: delta.governance ?? 0,
+          civility: delta.civility ?? 0,
         },
       };
     };
@@ -547,7 +547,7 @@ const AssetsDrawer: React.FC<AssetsDrawerProps> = ({
                           />
 
                           <div className="grid grid-cols-2 gap-2 text-[11px] text-ink">
-                            {(['economy', 'people', 'environment', 'governance'] as const).map((k) => (
+                            {(['economy', 'people', 'environment', 'civility'] as const).map((k) => (
                               <label key={k} className="flex items-center gap-2">
                                 <span className="text-[10px] uppercase text-ink-medium w-16 font-serif">{k.substring(0, 4)}</span>
                                 <input

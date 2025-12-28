@@ -12,11 +12,13 @@ const config: Config = {
       colors: {
         // 新中式配色系统
         paper: '#F7F4ED',        // 宣纸背景
-        ink: '#2C2C2C',          // 墨色文字
+        ink: {
+          DEFAULT: '#2C2C2C',    // 墨色文字
+          light: 'rgba(44, 44, 44, 0.1)', // 淡墨（10%透明度）
+          medium: 'rgba(44, 44, 44, 0.3)', // 中墨（30%透明度）
+        },
         'primary-red': '#B94047', // 朱红
         'accent-green': '#567C73', // 石绿
-        'ink-light': '#2C2C2C10', // 淡墨（10%透明度）
-        'ink-medium': '#2C2C2C30', // 中墨（30%透明度）
       },
       fontFamily: {
         serif: ['Noto Serif SC', 'STSong', 'SimSun', 'serif'], // 标题衬线体

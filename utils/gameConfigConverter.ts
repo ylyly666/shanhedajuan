@@ -16,7 +16,7 @@ function convertCardToUICard(card: Card, npcMap: Map<string, StoryNpc>): UICard 
   const npcName = card.npcName || npc?.name || '未知角色';
   const avatarUrl = npc?.avatarUrl || getImageByNpcId(card.npcId);
 
-  // 转换 delta 格式：从 StatKey (governance) 转换为 MetricType (culture)
+  // 转换 delta 格式：从 StatKey (civility) 转换为 MetricType (culture)
   const convertDelta = (delta: Partial<Record<string, number>>): Partial<Record<MetricType, number>> => {
     const result: Partial<Record<MetricType, number>> = {};
     Object.entries(delta).forEach(([key, value]) => {
@@ -165,4 +165,6 @@ export function convertGameConfigToGameFormat(config: GameConfig): {
     phases,
   };
 }
+
+
 

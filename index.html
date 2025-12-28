@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>山河答卷 - 基层治理沉浸式策略平台</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom Font Imports if needed, using generic serif/sans for now */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap');
-        
+        /* 使用系统字体，避免网络问题 */
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'SimHei', sans-serif;
         }
         h1, h2, h3, .font-serif {
-            font-family: 'Noto Serif SC', serif;
+            font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
         }
         
         /* Custom Scrollbar for Editor */
@@ -31,6 +28,47 @@
             background: #a8a29e; 
         }
     </style>
+    <script src="https://cdn.tailwindcss.com" onerror="console.warn('Tailwind CDN failed to load')"></script>
+    <script>
+      // 等待Tailwind加载完成后再配置
+      (function() {
+        function configureTailwind() {
+          if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+              theme: {
+                extend: {
+                  colors: {
+                    'paper': '#F7F4ED',
+                    'ink': '#2C2C2C',
+                    'primary-red': '#B94047',
+                    'accent-green': '#567C73',
+                    'ink-light': 'rgba(44, 44, 44, 0.1)',
+                    'ink-medium': 'rgba(44, 44, 44, 0.3)',
+                  },
+                  fontFamily: {
+                    'serif': ['Noto Serif SC', 'STSong', 'SimSun', 'serif'],
+                    'sans': ['Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+                  },
+                  boxShadow: {
+                    'paper': '0 2px 8px rgba(44, 44, 44, 0.08)',
+                    'paper-lg': '0 4px 16px rgba(44, 44, 44, 0.12)',
+                  },
+                }
+              }
+            };
+          } else {
+            // 如果Tailwind未加载，延迟重试
+            setTimeout(configureTailwind, 100);
+          }
+        }
+        // 页面加载后配置
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', configureTailwind);
+        } else {
+          configureTailwind();
+        }
+      })();
+    </script>
 <script type="importmap">
 {
   "imports": {
@@ -42,26 +80,6 @@
 }
 </script>
     <link rel="stylesheet" href="/index.css">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'paper': '#F7F4ED',
-              'ink': '#2C2C2C',
-              'primary-red': '#B94047',
-              'accent-green': '#567C73',
-              'ink-light': 'rgba(44, 44, 44, 0.1)',
-              'ink-medium': 'rgba(44, 44, 44, 0.3)',
-            },
-            fontFamily: {
-              'serif': ['Noto Serif SC', 'STSong', 'SimSun', 'serif'],
-              'sans': ['Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
-            },
-          }
-        }
-      }
-    </script>
 </head>
 <body>
     <div id="root"></div>

@@ -1,17 +1,17 @@
 /**
  * 游戏UI适配层
- * 用于将新UI组件的类型（culture）适配到目标项目的类型系统（governance）
+ * 用于将新UI组件的类型（culture）适配到目标项目的类型系统（civility）
  */
 
 import { StatKey, GameStats } from '@/types/game';
 
-// 新UI使用的MetricType (culture) -> 目标项目的StatKey (governance)
+// 新UI使用的MetricType (culture) -> 目标项目的StatKey (civility)
 export type MetricType = 'economy' | 'people' | 'environment' | 'culture';
 export type MetricTypeToStatKey = {
   economy: 'economy';
   people: 'people';
   environment: 'environment';
-  culture: 'governance';
+  culture: 'civility';
 };
 
 // 将MetricType转换为StatKey
@@ -20,7 +20,7 @@ export function metricToStatKey(metric: MetricType): StatKey {
     economy: 'economy',
     people: 'people',
     environment: 'environment',
-    culture: 'governance',
+    culture: 'civility',
   };
   return map[metric];
 }
@@ -31,7 +31,7 @@ export function statKeyToMetric(stat: StatKey): MetricType {
     economy: 'economy',
     people: 'people',
     environment: 'environment',
-    governance: 'culture',
+    civility: 'culture',
   };
   return map[stat];
 }
@@ -42,7 +42,7 @@ export function gameStatsToMetrics(stats: GameStats): Record<MetricType, number>
     economy: stats.economy,
     people: stats.people,
     environment: stats.environment,
-    culture: stats.governance,
+    culture: stats.civility,
   };
 }
 
@@ -52,7 +52,7 @@ export function metricsToGameStats(metrics: Record<MetricType, number>): GameSta
     economy: metrics.economy,
     people: metrics.people,
     environment: metrics.environment,
-    governance: metrics.culture,
+    civility: metrics.culture,
   };
 }
 
@@ -69,7 +69,7 @@ export function metricDeltaToGameStatsDelta(delta: MetricDelta): Partial<GameSta
     economy: delta.economy,
     people: delta.people,
     environment: delta.environment,
-    governance: delta.culture,
+    civility: delta.culture,
   };
 }
 

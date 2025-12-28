@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS public.knowledge_base (
   -- 基本信息
   title TEXT NOT NULL,
   tags TEXT[] DEFAULT '{}',
-  category TEXT NOT NULL CHECK (category IN ('economy', 'people', 'environment', 'governance')),
+  category TEXT NOT NULL CHECK (category IN ('economy', 'people', 'environment', 'civility')),
   
   -- 结构化内容
   context_summary TEXT NOT NULL,
@@ -131,5 +131,7 @@ $$;
 
 -- 完成！现在表已经创建好了
 -- 如果遇到权限错误，请检查 RLS 策略是否正确设置
+
+
 
 

@@ -12,6 +12,8 @@ import AdminCaseUpload from './components/admin/AdminCaseUpload';
 // @ts-ignore
 import AdminReview from './components/admin/AdminReview';
 // @ts-ignore
+import AdminBatchImport from './components/admin/AdminBatchImport';
+// @ts-ignore
 import AIAgent from './components/ai/AIAgent';
 // @ts-ignore
 import LoginModal from './components/auth/LoginModal';
@@ -22,7 +24,7 @@ import ProfilePage from './components/profile/ProfilePage';
 import { GameConfig } from './types';
 import { EDITOR_SAMPLE_CONFIG } from './constants';
 
-type AppMode = 'landing' | 'editor' | 'game' | 'game-preview' | 'library' | 'ugc' | 'admin' | 'admin-review' | 'ai-agent' | 'about' | 'profile';
+type AppMode = 'landing' | 'editor' | 'game' | 'game-preview' | 'library' | 'ugc' | 'admin' | 'admin-review' | 'admin-batch-import' | 'ai-agent' | 'about' | 'profile';
 
 interface User {
   email: string;
@@ -30,6 +32,7 @@ interface User {
   avatar?: string;
   bio?: string;
   createdAt?: string;
+  role?: 'user' | 'admin'; // 添加角色字段
 }
 
 const App: React.FC = () => {
@@ -43,8 +46,28 @@ const App: React.FC = () => {
   const handleExitGame = () => setMode('landing');
   const handleShowLibrary = () => setMode('library');
   const handleShowUGC = () => setMode('ugc');
-  const handleShowAdmin = () => setMode('admin');
-  const handleShowAdminReview = () => setMode('admin-review');
+  // 检查是否为管理员
+  const isAdmin = user?.role === 'admin' || user?.email?.includes('admin') || user?.email?.includes('@admin');
+  
+  const handleShowAdmin = () => {
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+    if (!isAdmin) {
+      alert('您没有管理员权限，请联系管理员获取访问权限。\n\n提示：管理员账号邮箱需包含 "admin" 关键字。');
+      return;
+    }
+    setMode('admin');
+  };
+  
+  const handleShowAdminReview = () => {
+    if (!user || !isAdmin) {
+      alert('您没有管理员权限');
+      return;
+    }
+    setMode('admin-review');
+  };
   const handleShowAIAgent = () => setMode('ai-agent');
   const handleShowAbout = () => setMode('about');
   const handleShowProfile = () => setMode('profile');
@@ -62,9 +85,13 @@ const App: React.FC = () => {
     // 模拟登录延迟
     await new Promise(resolve => setTimeout(resolve, 500));
     
+    // 判断是否为管理员（邮箱包含 "admin" 关键字）
+    const isAdminUser = email.toLowerCase().includes('admin') || email.toLowerCase().includes('@admin');
+    
     const userData: User = { 
       email, 
       name: email.split('@')[0],
+      role: isAdminUser ? 'admin' : 'user',
       createdAt: new Date().toISOString()
     };
     setUser(userData);
@@ -191,19 +218,53 @@ const App: React.FC = () => {
   }
 
   if (mode === 'admin') {
+    // 再次检查管理员权限
+    if (!user || !isAdmin) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-4">⚠️ 权限不足</h2>
+            <p className="text-stone-700 mb-6">您没有管理员权限，无法访问此页面。</p>
+            <button
+              onClick={() => setMode('landing')}
+              className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              返回首页
+            </button>
+          </div>
+        </div>
+      );
+    }
     return (
       <AdminCaseUpload 
         onBack={() => setMode('landing')} 
         onReviewMode={() => setMode('admin-review')}
+        onBatchImport={() => setMode('admin-batch-import')}
       />
     );
   }
 
   if (mode === 'admin-review') {
+    if (!user || !isAdmin) {
+      setMode('landing');
+      return null;
+    }
     return (
       <AdminReview 
         onBack={() => setMode('admin')} 
         onUploadMode={() => setMode('admin')}
+      />
+    );
+  }
+
+  if (mode === 'admin-batch-import') {
+    if (!user || !isAdmin) {
+      setMode('landing');
+      return null;
+    }
+    return (
+      <AdminBatchImport 
+        onBack={() => setMode('admin')}
       />
     );
   }
@@ -310,7 +371,7 @@ const App: React.FC = () => {
               </h1>
               <p className="text-xl text-ink-medium leading-relaxed max-w-2xl mx-auto mb-8">
                 在这里，你不仅是观察者，更是决策者。<br/>
-                面对两难抉择，平衡经济、民生、生态与党建。<br/>
+                面对两难抉择，平衡经济、民生、生态与乡风。<br/>
                 体验真实基层工作的复杂与温度。
               </p>
 

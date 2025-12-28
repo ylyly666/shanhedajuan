@@ -19,7 +19,7 @@ const categoryMap: Record<StatKey, string> = {
   economy: '经济发展',
   people: '民生保障',
   environment: '生态环保',
-  governance: '党建治理',
+  civility: '乡风民俗',
 };
 
 const sourceMap: Record<string, string> = {

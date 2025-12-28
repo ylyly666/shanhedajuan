@@ -1,8 +1,23 @@
 /* 山河答卷 - 新中式极简主义全局样式 */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+/* 字体导入 - 使用系统字体作为后备，避免网络问题 */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: local('Noto Sans SC'), local('PingFang SC'), local('Microsoft YaHei');
+}
 
-/* 全局变量 */
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: local('Noto Serif SC'), local('STSong'), local('SimSun');
+}
+
+/* 全局变量（用于非Tailwind样式） */
 :root {
   --color-paper: #F7F4ED;
   --color-ink: #2C2C2C;

@@ -10,6 +10,7 @@ interface KnowledgeBaseCase {
   title: string;
   tags: string[];
   category: StatKey;
+  author_display?: string;
   context_summary: string;
   conflict_detail: string;
   resolution_outcome: string;
@@ -23,6 +24,7 @@ interface AIExtractedCase {
   title: string;
   tags: string[];
   category: StatKey;
+  author_display?: string;
   context_summary: string;
   conflict_detail: string;
   resolution_outcome: string;
@@ -41,7 +43,8 @@ const UGCSubmission: React.FC<UGCSubmissionProps> = ({ onBack }) => {
   const [formData, setFormData] = useState<Partial<KnowledgeBaseCase>>({
     title: '',
     tags: [],
-    category: 'governance',
+    category: 'civility',
+    author_display: '',
     context_summary: '',
     conflict_detail: '',
     resolution_outcome: '',
@@ -76,6 +79,7 @@ const UGCSubmission: React.FC<UGCSubmissionProps> = ({ onBack }) => {
         title: extracted.title,
         tags: extracted.tags,
         category: extracted.category,
+        author_display: extracted.author_display,
         context_summary: extracted.context_summary,
         conflict_detail: extracted.conflict_detail,
         resolution_outcome: extracted.resolution_outcome,
@@ -157,6 +161,7 @@ const UGCSubmission: React.FC<UGCSubmissionProps> = ({ onBack }) => {
           title: formData.title!,
           tags: formData.tags || [],
           category: formData.category as StatKey,
+          author_display: formData.author_display,
           context_summary: formData.context_summary!,
           conflict_detail: formData.conflict_detail!,
           resolution_outcome: formData.resolution_outcome!,
@@ -176,7 +181,8 @@ const UGCSubmission: React.FC<UGCSubmissionProps> = ({ onBack }) => {
         setFormData({
           title: '',
           tags: [],
-          category: 'governance',
+          category: 'civility',
+          author_display: '',
           context_summary: '',
           conflict_detail: '',
           resolution_outcome: '',
@@ -334,15 +340,29 @@ const UGCSubmission: React.FC<UGCSubmissionProps> = ({ onBack }) => {
                     类别 <span className="text-red-500">*</span>
                   </label>
                   <select
-                    value={formData.category || 'governance'}
+                    value={formData.category || 'civility'}
                     onChange={(e) => updateField('category', e.target.value)}
                     className="w-full p-3 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-red-500"
                   >
                     <option value="economy">💰 经济发展</option>
                     <option value="people">👥 民生福祉</option>
                     <option value="environment">🌲 生态环保</option>
-                    <option value="governance">🚩 乡风民俗</option>
+                    <option value="civility">🚩 乡风民俗</option>
                   </select>
+                </div>
+
+                {/* 上传者 */}
+                <div>
+                  <label className="block text-sm font-bold text-stone-700 mb-2">
+                    上传者/来源身份
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.author_display || ''}
+                    onChange={(e) => updateField('author_display', e.target.value)}
+                    className="w-full p-3 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-red-500"
+                    placeholder="如：政府、基层干部、村民等"
+                  />
                 </div>
 
                 {/* 背景摘要 */}

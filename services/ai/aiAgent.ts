@@ -23,21 +23,27 @@ export const generateResponseWithRAG = async (
     });
   } catch (embeddingError) {
     console.warn('向量搜索失败，改用文本搜索', embeddingError);
-    const allCases = await getCasesFromSupabase({
-      status: 'published',
-      category: options?.category,
-      limit: 50,
-    });
-    const q = userQuery.toLowerCase();
-    relatedCases = allCases
-      .filter(
-        (c) =>
-          c.title.toLowerCase().includes(q) ||
-          c.context_summary.toLowerCase().includes(q) ||
-          c.conflict_detail.toLowerCase().includes(q) ||
-          c.tags.some((tag) => tag.toLowerCase().includes(q))
-      )
-      .slice(0, options?.maxCases || 5);
+    try {
+      // 尝试从Supabase获取所有案例，然后文本搜索
+      const allCases = await getCasesFromSupabase({
+        status: 'published',
+        category: options?.category,
+        limit: 50,
+      });
+      const q = userQuery.toLowerCase();
+      relatedCases = allCases
+        .filter(
+          (c) =>
+            c.title.toLowerCase().includes(q) ||
+            c.context_summary.toLowerCase().includes(q) ||
+            c.conflict_detail.toLowerCase().includes(q) ||
+            c.tags.some((tag) => tag.toLowerCase().includes(q))
+        )
+        .slice(0, options?.maxCases || 5);
+    } catch (textSearchError) {
+      console.warn('文本搜索也失败，使用空案例列表', textSearchError);
+      relatedCases = [];
+    }
   }
 
   // 2) 构建 Prompt
@@ -92,7 +98,7 @@ const getCategoryName = (category: StatKey): string => {
     economy: '经济发展',
     people: '民生福祉',
     environment: '生态环保',
-    governance: '乡风民俗',
+    civility: '乡风民俗',
   };
   return map[category] || category;
 };

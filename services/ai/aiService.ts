@@ -148,11 +148,11 @@ ${text.substring(0, 8000)}
     "options": {
       "left": {
         "text": "选项A",
-        "delta": { "economy": -10, "people": 5, "environment": 15, "governance": 0 }
+        "delta": { "economy": -10, "people": 5, "environment": 15, "civility": 0 }
       },
       "right": {
         "text": "选项B",
-        "delta": { "economy": 20, "people": 5, "environment": -20, "governance": 0 }
+        "delta": { "economy": 20, "people": 5, "environment": -20, "civility": 0 }
       }
     }
   }
@@ -213,7 +213,7 @@ export const evaluateNegotiation = async (
     economy: '经济发展',
     people: '民生福祉',
     environment: '生态环境',
-    governance: '乡风民俗'
+    civility: '乡风民俗'
   };
 
   const prompt = `
@@ -288,7 +288,7 @@ export const generateGameReport = async (
     economy: '💰 经济发展',
     people: '👥 民生福祉',
     environment: '🌲 生态环境',
-    governance: '🚩 乡风民俗'
+    civility: '🚩 乡风民俗'
   };
 
   const prompt = `

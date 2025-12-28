@@ -119,6 +119,7 @@ const AdminReview: React.FC<AdminReviewProps> = ({ onBack, onUploadMode }) => {
       title: caseItem.title,
       tags: caseItem.tags,
       category: caseItem.category,
+      author_display: caseItem.author_display,
       context_summary: caseItem.context_summary,
       conflict_detail: caseItem.conflict_detail,
       resolution_outcome: caseItem.resolution_outcome,
@@ -169,7 +170,7 @@ const AdminReview: React.FC<AdminReviewProps> = ({ onBack, onUploadMode }) => {
     'economy': '💰 经济发展',
     'people': '👥 民生福祉',
     'environment': '🌲 生态环保',
-    'governance': '🚩 乡风民俗',
+    'civility': '🚩 乡风民俗',
   };
 
   const sourceMap: Record<CaseSource, string> = {
@@ -389,15 +390,26 @@ const AdminReview: React.FC<AdminReviewProps> = ({ onBack, onUploadMode }) => {
                   <div>
                     <label className="block text-sm font-bold text-stone-700 mb-2">类别</label>
                     <select
-                      value={editFormData.category || 'governance'}
+                      value={editFormData.category || 'civility'}
                       onChange={(e) => updateEditField('category', e.target.value)}
                       className="w-full p-3 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-red-500"
                     >
                       <option value="economy">💰 经济发展</option>
                       <option value="people">👥 民生福祉</option>
                       <option value="environment">🌲 生态环保</option>
-                      <option value="governance">🚩 乡风民俗</option>
+                      <option value="civility">🚩 乡风民俗</option>
                     </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-stone-700 mb-2">上传者/来源身份</label>
+                    <input
+                      type="text"
+                      value={editFormData.author_display || ''}
+                      onChange={(e) => updateEditField('author_display', e.target.value)}
+                      className="w-full p-3 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-red-500"
+                      placeholder="如：政府、基层干部、书籍资料等"
+                    />
                   </div>
 
                   <div>

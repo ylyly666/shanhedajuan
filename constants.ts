@@ -4,12 +4,12 @@ export const INITIAL_STATS: GameStats = {
   economy: 50,
   people: 50,
   environment: 50,
-  governance: 50,
+  civility: 50,
 };
 
 export const MOCK_NPCS: NpcAsset[] = [
-  { id: 'npc_secretary', name: '李书记', role: '村支书', avatarUrl: '/images/像素小人1.jpg', defaultCrisisPrompt: '固执但在乎集体荣誉' },
-  { id: 'npc_villager', name: '张大爷', role: '养殖大户', avatarUrl: '/images/像素小人2.jpg', defaultCrisisPrompt: '脾气火爆，只认死理，利益受损者' },
+  { id: 'npc_secretary', name: '李书记', role: '村支书', avatarUrl: '/images/像素小人1.jpg', defaultCrisisPrompt: '固执但在乎集体荣誉'},
+  { id: 'npc_villager', name: '张大爷', role: '养殖大户', avatarUrl: '/images/像素小人2.jpg', defaultCrisisPrompt: '理想主义，但也务实' },
   { id: 'npc_youth', name: '小王', role: '返乡青年', avatarUrl: '/images/像素小人3.jpg', defaultCrisisPrompt: '理想主义，但也务实' },
   { id: 'npc_boss', name: '赵总', role: '投资商', avatarUrl: '/images/像素小人5.jpg', defaultCrisisPrompt: '唯利是图，但也讲究效率' },
 ];
@@ -59,7 +59,7 @@ const MOCK_CRISIS_NPCS: CrisisNpc[] = [
 ];
 
 // -----------------------------
-// 编辑器示例：山河村完整剧情
+// 编辑器示例：山河村完整剧本
 // -----------------------------
 export const EDITOR_STORY_NPCS: StoryNpc[] = [
   {
@@ -76,7 +76,7 @@ export const EDITOR_STORY_NPCS: StoryNpc[] = [
     role: '养殖大户/原村委会副主任',
     avatarUrl: '/images/像素小人2.jpg',
     description:
-      '48岁，经营全村最大养猪场，年出栏2000头。性格火爆直率，在村里有30多户亲戚，形成一定家族势力。2018年因酒驾被免去副主任职务，至今耿耿于怀。',
+      '48岁，经营全村最大养猪场，年出栏2000头。性格火爆直率，在村里30多户亲戚，形成一定家族势力。2018年因酒驾被免去副主任职务，至今耿耿于怀。',
   },
   {
     id: 'npc_wangxiao',
@@ -92,7 +92,7 @@ export const EDITOR_STORY_NPCS: StoryNpc[] = [
     role: '乡村小学教导主任',
     avatarUrl: '/images/像素小人4.jpg',
     description:
-      '32岁，师范毕业后自愿回乡任教8年。丈夫在县城工作，长期两地分居。教学认真负责，但常因学校条件简陋感到无力，多次申请调离未果。',
+      '32岁，师范毕业后自愿回乡任教10年。丈夫在县城工作，长期两地分居。教学认真负责，但常因学校条件简陋感到无力，多次申请调离未果。',
   },
   {
     id: 'npc_chenzong',
@@ -104,11 +104,11 @@ export const EDITOR_STORY_NPCS: StoryNpc[] = [
   },
   {
     id: 'npc_grandma_wang',
-    name: '王桂香',
+    name: '王桂花',
     role: '留守老人/村民监督委员会成员',
     avatarUrl: '/images/像素小人6.jpg',
     description:
-      '73岁，担任村民监督员15年，熟悉每一笔账目。为人正直但过于较真，得罪不少人。',
+      '73岁，担任村民监督15年，熟悉每一笔账目。为人正直但过于较真，得罪不少人。',
   },
   {
     id: 'npc_old_accountant',
@@ -179,10 +179,10 @@ const EDITOR_CRISIS_NPCS: CrisisNpc[] = [
   },
   {
     id: 'npc_grandma_wang',
-    name: '王桂香',
+    name: '王桂花',
     role: '村民监督委员会成员',
     avatarUrl: '/images/像素小人6.jpg',
-    personality: '关注公平透明，较真执拗',
+    personality: '关注公平透明，较真执着',
     judgeWeights: { empathy: 40, rationality: 20, compliance: 40 },
   },
   {
@@ -214,11 +214,11 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
     options: {
       left: {
         text: '立即组织转移，启用应急资金',
-        delta: { people: +25, economy: -20, governance: +15 },
+        delta: { people: +25, economy: -20, civility: +15 },
       },
       right: {
         text: '加强监测，先做临时防护',
-        delta: { governance: +10, economy: -5, people: -15 },
+        delta: { civility: +10, economy: -5, people: -15 },
       },
     },
   },
@@ -231,11 +231,11 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
     options: {
       left: {
         text: '立即封校，全力采购药品',
-        delta: { people: +20, economy: -15, governance: +10 },
+        delta: { people: +20, economy: -15, civility: +10 },
       },
       right: {
         text: '科学引导，避免恐慌',
-        delta: { governance: +15, people: +10, economy: -5 },
+        delta: { civility: +15, people: +10, economy: -5 },
       },
     },
   },
@@ -243,16 +243,16 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
   {
     id: 'random_wage_dispute',
     npcId: 'npc_sun',
-    text: '钱有财的建筑队欠了我家男人3万工钱两年未付，他说村集体欠他工程款，让我找村里要。我一个寡妇带两个孩子……',
+    text: '钱有财的建筑队欠了我家男人3万工钱两年未付，他说村集体欠他工程款，让我找村里要。我一个寡妇带两个孩子…',
     tags: ['劳资纠纷', '弱势群体', '历史债务'],
     options: {
       left: {
         text: '村里先垫付，再向钱有财追偿',
-        delta: { people: +30, economy: -15, governance: +20 },
+        delta: { people: +30, economy: -15, civility: +20 },
       },
       right: {
         text: '协助法律诉讼，提供法律援助',
-        delta: { governance: +15, people: +15, economy: -5 },
+        delta: { civility: +15, people: +15, economy: -5 },
       },
     },
   },
@@ -260,16 +260,16 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
   {
     id: 'random_funeral_conflict',
     npcId: 'npc_old_party',
-    text: '张家修坟多占李家三尺地，李家砸了碑，两家各叫了二十多人在坟地对峙，锄头铁锹都拿出来了！',
+    text: '张家修坟多占李家三尺地，李家砸了碑，两家各叫了二十多人在坟地对峙，锄头铁锹都拿出来了。',
     tags: ['宗族冲突', '历史恩怨', '群体事件'],
     options: {
       left: {
         text: '立即带村干部现场调解',
-        delta: { governance: +25, people: +15, economy: -10 },
+        delta: { civility: +25, people: +15, economy: -10 },
       },
       right: {
         text: '报警处理，依法解决',
-        delta: { governance: +15, people: -10, economy: -5 },
+        delta: { civility: +15, people: -10, economy: -5 },
       },
     },
   },
@@ -286,7 +286,7 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
       },
       right: {
         text: '先协调，寻找两全方案',
-        delta: { governance: +20, economy: +5, people: +5 },
+        delta: { civility: +20, economy: +5, people: +5 },
       },
     },
   },
@@ -294,16 +294,16 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
   {
     id: 'random_tech_accident',
     npcId: 'npc_wangxiao',
-    text: '电商平台服务器被攻击，50多个订单信息或泄露，若曝光可能赔钱并违法。',
+    text: '电商平台服务器被攻击，30多个订单信息或泄露，若曝光可能赔钱并违法。',
     tags: ['技术风险', '网络安全', '创业危机'],
     options: {
       left: {
         text: '立即报警并通知客户',
-        delta: { governance: +25, economy: -20, people: +10 },
+        delta: { civility: +25, economy: -20, people: +10 },
       },
       right: {
         text: '先内部处理，尽量隐瞒',
-        delta: { governance: -25, economy: -10, people: -20 },
+        delta: { civility: -25, economy: -10, people: -20 },
       },
     },
   },
@@ -311,16 +311,16 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
   {
     id: 'random_policy_change',
     npcId: 'npc_lifeng',
-    text: '县里新规：村级项目超过50万必须“四议两公开”并报镇党委审批，正在谈的项目都得重走程序。',
+    text: '县里新规：村级项目超过30万必须“四议两公开”并报镇党委审批，正在谈的项目都得重走程序。',
     tags: ['政策变动', '程序合规', '效率影响'],
     options: {
       left: {
         text: '严格执行新规，重新走程序',
-        delta: { governance: +30, economy: -15, people: +10 },
+        delta: { civility: +30, economy: -15, people: +10 },
       },
       right: {
         text: '特事特办，先推进后补程序',
-        delta: { economy: +10, governance: -20, people: -5 },
+        delta: { economy: +10, civility: -20, people: -5 },
       },
     },
   },
@@ -333,11 +333,11 @@ export const RANDOM_EVENT_LIBRARY: Card[] = [
     options: {
       left: {
         text: '真诚挽留，承诺改善条件',
-        delta: { people: +20, economy: -10, governance: +15 },
+        delta: { people: +20, economy: -10, civility: +15 },
       },
       right: {
         text: '支持个人发展，帮助办好手续',
-        delta: { governance: +20, people: -15, economy: 0 },
+        delta: { civility: +20, people: -15, economy: 0 },
       },
     },
   },
@@ -360,10 +360,10 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
     },
     people: {
       npcId: 'npc_grandma_wang',
-      npcName: '王桂香',
+      npcName: '王桂花',
       npcRole: '村民监督委员会成员',
       npcAvatarUrl: '/images/像素小人6.jpg',
-      personality: '关注公平透明，较真执拗',
+      personality: '关注公平透明，较真执着',
       conflictReason: '群众利益受损、民生被忽视',
       judgeWeights: { empathy: 40, rationality: 20, strategy: 20, compliance: 20 },
     },
@@ -376,7 +376,7 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
       conflictReason: '养殖污染影响饮水安全',
       judgeWeights: { empathy: 25, rationality: 25, strategy: 25, compliance: 25 },
     },
-    governance: {
+    civility: {
       npcId: 'npc_lifeng',
       npcName: '李丰',
       npcRole: '村党支部书记',
@@ -392,8 +392,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
       title: '第一阶段：新官上任（0-3个月）',
       description:
         '初到山河村，面对环保督察、危房小学、道路硬化停滞、贫困户住房、村集体债务等五大紧急问题，需快速摸底与建立信任。',
-      kpi: { economy: 30, people: 40, environment: 35, governance: 50 },
-      kpiEnabled: { economy: true, people: true, environment: true, governance: true },
+      kpi: { economy: 30, people: 40, environment: 35, civility: 50 },
+      kpiEnabled: { economy: true, people: true, environment: true, civility: true },
       cards: [
         {
           id: 'card_1_1',
@@ -405,12 +405,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '先处理环保整改，这是政治任务',
-              delta: { environment: +20, governance: +10, people: -15, economy: -10 },
+              delta: { environment: +20, civility: +10, people: -15, economy: -10 },
               followUpCardId: 'card_1_1_left',
             },
             right: {
               text: '先解决小学危房，孩子安全第一',
-              delta: { people: +25, environment: -10, governance: +5, economy: -15 },
+              delta: { people: +25, environment: -10, civility: +5, economy: -15 },
               followUpCardId: 'card_1_1_right',
             },
           },
@@ -424,12 +424,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '坚持原则，立即下达整改通知书',
-              delta: { environment: +30, governance: +20, people: -25, economy: -20 },
+              delta: { environment: +30, civility: +20, people: -25, economy: -20 },
               followUpCardId: 'card_1_1_left_left',
             },
             right: {
               text: '先做工作，承诺帮助转型过渡',
-              delta: { environment: +10, people: -5, governance: +15, economy: -5 },
+              delta: { environment: +10, people: -5, civility: +15, economy: -5 },
               followUpCardId: 'card_1_1_left_right',
             },
           },
@@ -437,17 +437,17 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
         {
           id: 'card_1_1_left_left',
           npcId: 'npc_old_party',
-          text: '张福贵放话要去市里上访，说你破坏营商环境。他家在村里有30多户亲戚，真闹起来不好收拾。',
+          text: '张福贵放话要去市里上访，说你破坏营商环境。他家在村里30多户亲戚，真闹起来不好收拾。',
           tags: ['矛盾升级', '群体性事件风险', '政治智慧'],
           options: {
             left: {
               text: '立即向镇党委汇报，寻求支持',
-              delta: { governance: +25, people: -20, economy: -10 },
+              delta: { civility: +25, people: -20, economy: -10 },
               followUpCardId: 'card_1_1_left_left_left',
             },
             right: {
               text: '亲自登门，夜访做家族工作',
-              delta: { people: +15, governance: -10, environment: -5 },
+              delta: { people: +15, civility: -10, environment: -5 },
               followUpCardId: 'card_1_1_left_left_right',
             },
           },
@@ -457,8 +457,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_lifeng',
           text: '镇里支持你依法整改，但要求稳定大局，注意舆情。',
           options: {
-            left: { text: '联合执法，确保合法合规', delta: { governance: +20, environment: +10 } },
-            right: { text: '放缓节奏，边整改边安抚', delta: { people: +10, environment: +5, governance: -5 } },
+            left: { text: '联合执法，确保合法合规', delta: { civility: +20, environment: +10 } },
+            right: { text: '放缓节奏，边整改边安抚', delta: { people: +10, environment: +5, civility: -5 } },
           },
         },
         {
@@ -466,8 +466,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_zhangfu',
           text: '张福贵态度稍软，但要求补贴损失，否则继续闹。',
           options: {
-            left: { text: '给予有限补偿换取停工配合', delta: { economy: -10, people: +10, governance: +5 } },
-            right: { text: '强调依法整改，不补贴', delta: { governance: +10, people: -10 } },
+            left: { text: '给予有限补偿换取停工配合', delta: { economy: -10, people: +10, civility: +5 } },
+            right: { text: '强调依法整改，不补贴', delta: { civility: +10, people: -10 } },
           },
         },
         {
@@ -475,8 +475,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_zhangfu',
           text: '张福贵同意整改，但希望获得转型支持与贷款帮助。',
           options: {
-            left: { text: '帮申请贴息贷款，指导转型', delta: { economy: -5, governance: +15, people: +5 } },
-            right: { text: '提供技术培训与市场对接', delta: { economy: +5, environment: +5, governance: +10 } },
+            left: { text: '帮申请贴息贷款，指导转型', delta: { economy: -5, civility: +15, people: +5 } },
+            right: { text: '提供技术培训与市场对接', delta: { economy: +5, environment: +5, civility: +10 } },
           },
         },
         {
@@ -487,12 +487,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '立即停课，转移学生到村委会',
-              delta: { people: +30, governance: +15, economy: -20 },
+              delta: { people: +30, civility: +15, economy: -20 },
               followUpCardId: 'card_1_1_right_left',
             },
             right: {
               text: '发动村民义务加固，先应急',
-              delta: { people: +20, governance: +25, economy: -5 },
+              delta: { people: +20, civility: +25, economy: -5 },
               followUpCardId: 'card_1_1_right_right',
             },
           },
@@ -502,8 +502,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_reporter_zhao',
           text: '媒体闻讯想采访危房停课一事，你如何应对？',
           options: {
-            left: { text: '坦诚问题，展示整改计划', delta: { governance: +15, people: +10, economy: -5 } },
-            right: { text: '低调处理，暂缓采访', delta: { governance: -5, people: -5 } },
+            left: { text: '坦诚问题，展示整改计划', delta: { civility: +15, people: +10, economy: -5 } },
+            right: { text: '低调处理，暂缓采访', delta: { civility: -5, people: -5 } },
           },
         },
         {
@@ -511,8 +511,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_old_accountant',
           text: '义务加固需要材料费用，账上资金紧张，是否动用预备金？',
           options: {
-            left: { text: '动用预备金，保障安全', delta: { economy: -10, people: +15, governance: +5 } },
-            right: { text: '申请镇里临时补助', delta: { governance: +10, people: +5 } },
+            left: { text: '动用预备金，保障安全', delta: { economy: -10, people: +15, civility: +5 } },
+            right: { text: '申请镇里临时补助', delta: { civility: +10, people: +5 } },
           },
         },
         {
@@ -523,12 +523,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '先还一部分，稳住债主',
-              delta: { governance: +10, economy: -25, people: +5 },
+              delta: { civility: +10, economy: -25, people: +5 },
               followUpCardId: 'card_1_2_left',
             },
             right: {
               text: '重新审计，该认的认，不该认的绝不认',
-              delta: { governance: +20, people: -10, economy: -5 },
+              delta: { civility: +20, people: -10, economy: -5 },
               followUpCardId: 'card_1_2_right',
             },
           },
@@ -538,8 +538,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_qian',
           text: '钱有财收下部分款项，但要求写清偿计划书并加盖公章。',
           options: {
-            left: { text: '签署计划书，分期偿还', delta: { governance: +10, economy: -10 } },
-            right: { text: '拒绝签署，维持口头承诺', delta: { governance: -10, people: -5 } },
+            left: { text: '签署计划书，分期偿还', delta: { civility: +10, economy: -10 } },
+            right: { text: '拒绝签署，维持口头承诺', delta: { civility: -10, people: -5 } },
           },
         },
         {
@@ -547,24 +547,24 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_old_accountant',
           text: '审计发现部分支出无票据，需追责前任干部，是否立案？',
           options: {
-            left: { text: '坚决立案，追责到底', delta: { governance: +20, people: -10 } },
-            right: { text: '先内部谈话，限期补齐凭证', delta: { governance: +10, people: +5 } },
+            left: { text: '坚决立案，追责到底', delta: { civility: +20, people: -10 } },
+            right: { text: '先内部谈话，限期补齐凭证', delta: { civility: +10, people: +5 } },
           },
         },
         {
           id: 'card_1_3',
           npcId: 'npc_qian',
-          text: '通镇道路因补偿争议停工半年，设备租赁费已亏8万。如何推进？',
+          text: '通镇道路因补偿争议停工半年，设备租赁费已5万。如何推进？',
           tags: ['基础设施', '征地', '裙带关系'],
           options: {
             left: {
               text: '重新规划路线，避开争议地块',
-              delta: { governance: +15, economy: -10, people: +10 },
+              delta: { civility: +15, economy: -10, people: +10 },
               followUpCardId: 'card_1_3_left',
             },
             right: {
-              text: '依法评估补偿，坚持原线',
-              delta: { governance: +25, economy: -15, people: -5 },
+              text: '依法评估补偿，坚持原则',
+              delta: { civility: +25, economy: -15, people: -5 },
               followUpCardId: 'card_1_3_right',
             },
           },
@@ -574,8 +574,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_lifeng',
           text: '改线可行，但需新增设计费用并延后工期，镇里催进度。',
           options: {
-            left: { text: '追加费用，确保推进', delta: { economy: -8, governance: +10 } },
-            right: { text: '先保通行，简化路面', delta: { people: +8, economy: -5, governance: +5 } },
+            left: { text: '追加费用，确保推进', delta: { economy: -8, civility: +10 } },
+            right: { text: '先保通行，简化路面', delta: { people: +8, economy: -5, civility: +5 } },
           },
         },
         {
@@ -583,8 +583,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_lifeng',
           text: '依法评估后补偿提高，李书记小舅子不满，内部压力增大。',
           options: {
-            left: { text: '坚持规则，公开评估结果', delta: { governance: +15, people: -5 } },
-            right: { text: '做内部工作，适度让利', delta: { people: +5, governance: -5, economy: -5 } },
+            left: { text: '坚持规则，公开评估结果', delta: { civility: +15, people: -5 } },
+            right: { text: '做内部工作，适度让利', delta: { people: +5, civility: -5, economy: -5 } },
           },
         },
         {
@@ -599,23 +599,23 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
       title: '第二阶段：发展之争（4-12个月）',
       description:
         '威信初步建立后，开始推动发展项目：有机农业园、电商基地、养殖转型，资金有限只能重点支持一条，同时历史问题反复。',
-      kpi: { economy: 55, people: 60, environment: 50, governance: 65 },
-      kpiEnabled: { economy: true, people: true, environment: false, governance: true },
+      kpi: { economy: 55, people: 60, environment: 50, civility: 65 },
+      kpiEnabled: { economy: true, people: true, environment: false, civility: true },
       cards: [
         {
           id: 'card_2_1',
           npcId: 'npc_chenzong',
-          text: '陈总提出500万有机农业园，要求免租三年并排他。若支持王潇，他或转投他村。',
+          text: '陈总提出300万有机农业园，要求免租三年并排他。若支持王潇，他或转投他村。',
           tags: ['招商引资', '排他条款', '利益博弈'],
           options: {
             left: {
               text: '接受条件，全力支持有机农业园',
-              delta: { economy: +40, environment: +15, people: -10, governance: -5 },
+              delta: { economy: +40, environment: +15, people: -10, civility: -5 },
               followUpCardId: 'card_2_1_left',
             },
             right: {
               text: '先评估，不承诺排他条款',
-              delta: { governance: +20, economy: -10, people: +5 },
+              delta: { civility: +20, economy: -10, people: +5 },
               followUpCardId: 'card_2_1_right',
             },
           },
@@ -627,12 +627,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '安置补偿受影响农户',
-              delta: { governance: +20, people: -15, economy: +10 },
+              delta: { civility: +20, people: -15, economy: +10 },
               followUpCardId: 'card_2_1_left_left',
             },
             right: {
               text: '按政策补偿即可',
-              delta: { economy: +25, people: -25, governance: -5 },
+              delta: { economy: +25, people: -25, civility: -5 },
             },
           },
         },
@@ -641,8 +641,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_grandma_wang',
           text: '安置需透明公开，老人担心失地后养老无保障。',
           options: {
-            left: { text: '设立专项监督与过渡补贴', delta: { governance: +15, people: +10, economy: -10 } },
-            right: { text: '签订补偿协议后快速推进', delta: { economy: +10, governance: -5 } },
+            left: { text: '设立专项监督与过渡补贴', delta: { civility: +15, people: +10, economy: -10 } },
+            right: { text: '签订补偿协议后快速推进', delta: { economy: +10, civility: -5 } },
           },
         },
         {
@@ -650,25 +650,25 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_chenzong',
           text: '陈总要求两周内给答复，否则撤资。',
           options: {
-            left: { text: '快速评估给出折中方案', delta: { governance: +10, economy: +10 } },
-            right: { text: '优先支持本土项目，放弃陈总', delta: { economy: -15, governance: +15, people: +10 } },
+            left: { text: '快速评估给出折中方案', delta: { civility: +10, economy: +10 } },
+            right: { text: '优先支持本土项目，放弃陈总', delta: { economy: -15, civility: +15, people: +10 } },
           },
         },
         {
           id: 'card_2_2',
           npcId: 'npc_wangxiao',
           text:
-            '王潇提出电商基地方案：统一品牌包装、建小型加工厂、培训20名青年，需集体支持20万。',
+            '王潇提出电商基地方案：统一品牌包装、建小型加工厂、培训30名青年，需集体支持20万。',
           tags: ['青年创业', '电商', '风险投资'],
           options: {
             left: {
-              text: '村集体投资20万占股51%',
-              delta: { economy: +25, people: +15, governance: -10 },
+              text: '村集体投资20万占51%',
+              delta: { economy: +25, people: +15, civility: -10 },
               followUpCardId: 'card_2_2_left',
             },
             right: {
               text: '协助贷款，村里只担保',
-              delta: { economy: +15, governance: +15, people: +5 },
+              delta: { economy: +15, civility: +15, people: +5 },
               followUpCardId: 'card_2_2_right',
             },
           },
@@ -678,8 +678,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_old_accountant',
           text: '集体入股需完善财务监管，是否设立项目专账？',
           options: {
-            left: { text: '设专账并定期公示', delta: { governance: +20, people: +10 } },
-            right: { text: '简化流程，先干再说', delta: { economy: +5, governance: -10 } },
+            left: { text: '设专账并定期公示', delta: { civility: +20, people: +10 } },
+            right: { text: '简化流程，先干再说', delta: { economy: +5, civility: -10 } },
           },
         },
         {
@@ -687,8 +687,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_wangxiao',
           text: '贷款担保获批，但银行要求风险共担，需追加抵押。',
           options: {
-            left: { text: '以集体资产作部分抵押', delta: { economy: -10, governance: +10 } },
-            right: { text: '缩小规模，降低贷款额', delta: { economy: -5, people: -5, governance: +5 } },
+            left: { text: '以集体资产作部分抵押', delta: { economy: -10, civility: +10 } },
+            right: { text: '缩小规模，降低贷款额', delta: { economy: -5, people: -5, civility: +5 } },
           },
         },
         {
@@ -699,12 +699,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '秘密取证，直报市环保局',
-              delta: { environment: +30, governance: -15, people: -10 },
+              delta: { environment: +30, civility: -15, people: -10 },
               followUpCardId: 'card_2_3_left',
             },
             right: {
               text: '内部施压，限期二次整改',
-              delta: { environment: +10, governance: +10, people: -5 },
+              delta: { environment: +10, civility: +10, people: -5 },
               followUpCardId: 'card_2_3_right',
             },
           },
@@ -714,8 +714,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_zhangfu',
           text: '张福贵得知举报，威胁报复，要求你撤回材料。',
           options: {
-            left: { text: '坚持上报，申请警方保护', delta: { governance: +20, people: -10 } },
-            right: { text: '协商缓报，换取彻底整改', delta: { environment: +10, governance: +5, people: +5 } },
+            left: { text: '坚持上报，申请警方保护', delta: { civility: +20, people: -10 } },
+            right: { text: '协商缓报，换取彻底整改', delta: { environment: +10, civility: +5, people: +5 } },
           },
         },
         {
@@ -723,8 +723,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_he',
           text: '二次整改承诺到位，但需要监督资金与设备采购。',
           options: {
-            left: { text: '建立第三方监测机制', delta: { governance: +15, environment: +10, economy: -5 } },
-            right: { text: '由村委监督，降低成本', delta: { governance: +5, economy: 0, environment: +5 } },
+            left: { text: '建立第三方监测机制', delta: { civility: +15, environment: +10, economy: -5 } },
+            right: { text: '由村委监督，降低成本', delta: { civility: +5, economy: 0, environment: +5 } },
           },
         },
         {
@@ -736,12 +736,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '坦诚问题，展示整改努力',
-              delta: { governance: +25, people: +10, economy: -5 },
+              delta: { civility: +25, people: +10, economy: -5 },
               followUpCardId: 'card_2_4_left',
             },
             right: {
               text: '重点介绍规划，淡化问题',
-              delta: { economy: +15, governance: -10, people: -5 },
+              delta: { economy: +15, civility: -10, people: -5 },
               followUpCardId: 'card_2_4_right',
             },
           },
@@ -751,8 +751,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_reporter_zhao',
           text: '记者认可坦诚态度，建议后续跟拍整改进展。',
           options: {
-            left: { text: '同意公开透明', delta: { governance: +15, people: +10 } },
-            right: { text: '仅提供阶段性信息', delta: { governance: +5 } },
+            left: { text: '同意公开透明', delta: { civility: +15, people: +10 } },
+            right: { text: '仅提供阶段性信息', delta: { civility: +5 } },
           },
         },
         {
@@ -760,8 +760,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_reporter_zhao',
           text: '记者质疑遮丑，准备发出批评报道。',
           options: {
-            left: { text: '紧急补充材料挽回', delta: { governance: +10, economy: -5 } },
-            right: { text: '接受批评，内部整改', delta: { governance: +5, people: +5 } },
+            left: { text: '紧急补充材料挽回', delta: { civility: +10, economy: -5 } },
+            right: { text: '接受批评，内部整改', delta: { civility: +5, people: +5 } },
           },
         },
         {
@@ -776,8 +776,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
       title: '第三阶段：深水攻坚（13-24个月）',
       description:
         '项目推进中的利益分配、环保反弹、媒体与上级考核齐聚，需在有限时间内巩固成果、化解危机并形成可持续机制。',
-      kpi: { economy: 70, people: 75, environment: 60, governance: 80 },
-      kpiEnabled: { economy: true, people: true, environment: true, governance: true },
+      kpi: { economy: 70, people: 75, environment: 60, civility: 80 },
+      kpiEnabled: { economy: true, people: true, environment: true, civility: true },
       cards: [
         {
           id: 'card_3_1',
@@ -788,12 +788,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '立即调查，如有欺诈依法处理',
-              delta: { governance: +30, economy: -40, people: +15 },
+              delta: { civility: +30, economy: -40, people: +15 },
               followUpCardId: 'card_3_1_left',
             },
             right: {
               text: '内部约谈，限期整改',
-              delta: { economy: -15, governance: -10, people: -20 },
+              delta: { economy: -15, civility: -10, people: -20 },
               followUpCardId: 'card_3_1_right',
             },
           },
@@ -803,8 +803,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_chenzong',
           text: '陈总称受市场波动影响，若严格处罚将撤资并索赔。',
           options: {
-            left: { text: '坚持调查，必要时解除合同', delta: { governance: +20, economy: -20 } },
-            right: { text: '协商整改，保留项目但强化监管', delta: { governance: +10, economy: -5 } },
+            left: { text: '坚持调查，必要时解除合同', delta: { civility: +20, economy: -20 } },
+            right: { text: '协商整改，保留项目但强化监管', delta: { civility: +10, economy: -5 } },
           },
         },
         {
@@ -812,25 +812,25 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_grandma_wang',
           text: '村民认为你偏袒资本方，信任下降。',
           options: {
-            left: { text: '公开整改清单与时间表', delta: { governance: +15, people: +10 } },
-            right: { text: '维持内部处理，求稳', delta: { governance: -10, people: -10 } },
+            left: { text: '公开整改清单与时间表', delta: { civility: +15, people: +10 } },
+            right: { text: '维持内部处理，求稳', delta: { civility: -10, people: -10 } },
           },
         },
         {
           id: 'card_3_2',
           npcId: 'npc_wangxiao',
           text:
-            '电商项目遭投诉：物流成本高、包装不达标、已亏8万。是否追加投资？',
+            '电商项目遭投诉：物流成本高、包装不达标、亏损15万。是否追加投资？',
           tags: ['创业失败', '资金风险', '信任危机'],
           options: {
             left: {
               text: '追加投资，聘请专业团队挽救',
-              delta: { economy: -25, governance: -15, people: +10 },
+              delta: { economy: -25, civility: -15, people: +10 },
               followUpCardId: 'card_3_2_left',
             },
             right: {
               text: '及时止损，总结教训',
-              delta: { governance: +20, economy: -10, people: -15 },
+              delta: { civility: +20, economy: -10, people: -15 },
               followUpCardId: 'card_3_2_right',
             },
           },
@@ -840,8 +840,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_old_accountant',
           text: '需追加预算并重新确立决策机制，是否引入第三方运营？',
           options: {
-            left: { text: '引入专业团队托管', delta: { economy: -10, governance: +15 } },
-            right: { text: '内部迭代，控制成本', delta: { economy: -5, governance: +5 } },
+            left: { text: '引入专业团队托管', delta: { economy: -10, civility: +15 } },
+            right: { text: '内部迭代，控制成本', delta: { economy: -5, civility: +5 } },
           },
         },
         {
@@ -850,7 +850,7 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           text: '王潇失望，但愿意留下协助总结经验。',
           options: {
             left: { text: '鼓励其转型做培训与直播', delta: { people: +10, economy: +5 } },
-            right: { text: '安排他参与其他项目', delta: { governance: +5, people: +5 } },
+            right: { text: '安排他参与其他项目', delta: { civility: +5, people: +5 } },
           },
         },
         {
@@ -861,12 +861,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '坚持原则，会上坦诚沟通',
-              delta: { governance: +25, people: -10, economy: -5 },
+              delta: { civility: +25, people: -10, economy: -5 },
               followUpCardId: 'card_3_3_left',
             },
             right: {
               text: '适当妥协，先维持团结',
-              delta: { governance: -10, people: +15, economy: +5 },
+              delta: { civility: -10, people: +15, economy: +5 },
               followUpCardId: 'card_3_3_right',
             },
           },
@@ -876,8 +876,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_old_party',
           text: '老党员支持你立规矩，但提醒注意方式方法。',
           options: {
-            left: { text: '建立班子共识行动清单', delta: { governance: +15 } },
-            right: { text: '聚焦几件硬任务，少开战线', delta: { governance: +10, people: +5 } },
+            left: { text: '建立班子共识行动清单', delta: { civility: +15 } },
+            right: { text: '聚焦几件硬任务，少开战线', delta: { civility: +10, people: +5 } },
           },
         },
         {
@@ -885,8 +885,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_lifeng',
           text: '暂时缓和矛盾，但改革动力下降。',
           options: {
-            left: { text: '设里程碑，避免拖延', delta: { governance: +10 } },
-            right: { text: '继续观望，避免冲突', delta: { governance: -5, people: +5 } },
+            left: { text: '设里程碑，避免拖延', delta: { civility: +10 } },
+            right: { text: '继续观望，避免冲突', delta: { civility: -5, people: +5 } },
           },
         },
         {
@@ -898,12 +898,12 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           options: {
             left: {
               text: '精心准备材料，全力争取',
-              delta: { governance: +20, economy: +15, people: +10 },
+              delta: { civility: +20, economy: +15, people: +10 },
               followUpCardId: 'card_3_end_a',
             },
             right: {
               text: '实事求是，不包装不夸大',
-              delta: { governance: +25, economy: +5, people: +15 },
+              delta: { civility: +25, economy: +5, people: +15 },
               followUpCardId: 'card_3_end_b',
             },
           },
@@ -913,8 +913,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_old_party',
           text: '改革派结局：得罪不少人，但路通了、校舍建了，规矩立住，群众认可变化。',
           options: {
-            left: { text: '继续推进未完成改革', delta: { governance: +40, people: +25, economy: +20, environment: +30 } },
-            right: { text: '申请留任，完成未尽事业', delta: { governance: +50, people: +30, economy: +25, environment: +35 } },
+            left: { text: '继续推进未完成改革', delta: { civility: +40, people: +25, economy: +20, environment: +30 } },
+            right: { text: '申请留任，完成未尽事业', delta: { civility: +50, people: +30, economy: +25, environment: +35 } },
           },
         },
         {
@@ -922,8 +922,8 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
           npcId: 'npc_lifeng',
           text: '务实派结局：稳步推进，欠债还清，矛盾化解，班子稳定，人心未乱。',
           options: {
-            left: { text: '总结经验，形成可复制模式', delta: { governance: +35, people: +30, economy: +25, environment: +20 } },
-            right: { text: '推荐接任者，确保延续', delta: { governance: +45, people: +35, economy: +20, environment: +25 } },
+            left: { text: '总结经验，形成可复制模式', delta: { civility: +35, people: +30, economy: +25, environment: +20 } },
+            right: { text: '推荐接任者，确保延续', delta: { civility: +45, people: +35, economy: +20, environment: +25 } },
           },
         },
         {
@@ -938,4 +938,3 @@ export const EDITOR_SAMPLE_CONFIG: GameConfig = {
 
 // DEMO_CONFIG 作为在线/预览的默认值，同步指向编辑器示例
 export const DEMO_CONFIG: GameConfig = EDITOR_SAMPLE_CONFIG;
-

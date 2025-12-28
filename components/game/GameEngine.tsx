@@ -186,10 +186,10 @@ const GameEngine: React.FC<GameEngineProps> = ({ config, onExit }) => {
           />
           <StatBadge 
             label="乡风民俗" 
-            value={stats.governance} 
+            value={stats.civility} 
             icon="🚩" 
-            target={getKPI('governance')}
-            isWarning={stats.governance <= 0}
+            target={getKPI('civility')}
+            isWarning={stats.civility <= 0}
           />
         </div>
       </div>
@@ -337,7 +337,7 @@ const GameEngine: React.FC<GameEngineProps> = ({ config, onExit }) => {
                       const numValue = value as number;
                       return (
                         <div key={key} className={numValue > 0 ? 'text-accent-green' : 'text-primary-red'}>
-                          {key === 'economy' && '💰'} {key === 'people' && '👥'} {key === 'environment' && '🌲'} {key === 'governance' && '🚩'}
+                          {key === 'economy' && '💰'} {key === 'people' && '👥'} {key === 'environment' && '🌲'} {key === 'civility' && '🚩'}
                           {' '}{numValue > 0 ? '+' : ''}{numValue}
                         </div>
                       );
@@ -349,7 +349,7 @@ const GameEngine: React.FC<GameEngineProps> = ({ config, onExit }) => {
                       const numValue = value as number;
                       return (
                         <div key={key} className={numValue > 0 ? 'text-accent-green' : 'text-primary-red'}>
-                          {key === 'economy' && '💰'} {key === 'people' && '👥'} {key === 'environment' && '🌲'} {key === 'governance' && '🚩'}
+                          {key === 'economy' && '💰'} {key === 'people' && '👥'} {key === 'environment' && '🌲'} {key === 'civility' && '🚩'}
                           {' '}{numValue > 0 ? '+' : ''}{numValue}
                         </div>
                       );

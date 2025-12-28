@@ -26,10 +26,25 @@ const ResourceLibrary: React.FC<ResourceLibraryProps> = ({ onBack, onAdminMode }
       setIsLoading(true);
       setError(null);
       try {
-        const data = await getCasesFromSupabase();
+        const data = await getCasesFromSupabase({
+          status: 'published',
+        });
         setCases(data);
+        // 如果没有数据，显示提示信息
+        if (data.length === 0) {
+          console.info('案例库为空，可能未配置Supabase或使用Mock数据');
+        }
       } catch (err: any) {
-        setError(err?.message || '加载数据失败');
+        console.error('加载案例失败:', err);
+        setError(err?.message || '加载数据失败，请检查网络连接或Supabase配置');
+        // 即使出错也尝试使用Mock数据
+        try {
+          const { MOCK_KNOWLEDGE_BASE_CASES } = await import('@/services/database/mockCases');
+          setCases(MOCK_KNOWLEDGE_BASE_CASES.filter(c => c.status === 'published'));
+          setError(null); // 清除错误，因为Mock数据可用
+        } catch (mockError) {
+          // Mock数据也加载失败，保持错误状态
+        }
       } finally {
         setIsLoading(false);
       }
@@ -86,7 +101,7 @@ const ResourceLibrary: React.FC<ResourceLibraryProps> = ({ onBack, onAdminMode }
     economy: '💰 经济发展',
     people: '👥 民生福祉',
     environment: '🌲 生态环保',
-    governance: '🚩 乡风民俗',
+    civility: '🚩 乡风民俗',
   };
 
   return (
@@ -149,7 +164,7 @@ const ResourceLibrary: React.FC<ResourceLibraryProps> = ({ onBack, onAdminMode }
               <option value="economy">💰 经济发展</option>
               <option value="people">👥 民生福祉</option>
               <option value="environment">🌲 生态环保</option>
-              <option value="governance">🚩 乡风民俗</option>
+              <option value="civility">🚩 乡风民俗</option>
             </select>
 
             <select

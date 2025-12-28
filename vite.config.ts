@@ -25,6 +25,9 @@ export default defineConfig(({ mode }) => {
         'process.env.SILICOFLOW_BASE_URL': JSON.stringify(env.SILICOFLOW_BASE_URL || env.VITE_SILICOFLOW_BASE_URL),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY),
         'process.env.OPENAI_API_KEY': JSON.stringify(env.OPENAI_API_KEY || env.VITE_OPENAI_API_KEY),
+        // Supabase配置
+        'process.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL),
+        'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY),
         // Vite环境变量（使用import.meta.env）
         'import.meta.env.VITE_SILICOFLOW_API_KEY': JSON.stringify(env.VITE_SILICOFLOW_API_KEY || env.SILICOFLOW_API_KEY),
         'import.meta.env.VITE_SILICOFLOW_BASE_URL': JSON.stringify(env.VITE_SILICOFLOW_BASE_URL || env.SILICOFLOW_BASE_URL),

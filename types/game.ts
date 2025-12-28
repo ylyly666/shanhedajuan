@@ -7,7 +7,7 @@ export interface GameStats {
   economy: number;
   people: number;
   environment: number;
-  governance: number;
+  civility: number;
 }
 
 export type StatKey = keyof GameStats;

@@ -43,7 +43,7 @@ export async function generateCardsFromDocMock(docText: string): Promise<CardDra
     economy: ['经济', '收入', '投资', '资金', '项目', '产业'],
     environment: ['环境', '污染', '生态', '绿色', '环保', '水源'],
     people: ['民生', '村民', '群众', '福利', '就业', '生活'],
-    governance: ['治理', '管理', '制度', '规范', '监督', '问责'],
+    civility: ['治理', '管理', '制度', '规范', '监督', '问责'],
   };
 
   for (let i = 0; i < Math.min(5, lines.length); i++) {
@@ -51,7 +51,7 @@ export async function generateCardsFromDocMock(docText: string): Promise<CardDra
     const hasEconomy = keywords.economy.some(k => line.includes(k));
     const hasEnvironment = keywords.environment.some(k => line.includes(k));
     const hasPeople = keywords.people.some(k => line.includes(k));
-    const hasGovernance = keywords.governance.some(k => line.includes(k));
+    const hasGovernance = keywords.civility.some(k => line.includes(k));
 
     cards.push({
       id: `draft_${Date.now()}_${i}`,
@@ -64,7 +64,7 @@ export async function generateCardsFromDocMock(docText: string): Promise<CardDra
             ...(hasEconomy ? { economy: -10 } : {}),
             ...(hasEnvironment ? { environment: 15 } : {}),
             ...(hasPeople ? { people: 5 } : {}),
-            ...(hasGovernance ? { governance: 10 } : {})
+            ...(hasGovernance ? { civility: 10 } : {})
           }
         },
         right: {
@@ -73,7 +73,7 @@ export async function generateCardsFromDocMock(docText: string): Promise<CardDra
             ...(hasEconomy ? { economy: 20 } : {}),
             ...(hasEnvironment ? { environment: -20 } : {}),
             ...(hasPeople ? { people: -5 } : {}),
-            ...(hasGovernance ? { governance: -5 } : {})
+            ...(hasGovernance ? { civility: -5 } : {})
           }
         }
       },

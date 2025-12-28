@@ -26,12 +26,13 @@ export const extractCaseFromText = async (rawText: string): Promise<AIExtractedC
   const systemPrompt = `你是基层治理案例分析师，请从用户文本中提取结构化信息并返回 JSON：
 字段：
 - title: 简洁标题（<=20字）
-- tags: 3-5 个关键词
-- category: economy|people|environment|governance
-- context_summary: 背景摘要
-- conflict_detail: 矛盾详情
-- resolution_outcome: 解决结果
-- expert_comment: 专家点评（可选）
+- tags: 3-5 个关键词（数组格式）
+- category: economy(经济发展)|people(民生福祉)|environment(生态环境)|civility(乡风民俗/基层治理)
+- author_display: 上传者/来源身份（如"政府"、"基层干部"、"村民"等，如果文本中有提及身份则提取，否则留空）
+- context_summary: 背景摘要（事件起因、背景）
+- conflict_detail: 矛盾详情（核心冲突、困难点）
+- resolution_outcome: 解决结果（处理措施及成效）
+- expert_comment: 专家点评（经验总结或警示意义，可选）
 要求：不编造；若缺失则留空；仅返回 JSON 可被 JSON.parse 解析。`;
 
   const userPrompt = `请分析并提取案例信息，返回 JSON：
@@ -75,16 +76,17 @@ ${rawText}`;
   const result: AIExtractedCase = {
     title: extracted.title || '未命名案例',
     tags: Array.isArray(extracted.tags) ? extracted.tags : [],
-    category: (extracted.category as StatKey) || 'governance',
+    category: (extracted.category as StatKey) || 'civility',
+    author_display: extracted.author_display || undefined,
     context_summary: extracted.context_summary || '',
     conflict_detail: extracted.conflict_detail || '',
     resolution_outcome: extracted.resolution_outcome || '',
     expert_comment: extracted.expert_comment || undefined,
   };
 
-  const valid: StatKey[] = ['economy', 'people', 'environment', 'governance'];
+  const valid: StatKey[] = ['economy', 'people', 'environment', 'civility'];
   if (!valid.includes(result.category)) {
-    result.category = 'governance';
+    result.category = 'civility';
   }
 
   return result;

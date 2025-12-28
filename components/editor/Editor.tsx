@@ -6,6 +6,8 @@ import TopNav, { EditorView } from '@/components/shared/TopNav';
 // @ts-ignore
 import CrisisConfigPage from '@/components/editor/CrisisConfigPage';
 import TimelineEditor from '@/components/editor/TimelineEditor';
+// @ts-ignore
+import CardImport from '@/components/editor/CardImport';
 
 interface EditorProps {
   config: GameConfig;
@@ -17,6 +19,7 @@ interface EditorProps {
 const Editor: React.FC<EditorProps> = ({ config, setConfig, onLaunchPreview, onBack }) => {
   const [activeStageId, setActiveStageId] = useState<string>(config.stages[0]?.id || '');
   const [currentView, setCurrentView] = useState<EditorView>('timeline');
+  const [showImportModal, setShowImportModal] = useState(false);
 
   // 确保有默认阶段
   useEffect(() => {
@@ -67,6 +70,7 @@ const Editor: React.FC<EditorProps> = ({ config, setConfig, onLaunchPreview, onB
         onViewChange={setCurrentView}
         onLaunchPreview={onLaunchPreview}
         onBack={onBack}
+        onImport={() => setShowImportModal(true)}
       />
 
       {/* Crisis Config Page */}
@@ -85,6 +89,15 @@ const Editor: React.FC<EditorProps> = ({ config, setConfig, onLaunchPreview, onB
           setConfig={setConfig}
           activeStageId={activeStageId}
           setActiveStageId={setActiveStageId}
+        />
+      )}
+
+      {/* Card Import Modal */}
+      {showImportModal && (
+        <CardImport
+          config={config}
+          setConfig={setConfig}
+          onClose={() => setShowImportModal(false)}
         />
       )}
     </div>

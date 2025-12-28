@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS knowledge_base (
   -- 基本信息
   title TEXT NOT NULL,
   tags TEXT[] DEFAULT '{}',
-  category TEXT NOT NULL CHECK (category IN ('economy', 'people', 'environment', 'governance')),
+  category TEXT NOT NULL CHECK (category IN ('economy', 'people', 'environment', 'civility')),
+  author_display TEXT, -- 上传者/来源身份（如"政府"、"基层干部"、"村民"等），用于展示
   
   -- 结构化内容
   context_summary TEXT NOT NULL, -- 背景摘要
@@ -98,6 +99,7 @@ CREATE INDEX IF NOT EXISTS idx_knowledge_base_fulltext ON knowledge_base
 USING GIN (
   to_tsvector('simple', 
     coalesce(title, '') || ' ' || 
+    coalesce(author_display, '') || ' ' ||
     coalesce(context_summary, '') || ' ' || 
     coalesce(conflict_detail, '') || ' ' || 
     coalesce(resolution_outcome, '')
@@ -146,5 +148,8 @@ $$;
 COMMENT ON TABLE knowledge_base IS '乡村振兴知识库，存储结构化案例数据，支持RAG向量检索';
 COMMENT ON COLUMN knowledge_base.embedding IS '向量嵌入，用于语义相似度搜索（RAG）';
 COMMENT ON COLUMN knowledge_base.source IS '案例来源：official_report(官方报告), field_experience(一线经验), user_upload(用户上传), expert_contribution(专家贡献)';
+COMMENT ON COLUMN knowledge_base.author_display IS '上传者/来源身份（如"政府"、"基层干部"、"村民"等），用于展示，区别于系统层面的source字段';
+
+
 
 

@@ -10,6 +10,7 @@ interface KnowledgeBaseCase {
   title: string;
   tags: string[];
   category: StatKey;
+  author_display?: string;
   context_summary: string;
   conflict_detail: string;
   resolution_outcome: string;
@@ -23,6 +24,7 @@ interface AIExtractedCase {
   title: string;
   tags: string[];
   category: StatKey;
+  author_display?: string;
   context_summary: string;
   conflict_detail: string;
   resolution_outcome: string;
@@ -32,9 +34,10 @@ interface AIExtractedCase {
 interface AdminCaseUploadProps {
   onBack: () => void;
   onReviewMode?: () => void;
+  onBatchImport?: () => void;
 }
 
-const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode }) => {
+const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode, onBatchImport }) => {
   // 原始文本
   const [rawText, setRawText] = useState('');
   
@@ -42,7 +45,8 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
   const [formData, setFormData] = useState<Partial<KnowledgeBaseCase>>({
     title: '',
     tags: [],
-    category: 'governance',
+    category: 'civility',
+    author_display: '',
     context_summary: '',
     conflict_detail: '',
     resolution_outcome: '',
@@ -77,6 +81,7 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
         title: extracted.title,
         tags: extracted.tags,
         category: extracted.category,
+        author_display: extracted.author_display,
         context_summary: extracted.context_summary,
         conflict_detail: extracted.conflict_detail,
         resolution_outcome: extracted.resolution_outcome,
@@ -122,9 +127,14 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
 
       let embedding: number[] | undefined;
       try {
-        embedding = await generateEmbedding(textForEmbedding);
+        const generatedEmbedding = await generateEmbedding(textForEmbedding);
+        // 确保不是空数组或undefined
+        if (generatedEmbedding && Array.isArray(generatedEmbedding) && generatedEmbedding.length > 0) {
+          embedding = generatedEmbedding;
+        }
       } catch (embedError) {
         console.warn('向量生成失败，将保存不带向量的记录', embedError);
+        embedding = undefined; // 确保是 undefined，不是空数组
         // 即使向量生成失败，也继续保存案例
       }
 
@@ -134,6 +144,7 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
           title: formData.title!,
           tags: formData.tags || [],
           category: formData.category as StatKey,
+          author_display: formData.author_display,
           context_summary: formData.context_summary!,
           conflict_detail: formData.conflict_detail!,
           resolution_outcome: formData.resolution_outcome!,
@@ -153,7 +164,8 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
         setFormData({
           title: '',
           tags: [],
-          category: 'governance',
+          category: 'civility',
+          author_display: '',
           context_summary: '',
           conflict_detail: '',
           resolution_outcome: '',
@@ -209,14 +221,24 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
               <span>管理员案例录入</span>
             </h1>
           </div>
-          {onReviewMode && (
-            <button
-              onClick={onReviewMode}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-bold text-sm"
-            >
-              📋 审核管理
-            </button>
-          )}
+          <div className="flex items-center gap-3">
+            {onBatchImport && (
+              <button
+                onClick={onBatchImport}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all shadow-md hover:shadow-lg font-bold text-sm"
+              >
+                📊 批量导入
+              </button>
+            )}
+            {onReviewMode && (
+              <button
+                onClick={onReviewMode}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-bold text-sm"
+              >
+                📋 审核管理
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -331,15 +353,29 @@ const AdminCaseUpload: React.FC<AdminCaseUploadProps> = ({ onBack, onReviewMode 
                     类别 <span className="text-red-500">*</span>
                   </label>
                   <select
-                    value={formData.category || 'governance'}
+                    value={formData.category || 'civility'}
                     onChange={(e) => updateField('category', e.target.value)}
                     className="w-full p-3 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-red-500"
                   >
                     <option value="economy">💰 经济发展</option>
                     <option value="people">👥 民生福祉</option>
                     <option value="environment">🌲 生态环保</option>
-                    <option value="governance">🚩 党建治理</option>
+                    <option value="civility">🚩 乡风民俗</option>
                   </select>
+                </div>
+
+                {/* 上传者 */}
+                <div>
+                  <label className="block text-sm font-bold text-stone-700 mb-2">
+                    上传者/来源身份
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.author_display || ''}
+                    onChange={(e) => updateField('author_display', e.target.value)}
+                    className="w-full p-3 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-red-500"
+                    placeholder="如：政府、基层干部、村民等"
+                  />
                 </div>
 
                 {/* 来源 */}

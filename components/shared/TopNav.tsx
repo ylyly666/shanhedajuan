@@ -7,9 +7,10 @@ interface TopNavProps {
   onViewChange: (view: EditorView) => void;
   onLaunchPreview: () => void;
   onBack?: () => void;
+  onImport?: () => void;
 }
 
-const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPreview, onBack }) => {
+const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPreview, onBack, onImport }) => {
   return (
     <div className="h-14 bg-white/80 backdrop-blur-sm border-b border-ink-light/30 flex items-center justify-between px-6">
       <div className="flex items-center gap-2">
@@ -52,6 +53,14 @@ const TopNav: React.FC<TopNavProps> = ({ currentView, onViewChange, onLaunchPrev
           </button>
         </div>
 
+        {onImport && (
+          <button
+            onClick={onImport}
+            className="text-xs text-ink hover:text-primary-red px-3 py-1 bg-ink-light/30 rounded-md hover:bg-ink-light/50 transition-colors flex items-center gap-1"
+          >
+            📥 导入卡牌
+          </button>
+        )}
         {onBack && (
           <button
             onClick={onBack}

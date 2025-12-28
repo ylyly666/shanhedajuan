@@ -361,196 +361,199 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-6 py-16">
+      {/* Hero Section - Level 1 (Paper) */}
+      <main className="bg-[#F7F4ED]">
+        <section className="max-w-7xl mx-auto px-6 py-24 md:py-32">
           <div className="text-center mb-16">
-              <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6 tracking-tight font-serif">
-                基层治理的<br/>
-                <span className="text-primary-red">
-                  沉浸式演练场
-                </span>
-              </h1>
-              <p className="text-xl text-ink-medium leading-relaxed max-w-2xl mx-auto mb-8">
-                在这里，你不仅是观察者，更是决策者。<br/>
-                面对两难抉择，平衡经济、民生、生态与乡风。<br/>
-                体验真实基层工作的复杂与温度。
-              </p>
+            <h1 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-6 tracking-tight font-serif">
+              基层治理的<br/>
+              <span className="text-[#B94047]">
+                沉浸式演练场
+              </span>
+            </h1>
+            <p className="text-xl text-[#2C2C2C]/80 leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
+              在这里，你不仅是观察者，更是决策者。<br/>
+              面对两难抉择，平衡经济、民生、生态与乡风。<br/>
+              体验真实基层工作的复杂与温度。
+            </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <button 
-                  onClick={handleLaunchGame}
-                  className="px-8 py-4 bg-primary-red text-white rounded-md text-lg font-bold shadow-paper-lg hover:bg-[#A0353C] hover:shadow-paper transition-all active:scale-95 transform"
-                >
-                  🎮 进入实战演练
-                </button>
-                <button 
-                  onClick={handleLaunchEditor}
-                  className="px-8 py-4 bg-white/80 backdrop-blur-sm text-ink border-2 border-ink-light rounded-md text-lg font-bold shadow-paper hover:border-primary-red hover:bg-primary-red/5 transition-all active:scale-95 transform"
-                >
-                  🛠️ 创作者工坊
-                </button>
-              </div>
-
-          <div className="flex items-center justify-center gap-8 text-sm text-stone-500">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">📊</span>
-              <span>已收录 <strong className="text-red-800">380+</strong> 个真实案例</span>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <button 
+                onClick={handleLaunchGame}
+                className="px-8 py-4 bg-[#B94047] text-white rounded-lg text-lg font-bold shadow-lg hover:bg-[#A0353C] hover:shadow-xl transition-all active:scale-95 transform"
+              >
+                🎮 进入实战演练
+              </button>
+              <button 
+                onClick={handleLaunchEditor}
+                className="px-8 py-4 bg-white/90 backdrop-blur-sm text-[#2C2C2C] border-2 border-[#2C2C2C]/10 rounded-lg text-lg font-bold shadow-md hover:border-[#B94047] hover:bg-[#B94047]/5 transition-all active:scale-95 transform"
+              >
+                🛠️ 创作者工坊
+              </button>
             </div>
-            <div className="w-px h-6 bg-stone-300"></div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🏢</span>
-              <span>调研笔记 <strong className="text-red-800">22万</strong> 字</span>
+
+            <div className="flex items-center justify-center gap-8 text-sm text-[#2C2C2C]/70">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">📊</span>
+                <span>已收录 <strong className="text-[#B94047]">380+</strong> 个真实案例</span>
+              </div>
+              <div className="w-px h-6 bg-[#2C2C2C]/20"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🏢</span>
+                <span>调研笔记 <strong className="text-[#B94047]">22万</strong> 字</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="glass rounded-md shadow-paper p-6 hover:shadow-paper-lg transition-all border border-ink-light">
-            <div className="text-4xl mb-4">📚</div>
-            <h3 className="text-xl font-bold text-ink mb-2 font-serif">资料库</h3>
-            <p className="text-ink-medium text-sm mb-4">
-              丰富的政策法规和典型案例，为学习提供参考
-            </p>
+          {/* 功能入口 Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             <button
               onClick={handleShowLibrary}
-              className="text-primary-red font-bold text-sm hover:underline"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform"
             >
-              查看资料库 →
+              <div className="text-5xl mb-4">📚</div>
+              <h3 className="text-xl font-bold text-[#2C2C2C] mb-2 font-serif">资料库</h3>
+              <p className="text-[#2C2C2C]/70 text-sm mb-4 font-sans">
+                丰富的政策法规和典型案例，为学习提供参考
+              </p>
+              <span className="text-[#B94047] font-bold text-sm">查看资料库 →</span>
             </button>
-          </div>
 
-          <div className="glass rounded-md shadow-paper p-6 hover:shadow-paper-lg transition-all border border-ink-light">
-            <div className="text-4xl mb-4">📝</div>
-            <h3 className="text-xl font-bold text-ink mb-2 font-serif">UGC投稿</h3>
-            <p className="text-ink-medium text-sm mb-4">
-              分享您的真实经验，共同建设基层治理知识库
-            </p>
             <button
               onClick={handleShowUGC}
-              className="text-primary-red font-bold text-sm hover:underline"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform"
             >
-              立即投稿 →
+              <div className="text-5xl mb-4">📝</div>
+              <h3 className="text-xl font-bold text-[#2C2C2C] mb-2 font-serif">UGC投稿</h3>
+              <p className="text-[#2C2C2C]/70 text-sm mb-4 font-sans">
+                分享您的真实经验，共同建设基层治理知识库
+              </p>
+              <span className="text-[#B94047] font-bold text-sm">立即投稿 →</span>
             </button>
-          </div>
 
-          <div className="glass rounded-md shadow-paper p-6 hover:shadow-paper-lg transition-all border border-ink-light">
-            <div className="text-4xl mb-4">🤖</div>
-            <h3 className="text-xl font-bold text-ink mb-2 font-serif">AI智能体</h3>
-            <p className="text-ink-medium text-sm mb-4">
-              基于RAG检索的AI助手，基于案例库提供专业咨询
-            </p>
             <button
               onClick={handleShowAIAgent}
-              className="text-primary-red font-bold text-sm hover:underline"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform"
             >
-              开始对话 →
+              <div className="text-5xl mb-4">🤖</div>
+              <h3 className="text-xl font-bold text-[#2C2C2C] mb-2 font-serif">AI智能体</h3>
+              <p className="text-[#2C2C2C]/70 text-sm mb-4 font-sans">
+                基于RAG检索的AI助手，基于案例库提供专业咨询
+              </p>
+              <span className="text-[#B94047] font-bold text-sm">开始对话 →</span>
             </button>
           </div>
-        </div>
+        </section>
       </main>
 
-      {/* 新的 LandingPage 内容 - 放在原先内容之后 */}
-      <div className="min-h-screen bg-[#F7F4ED]">
-        {/* Vision Section */}
-        <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
+      {/* Vision Section - Level 2 (White) */}
+      <section className="bg-white py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
             {/* 左侧文案 */}
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] mb-6 font-serif">
                 🌏 打破时空限制，把"村口"搬进屏幕
               </h2>
-              <p className="text-lg md:text-xl text-[#2C2C2C]/80 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-[#2C2C2C]/80 mb-8 leading-relaxed font-sans">
                 《山河答卷》不仅是一款策略游戏，更是专为选调生、驻村干部打造的数字化练兵场。我们致力于解决传统培训中"理论脱离实践"的痛点。在这里，您是第一书记，整个村庄的命运，系于您的一念之间。
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">💼</span>
+                  <span className="text-4xl">💼</span>
                   <div>
-                    <h3 className="font-bold text-[#2C2C2C] mb-1">沉浸式履职</h3>
-                    <p className="text-[#2C2C2C]/70">直面真实村民诉求。</p>
+                    <h3 className="font-bold text-[#2C2C2C] mb-1 text-lg font-serif">沉浸式履职</h3>
+                    <p className="text-[#2C2C2C]/70 font-sans">直面真实村民诉求。</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">🧠</span>
+                  <span className="text-4xl">🧠</span>
                   <div>
-                    <h3 className="font-bold text-[#2C2C2C] mb-1">系统化思维</h3>
-                    <p className="text-[#2C2C2C]/70">在多方利益中寻找平衡。</p>
+                    <h3 className="font-bold text-[#2C2C2C] mb-1 text-lg font-serif">系统化思维</h3>
+                    <p className="text-[#2C2C2C]/70 font-sans">在多方利益中寻找平衡。</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl">⚔️</span>
+                  <span className="text-4xl">⚔️</span>
                   <div>
-                    <h3 className="font-bold text-[#2C2C2C] mb-1">实战化演练</h3>
-                    <p className="text-[#2C2C2C]/70">低成本试错，高效率复盘。</p>
+                    <h3 className="font-bold text-[#2C2C2C] mb-1 text-lg font-serif">实战化演练</h3>
+                    <p className="text-[#2C2C2C]/70 font-sans">低成本试错，高效率复盘。</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* 右侧视觉 */}
-            <div className="flex items-center justify-center">
-              <div className="text-8xl md:text-9xl space-x-4">
+            {/* 右侧视觉 - 带装饰背景 */}
+            <div className="flex items-center justify-center relative">
+              <div className="absolute w-64 h-64 bg-gray-100 rounded-full blur-3xl opacity-50"></div>
+              <div className="relative text-8xl md:text-9xl space-x-4 z-10">
                 <span>🏞️</span>
                 <span>🔗</span>
                 <span>📱</span>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Gameplay Section */}
-        <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
+      {/* Gameplay Section - Level 1 (Paper) */}
+      <section className="bg-[#F7F4ED] py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             {/* 左侧说明 */}
             <div>
-              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">极简决策</h3>
-              <p className="text-lg text-[#2C2C2C]/80 mb-6">
+              <h3 className="text-3xl font-bold text-[#2C2C2C] mb-4 font-serif">极简决策</h3>
+              <p className="text-lg text-[#2C2C2C]/80 mb-6 font-sans">
                 👈 左滑 / 👉 右滑，深度博弈。
               </p>
-              <p className="text-[#2C2C2C]/70 mb-4">
+              <p className="text-[#2C2C2C]/70 mb-4 font-sans">
                 特色机制：模糊反馈系统。
               </p>
-              <p className="text-[#2C2C2C]/70">
-                <span className="text-2xl">🔀</span> 伏笔机制 & <span className="text-2xl">🎲</span> 随机挑战。
+              <p className="text-[#2C2C2C]/70 font-sans">
+                <span className="text-3xl">🔀</span> 伏笔机制 & <span className="text-3xl">🎲</span> 随机挑战。
               </p>
             </div>
 
-            {/* 中间卡片模拟 */}
+            {/* 中间 - 手机外壳模拟 */}
             <div className="flex justify-center">
-              <div className="bg-white rounded-2xl p-8 shadow-xl max-w-sm w-full">
-                <div className="text-center mb-6">
-                  <div className="text-6xl mb-4">🏭</div>
-                  <p className="text-xl font-bold text-[#2C2C2C]">是否引进该项目？</p>
-                </div>
-                
-                <div className="flex justify-between items-center mb-6">
-                  <button className="px-6 py-3 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-colors">
-                    ❌ 拒绝
-                  </button>
-                  <button className="px-6 py-3 bg-green-50 text-green-600 rounded-lg font-bold hover:bg-green-100 transition-colors">
-                    ✅ 同意
-                  </button>
-                </div>
+              <div className="border-8 border-stone-800 rounded-[2.5rem] bg-white shadow-2xl p-4 max-w-sm w-full">
+                {/* 手机屏幕内容 */}
+                <div className="bg-white rounded-2xl p-6">
+                  <div className="text-center mb-6">
+                    <div className="text-6xl mb-4">🏭</div>
+                    <p className="text-xl font-bold text-[#2C2C2C] font-serif">是否引进该项目？</p>
+                  </div>
+                  
+                  <div className="flex justify-between items-center mb-6">
+                    <button className="px-6 py-3 bg-red-50 text-red-600 rounded-lg font-bold hover:bg-red-100 transition-colors">
+                      ❌ 拒绝
+                    </button>
+                    <button className="px-6 py-3 bg-green-50 text-green-600 rounded-lg font-bold hover:bg-green-100 transition-colors">
+                      ✅ 同意
+                    </button>
+                  </div>
 
-                {/* 底部指标 */}
-                <div className="grid grid-cols-4 gap-2 text-center">
-                  <div>
-                    <div className="text-2xl mb-1">💰</div>
-                    <div className="text-xs text-[#2C2C2C]/70">经济</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl mb-1">👥</div>
-                    <div className="text-xs text-[#2C2C2C]/70">民生</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl mb-1">🌲</div>
-                    <div className="text-xs text-[#2C2C2C]/70">生态</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl mb-1">🚩</div>
-                    <div className="text-xs text-[#2C2C2C]/70">乡风</div>
+                  {/* 底部指标 */}
+                  <div className="grid grid-cols-4 gap-2 text-center">
+                    <div>
+                      <div className="text-2xl mb-1">💰</div>
+                      <div className="text-xs text-[#2C2C2C]/70">经济</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl mb-1">👥</div>
+                      <div className="text-xs text-[#2C2C2C]/70">民生</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl mb-1">🌲</div>
+                      <div className="text-xs text-[#2C2C2C]/70">生态</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl mb-1">🚩</div>
+                      <div className="text-xs text-[#2C2C2C]/70">乡风</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -558,85 +561,100 @@ const App: React.FC = () => {
 
             {/* 右侧说明 */}
             <div>
-              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">非线性叙事</h3>
-              <p className="text-lg text-[#2C2C2C]/80">
+              <h3 className="text-3xl font-bold text-[#2C2C2C] mb-4 font-serif">非线性叙事</h3>
+              <p className="text-lg text-[#2C2C2C]/80 font-sans">
                 每一次选择都会影响后续剧情发展，体验真实的决策压力。
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* AI Crisis Section */}
-        <section className="bg-[#2C2C2C] text-white py-20 md:py-32">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              {/* 左侧 */}
-              <div>
-                <div className="text-6xl mb-6">🚨</div>
-                <h2 className="text-4xl font-bold mb-6">指标归零报警！</h2>
-                <p className="text-xl mb-8 opacity-90">
-                  触发独创"熔断保护机制"。
-                </p>
+      {/* AI Crisis Section - Level 3 (Dark) */}
+      <section className="bg-[#2C2C2C] text-white py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* 左侧 */}
+            <div>
+              <div className="text-7xl mb-6">🚨</div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 font-serif">指标归零报警！</h2>
+              <p className="text-xl mb-8 text-white/90 font-sans">
+                触发独创"熔断保护机制"。
+              </p>
+            </div>
+
+            {/* 右侧对话模拟 - 改进的聊天气泡样式 */}
+            <div className="space-y-4">
+              {/* NPC 消息 - 左对齐，白底黑字 */}
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
+                <div className="flex items-start gap-4">
+                  <span className="text-4xl">👨‍🌾</span>
+                  <div className="flex-1">
+                    <p className="font-bold text-[#2C2C2C] mb-1 font-serif">村民</p>
+                    <p className="text-[#2C2C2C]/90 font-sans">"书记！俺鱼塘的鱼全翻白肚了！"</p>
+                  </div>
+                </div>
               </div>
 
-              {/* 右侧对话模拟 */}
-              <div className="space-y-4">
-                <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                  <div className="flex items-start gap-4 mb-2">
-                    <span className="text-3xl">👨‍🌾</span>
-                    <div>
-                      <p className="font-bold mb-1">村民</p>
-                      <p className="opacity-90">"书记！俺鱼塘的鱼全翻白肚了！"</p>
-                    </div>
+              {/* Player 消息 - 右对齐，绿底白字 */}
+              <div className="bg-green-600 rounded-2xl p-6 shadow-lg ml-auto max-w-[85%]">
+                <div className="flex items-start gap-4">
+                  <div className="flex-1 text-right">
+                    <p className="font-bold text-white mb-1 font-serif">您</p>
+                    <p className="text-white/90 font-sans">"大爷您先别急..."</p>
                   </div>
+                  <span className="text-4xl">👨‍💼</span>
                 </div>
+              </div>
 
-                <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                  <div className="flex items-start gap-4 mb-2">
-                    <span className="text-3xl">👨‍💼</span>
-                    <div>
-                      <p className="font-bold mb-1">您</p>
-                      <p className="opacity-90">"大爷您先别急..."</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                  <div className="flex items-start gap-4 mb-2">
-                    <span className="text-3xl">🤖</span>
-                    <div>
-                      <p className="font-bold mb-1">AI 判官</p>
-                      <p className="opacity-90">
-                        <span className="text-red-400">❌ 打官腔? 扣分!</span> | <span className="text-green-400">✅ 真诚? 怒气消解。</span>
-                      </p>
+              {/* AI 分析条 */}
+              <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/20">
+                <div className="flex items-center gap-4">
+                  <span className="text-4xl">🤖</span>
+                  <div className="flex-1">
+                    <p className="font-bold mb-2 font-serif">AI 判官分析</p>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-white/80 text-sm font-sans">共情度</span>
+                        <span className="text-green-400 font-bold">高</span>
+                      </div>
+                      <div className="w-full bg-white/20 rounded-full h-2">
+                        <div className="bg-green-400 h-2 rounded-full" style={{ width: '85%' }}></div>
+                      </div>
+                      <div className="flex gap-4 text-sm mt-3">
+                        <span className="text-red-400">❌ 打官腔? 扣分!</span>
+                        <span className="text-green-400">✅ 真诚? 怒气消解。</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* AI Report Section */}
-        <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
+      {/* AI Report Section - Level 2 (White) */}
+      <section className="bg-white py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] mb-6 font-serif">
               📝 不仅仅是游戏，更是一份深度体检报告
             </h2>
-            <p className="text-xl text-[#2C2C2C]/80 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-[#2C2C2C]/80 max-w-3xl mx-auto leading-relaxed font-sans">
               AI 会精准识别您的关键失误，并智能匹配 22 万字调研库中的真实案例。（如：自动推送"两山理论在安吉的实践"）。
             </p>
           </div>
 
           {/* Stat Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl p-8 shadow-lg border border-[#2C2C2C]/10">
-              <div className="text-4xl mb-4">📊</div>
-              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">治理画像</h3>
+            <div className="bg-[#F7F4ED] rounded-xl p-8 shadow-lg border border-[#2C2C2C]/10">
+              <div className="text-5xl mb-4">📊</div>
+              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 font-serif">治理画像</h3>
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-[#2C2C2C]/70">激进发展型</span>
+                    <span className="text-[#2C2C2C]/70 font-sans">激进发展型</span>
                     <span className="font-bold text-[#B94047]">85%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-3">
@@ -646,71 +664,71 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-8 shadow-lg border border-[#2C2C2C]/10">
-              <div className="text-4xl mb-4">📉</div>
-              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">关键复盘</h3>
-              <p className="text-[#2C2C2C]/70">
+            <div className="bg-[#F7F4ED] rounded-xl p-8 shadow-lg border border-[#2C2C2C]/10">
+              <div className="text-5xl mb-4">📉</div>
+              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 font-serif">关键复盘</h3>
+              <p className="text-[#2C2C2C]/70 font-sans">
                 案例映射：自动匹配相关真实案例，提供学习参考。
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Solutions & Ecosystem Section */}
-        <section className="bg-white py-20 md:py-32">
-          <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] text-center mb-16">
-              解决方案与生态
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Card 1 */}
-              <div className="bg-[#F7F4ED] rounded-xl p-8 border border-[#2C2C2C]/10">
-                <div className="text-5xl mb-4">🏗️</div>
-                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">To B/G 定制引擎</h3>
-                <p className="text-[#2C2C2C]/80 leading-relaxed">
-                  专为培训打造的"中央厨房"。上传 PDF → AI 解析 → 生成剧本。
-                </p>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-[#F7F4ED] rounded-xl p-8 border border-[#2C2C2C]/10">
-                <div className="text-5xl mb-4">⚙️</div>
-                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">深度仿真配置</h3>
-                <p className="text-[#2C2C2C]/80 leading-relaxed">
-                  自定义 NPC 性格 / 考核 KPI / 判分权重。
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-[#F7F4ED] rounded-xl p-8 border border-[#2C2C2C]/10">
-                <div className="text-5xl mb-4">🌊</div>
-                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">活水化智慧大脑</h3>
-                <p className="text-[#2C2C2C]/80 leading-relaxed">
-                  <strong>22万字</strong> 核心调研库。RAG 检索增强。UGC 众筹共建。
-                </p>
-              </div>
+      {/* Solutions & Ecosystem Section - Level 1 (Paper) */}
+      <section className="bg-[#F7F4ED] py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] text-center mb-16 font-serif">
+            解决方案与生态
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="bg-white rounded-xl p-8 border border-[#2C2C2C]/10 shadow-lg hover:-translate-y-2 transition-all duration-300">
+              <div className="text-6xl mb-4">🏗️</div>
+              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 font-serif">To B/G 定制引擎</h3>
+              <p className="text-[#2C2C2C]/80 leading-relaxed font-sans">
+                专为培训打造的"中央厨房"。上传 PDF → AI 解析 → 生成剧本。
+              </p>
             </div>
-          </div>
-        </section>
 
-        {/* Footer */}
-        <footer className="bg-[#2C2C2C] text-white py-12">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <div className="space-y-4 mb-8">
-              <p className="text-lg">
-                <span className="text-2xl">👥</span> 主创团队：俞乐怡 · 徐靖豫 · 郭芷岑
+            {/* Card 2 */}
+            <div className="bg-white rounded-xl p-8 border border-[#2C2C2C]/10 shadow-lg hover:-translate-y-2 transition-all duration-300">
+              <div className="text-6xl mb-4">⚙️</div>
+              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 font-serif">深度仿真配置</h3>
+              <p className="text-[#2C2C2C]/80 leading-relaxed font-sans">
+                自定义 NPC 性格 / 考核 KPI / 判分权重。
               </p>
-              <p className="text-lg opacity-90">
-                <span className="text-2xl">🎓</span> 项目归属：© 2025 山河答卷项目组 | 武汉大学新闻与传播学院
-              </p>
-              <p className="text-lg opacity-90">
-                <span className="text-2xl">📧</span> 联系我们：2209523089@qq.com
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white rounded-xl p-8 border border-[#2C2C2C]/10 shadow-lg hover:-translate-y-2 transition-all duration-300">
+              <div className="text-6xl mb-4">🌊</div>
+              <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 font-serif">活水化智慧大脑</h3>
+              <p className="text-[#2C2C2C]/80 leading-relaxed font-sans">
+                <strong>22万字</strong> 核心调研库。RAG 检索增强。UGC 众筹共建。
               </p>
             </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </section>
+
+      {/* Footer - Level 3 (Darker) */}
+      <footer className="bg-[#1F1F1F] text-white py-12">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="space-y-4 mb-8">
+            <p className="text-lg font-sans">
+              <span className="text-2xl">👥</span> 主创团队：俞乐怡 · 徐靖豫 · 郭芷岑
+            </p>
+            <p className="text-lg text-white/80 font-sans">
+              <span className="text-2xl">🎓</span> 项目归属：© 2025 山河答卷项目组 | 武汉大学新闻与传播学院
+            </p>
+            <p className="text-lg text-white/80 font-sans">
+              <span className="text-2xl">📧</span> 联系我们：2209523089@qq.com
+            </p>
+          </div>
+        </div>
+      </footer>
 
       {/* 登录模态框 */}
       <LoginModal

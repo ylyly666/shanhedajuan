@@ -25,24 +25,27 @@ export interface KnowledgeBaseCase {
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-// 调试信息（开发环境）
-if (import.meta.env.DEV) {
-  console.log('[Supabase Config]', {
-    hasUrl: !!SUPABASE_URL,
-    hasKey: !!SUPABASE_ANON_KEY,
-    urlPrefix: SUPABASE_URL ? SUPABASE_URL.substring(0, 30) + '...' : '未配置',
-    keyPrefix: SUPABASE_ANON_KEY ? SUPABASE_ANON_KEY.substring(0, 20) + '...' : '未配置',
-    fullUrl: SUPABASE_URL, // 开发环境显示完整URL用于调试
-  });
-  
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.warn('[Supabase] ⚠️ 未检测到Supabase配置，将使用Mock数据');
+// 调试信息（开发环境和生产环境都显示）
+console.log('[Supabase Config]', {
+  hasUrl: !!SUPABASE_URL,
+  hasKey: !!SUPABASE_ANON_KEY,
+  urlPrefix: SUPABASE_URL ? SUPABASE_URL.substring(0, 30) + '...' : '未配置',
+  keyPrefix: SUPABASE_ANON_KEY ? SUPABASE_ANON_KEY.substring(0, 20) + '...' : '未配置',
+  env: import.meta.env.MODE,
+  fullUrl: import.meta.env.DEV ? SUPABASE_URL : undefined, // 生产环境不显示完整URL
+});
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.warn('[Supabase] ⚠️ 未检测到Supabase配置，将使用Mock数据');
+  if (import.meta.env.DEV) {
     console.warn('[Supabase] 请在 .env.local 文件中配置：');
-    console.warn('[Supabase]   VITE_SUPABASE_URL=https://your-project.supabase.co');
-    console.warn('[Supabase]   VITE_SUPABASE_ANON_KEY=your-anon-key');
   } else {
-    console.log('[Supabase] ✅ 检测到Supabase配置，将连接真实数据库');
+    console.warn('[Supabase] 请在 Vercel Dashboard 的环境变量中配置：');
   }
+  console.warn('[Supabase]   VITE_SUPABASE_URL=https://your-project.supabase.co');
+  console.warn('[Supabase]   VITE_SUPABASE_ANON_KEY=your-anon-key');
+} else {
+  console.log('[Supabase] ✅ 检测到Supabase配置，将连接真实数据库');
 }
 
 // 尝试使用官方Supabase客户端（如果已安装）
@@ -459,7 +462,11 @@ export const generateEmbedding = async (text: string): Promise<number[] | undefi
 
   // 如果没有配置 embedding 服务，返回 undefined（不发送向量字段）
   console.warn('[Embedding] 未配置 embedding 服务（SilicoFlow 或 OpenAI），将保存不带向量的记录');
-  console.warn('[Embedding] 请在 .env.local 中配置：');
+  if (import.meta.env.DEV) {
+    console.warn('[Embedding] 请在 .env.local 中配置：');
+  } else {
+    console.warn('[Embedding] 请在 Vercel Dashboard 的环境变量中配置：');
+  }
   console.warn('[Embedding]   VITE_SILICOFLOW_API_KEY=your_key (推荐)');
   console.warn('[Embedding]   或 VITE_OPENAI_API_KEY=your_key');
   return undefined; // 返回 undefined，调用方需要检查

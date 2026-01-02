@@ -35,6 +35,149 @@ interface User {
   role?: 'user' | 'admin'; // 添加角色字段
 }
 
+// 增强版像素风格背景组件 - 增加中间区域方块
+const PixelBackground: React.FC = () => {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* 增强的网格背景 - 更明显 */}
+      <div className="absolute inset-0 opacity-[0.12]">
+        <div 
+          className="w-full h-full"
+          style={{
+            backgroundImage: `linear-gradient(to right, #B94047 2px, transparent 2px),
+                              linear-gradient(to bottom, #B94047 2px, transparent 2px)`,
+            backgroundSize: '40px 40px',
+          }}
+        />
+      </div>
+      
+      {/* 主要主题色方块 - 带轻微浮动动画 */}
+      <div className="absolute top-10 left-10 w-28 h-28 bg-[#B94047]/20 border-4 border-[#B94047]/40 shadow-lg animate-float-slow"></div>
+      <div className="absolute top-12 right-12 w-32 h-32 bg-[#2C2C2C]/20 border-4 border-[#2C2C2C]/40 shadow-lg animate-float-medium"></div>
+      <div className="absolute bottom-10 left-12 w-24 h-24 bg-[#B94047]/20 border-4 border-[#B94047]/40 shadow-lg animate-float-slow animation-delay-500"></div>
+      <div className="absolute bottom-12 right-10 w-28 h-28 bg-[#2C2C2C]/20 border-4 border-[#2C2C2C]/40 shadow-lg animate-float-medium animation-delay-1000"></div>
+      
+      {/* === 新增：中间区域的核心方块 === */}
+      
+      {/* 中心区域左上区块 */}
+      <div className="absolute top-1/3 left-1/3 w-18 h-18 bg-[#B94047]/15 border-3 border-[#B94047]/25 animate-float-slow animation-delay-300"></div>
+      <div className="absolute top-2/5 left-2/5 w-12 h-12 bg-[#2C2C2C]/10 border-2 border-[#2C2C2C]/20 animate-float-medium animation-delay-700"></div>
+      
+      {/* 中心区域右上区块 */}
+      <div className="absolute top-1/3 right-1/3 w-16 h-16 bg-[#2C2C2C]/15 border-3 border-[#2C2C2C]/25 animate-float-slow animation-delay-400"></div>
+      <div className="absolute top-2/5 right-2/5 w-14 h-14 bg-[#B94047]/10 border-2 border-[#B94047]/20 animate-float-medium animation-delay-800"></div>
+      
+      {/* 中心区域左下区块 */}
+      <div className="absolute bottom-1/3 left-1/3 w-14 h-14 bg-[#2C2C2C]/15 border-3 border-[#2C2C2C]/25 animate-float-slow animation-delay-500"></div>
+      <div className="absolute bottom-2/5 left-2/5 w-10 h-10 bg-[#B94047]/10 border-2 border-[#B94047]/20 animate-float-medium animation-delay-900"></div>
+      
+      {/* 中心区域右下区块 */}
+      <div className="absolute bottom-1/3 right-1/3 w-20 h-20 bg-[#B94047]/15 border-3 border-[#B94047]/25 animate-float-slow animation-delay-600"></div>
+      <div className="absolute bottom-2/5 right-2/5 w-8 h-8 bg-[#2C2C2C]/10 border-2 border-[#2C2C2C]/20 animate-float-medium animation-delay-1000"></div>
+      
+      {/* 中心区域上方 */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-22 h-22 bg-[#B94047]/10 border-3 border-[#B94047]/30 rotate-12 animate-float-slow animation-delay-200"></div>
+      <div className="absolute top-3/8 left-2/5 w-16 h-16 bg-[#2C2C2C]/10 border-2 border-[#2C2C2C]/25 rotate-6 animate-float-medium animation-delay-600"></div>
+      <div className="absolute top-3/8 right-2/5 w-16 h-16 bg-[#B94047]/10 border-2 border-[#B94047]/25 rotate-6 animate-float-medium animation-delay-1100"></div>
+      
+      {/* 中心区域下方 */}
+      <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-18 h-18 bg-[#2C2C2C]/10 border-3 border-[#2C2C2C]/30 -rotate-12 animate-float-slow animation-delay-300"></div>
+      <div className="absolute bottom-3/8 left-2/5 w-14 h-14 bg-[#B94047]/10 border-2 border-[#B94047]/25 -rotate-6 animate-float-medium animation-delay-700"></div>
+      <div className="absolute bottom-3/8 right-2/5 w-14 h-14 bg-[#2C2C2C]/10 border-2 border-[#2C2C2C]/25 -rotate-6 animate-float-medium animation-delay-1200"></div>
+      
+      {/* 中心区域左侧 */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-20 h-20 bg-[#B94047]/12 border-3 border-[#B94047]/28 animate-spin-slow animation-delay-500"></div>
+      <div className="absolute top-5/12 left-3/8 w-10 h-10 bg-[#2C2C2C]/8 border-1 border-[#2C2C2C]/20 animate-float-fast animation-delay-800"></div>
+      <div className="absolute top-7/12 left-3/8 w-10 h-10 bg-[#B94047]/8 border-1 border-[#B94047]/20 animate-float-fast animation-delay-1300"></div>
+      
+      {/* 中心区域右侧 */}
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-16 h-16 bg-[#2C2C2C]/12 border-3 border-[#2C2C2C]/28 animate-spin-slow animation-delay-1000"></div>
+      <div className="absolute top-5/12 right-3/8 w-8 h-8 bg-[#B94047]/8 border-1 border-[#B94047]/20 animate-float-fast animation-delay-300"></div>
+      <div className="absolute top-7/12 right-3/8 w-8 h-8 bg-[#2C2C2C]/8 border-1 border-[#2C2C2C]/20 animate-float-fast animation-delay-1100"></div>
+      
+      {/* 中间区域的小方块 - 带旋转动画 */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-20 h-20 bg-[#B94047]/15 border-3 border-[#B94047]/25 rotate-45 animate-spin-slow"></div>
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-20 h-20 bg-[#2C2C2C]/15 border-3 border-[#2C2C2C]/25 rotate-45 animate-spin-slow animation-delay-1500"></div>
+      
+      {/* 更多随机分布的装饰方块 */}
+      {/* 第一组随机方块 */}
+      <div className="absolute top-24 left-32 w-16 h-16 bg-[#B94047]/10 border-2 border-[#B94047]/25 animate-float-slow animation-delay-200"></div>
+      <div className="absolute top-36 right-36 w-14 h-14 bg-[#2C2C2C]/10 border-2 border-[#2C2C2C]/25 animate-float-medium animation-delay-400"></div>
+      <div className="absolute bottom-28 left-36 w-12 h-12 bg-[#B94047]/10 border-2 border-[#B94047]/25 animate-float-slow animation-delay-600"></div>
+      <div className="absolute bottom-32 right-28 w-18 h-18 bg-[#2C2C2C]/10 border-2 border-[#2C2C2C]/25 animate-float-medium animation-delay-800"></div>
+      
+      {/* 第二组随机方块 */}
+      <div className="absolute top-16 left-48 w-10 h-10 bg-[#B94047]/15 border-2 border-[#B94047]/30 animate-pulse"></div>
+      <div className="absolute top-48 left-16 w-12 h-12 bg-[#2C2C2C]/15 border-2 border-[#2C2C2C]/30 animate-pulse animation-delay-300"></div>
+      <div className="absolute bottom-16 right-48 w-14 h-14 bg-[#B94047]/15 border-2 border-[#B94047]/30 animate-pulse animation-delay-600"></div>
+      <div className="absolute bottom-48 right-16 w-16 h-16 bg-[#2C2C2C]/15 border-2 border-[#2C2C2C]/30 animate-pulse animation-delay-900"></div>
+      
+      {/* 第三组微小方块 - 分布更广 */}
+      <div className="absolute top-8 left-1/3 w-6 h-6 bg-[#B94047]/20 border border-[#B94047]/30 animate-float-fast"></div>
+      <div className="absolute top-1/4 right-24 w-8 h-8 bg-[#2C2C2C]/20 border border-[#2C2C2C]/30 animate-float-fast animation-delay-100"></div>
+      <div className="absolute bottom-1/4 left-24 w-7 h-7 bg-[#B94047]/20 border border-[#B94047]/30 animate-float-fast animation-delay-200"></div>
+      <div className="absolute bottom-8 right-1/3 w-5 h-5 bg-[#2C2C2C]/20 border border-[#2C2C2C]/30 animate-float-fast animation-delay-300"></div>
+      
+      {/* 第四组方块 - 靠近中间边缘 */}
+      <div className="absolute top-40 left-20 w-9 h-9 bg-[#B94047]/10 border-1 border-[#B94047]/20 animate-float-slow animation-delay-700"></div>
+      <div className="absolute top-20 right-40 w-11 h-11 bg-[#2C2C2C]/10 border-1 border-[#2C2C2C]/20 animate-float-slow animation-delay-900"></div>
+      <div className="absolute bottom-40 left-40 w-8 h-8 bg-[#B94047]/10 border-1 border-[#B94047]/20 animate-float-slow animation-delay-1100"></div>
+      <div className="absolute bottom-20 right-20 w-10 h-10 bg-[#2C2C2C]/10 border-1 border-[#2C2C2C]/20 animate-float-slow animation-delay-1300"></div>
+      
+      {/* === 新增：中心区域的微小装饰方块 === */}
+      <div className="absolute top-1/2 left-2/5 w-6 h-6 bg-[#B94047]/15 border border-[#B94047]/25 animate-float-fast animation-delay-100"></div>
+      <div className="absolute top-1/2 right-2/5 w-6 h-6 bg-[#2C2C2C]/15 border border-[#2C2C2C]/25 animate-float-fast animation-delay-300"></div>
+      <div className="absolute top-3/5 left-2/5 w-5 h-5 bg-[#2C2C2C]/12 border border-[#2C2C2C]/20 animate-float-fast animation-delay-500"></div>
+      <div className="absolute top-3/5 right-2/5 w-5 h-5 bg-[#B94047]/12 border border-[#B94047]/20 animate-float-fast animation-delay-700"></div>
+      <div className="absolute top-2/5 left-2/5 w-4 h-4 bg-[#B94047]/10 border border-[#B94047]/15 animate-pulse animation-delay-200"></div>
+      <div className="absolute top-2/5 right-2/5 w-4 h-4 bg-[#2C2C2C]/10 border border-[#2C2C2C]/15 animate-pulse animation-delay-400"></div>
+      
+      {/* 增强的对角线装饰 - 带动画 */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-1.5 bg-gradient-to-r from-transparent via-[#B94047]/40 to-transparent rotate-45 animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-1.5 bg-gradient-to-r from-transparent via-[#2C2C2C]/40 to-transparent -rotate-45 animate-pulse animation-delay-500"></div>
+      
+      {/* 水平装饰线 - 带动画 */}
+      <div className="absolute top-1/3 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#B94047]/30 to-transparent animate-pulse animation-delay-200"></div>
+      <div className="absolute bottom-1/3 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#2C2C2C]/30 to-transparent animate-pulse animation-delay-700"></div>
+      
+      {/* 垂直装饰线 - 新增 */}
+      <div className="absolute left-1/3 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-[#B94047]/25 to-transparent animate-pulse animation-delay-300"></div>
+      <div className="absolute right-1/3 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-[#2C2C2C]/25 to-transparent animate-pulse animation-delay-800"></div>
+      
+      {/* 像素点装饰 - 更多更明显，带动画 */}
+      <div className="absolute top-32 left-32 w-3 h-3 bg-[#B94047]/40 animate-bounce"></div>
+      <div className="absolute top-40 right-40 w-3 h-3 bg-[#B94047]/40 animate-bounce animation-delay-200"></div>
+      <div className="absolute bottom-32 left-40 w-3 h-3 bg-[#2C2C2C]/40 animate-bounce animation-delay-400"></div>
+      <div className="absolute bottom-40 right-32 w-3 h-3 bg-[#2C2C2C]/40 animate-bounce animation-delay-600"></div>
+      
+      {/* 中心区域的像素点 */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-[#B94047]/30 animate-ping"></div>
+      <div className="absolute top-1/2 left-45% w-1.5 h-1.5 bg-[#2C2C2C]/25 animate-pulse animation-delay-100"></div>
+      <div className="absolute top-1/2 right-45% w-1.5 h-1.5 bg-[#B94047]/25 animate-pulse animation-delay-300"></div>
+      
+      <div className="absolute top-1/3 left-2/3 w-2.5 h-2.5 bg-[#B94047]/30 animate-ping"></div>
+      <div className="absolute top-2/3 right-2/3 w-2.5 h-2.5 bg-[#B94047]/30 animate-ping animation-delay-300"></div>
+      <div className="absolute bottom-1/3 left-1/3 w-2.5 h-2.5 bg-[#2C2C2C]/30 animate-ping animation-delay-600"></div>
+      <div className="absolute bottom-2/3 right-1/3 w-2.5 h-2.5 bg-[#2C2C2C]/30 animate-ping animation-delay-900"></div>
+      
+      {/* 网格交叉点装饰 */}
+      <div className="absolute top-16 left-16 w-1.5 h-1.5 bg-[#B94047]/50 rotate-45 animate-pulse"></div>
+      <div className="absolute top-16 right-16 w-1.5 h-1.5 bg-[#B94047]/50 rotate-45 animate-pulse animation-delay-250"></div>
+      <div className="absolute bottom-16 left-16 w-1.5 h-1.5 bg-[#2C2C2C]/50 rotate-45 animate-pulse animation-delay-500"></div>
+      <div className="absolute bottom-16 right-16 w-1.5 h-1.5 bg-[#2C2C2C]/50 rotate-45 animate-pulse animation-delay-750"></div>
+      
+      {/* 增强的渐变遮罩 - 中间更干净，边缘保留装饰 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F7F4ED]/70 via-[#F7F4ED]/50 to-[#F7F4ED]/70"></div>
+      
+      {/* 中心聚焦遮罩 - 调整为更透明，让中间方块更可见 */}
+      <div className="absolute inset-0 bg-radial-gradient(circle at center, transparent 45%, rgba(247, 244, 237, 0.7) 85%)"></div>
+      
+      {/* 中心保护层 - 确保文字区域完全干净 */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-radial-gradient(circle, transparent 30%, rgba(247, 244, 237, 0.9) 70%)"></div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [mode, setMode] = useState<AppMode>('landing');
   const [config, setConfig] = useState<GameConfig>(EDITOR_SAMPLE_CONFIG);
@@ -291,16 +434,27 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <button
-              onClick={() => setMode('landing')}
-              className="text-2xl font-bold text-primary-red tracking-wider flex items-center gap-2 font-serif hover:opacity-80 transition-opacity"
-            >
-              <span className="text-3xl">⛰️</span>
-              <span>山河答卷</span>
+           <button
+  onClick={() => setMode('landing')}
+  className="text-2xl font-bold text-primary-red tracking-wider flex items-center gap-2 font-serif hover:opacity-80 transition-opacity"
+>
+            <img 
+    src="/images/logo.png"  // public目录下的路径
+    alt="山河答卷Logo" 
+    className="h-9 w-9 object-contain"
+            />
+            <span>山河答卷</span>
+            <span className="text-sm font-normal text-black">-基层治理沉浸式平台</span>
             </button>
 
             {/* 导航链接 */}
             <div className="flex items-center gap-1">
+              <button 
+                onClick={handleLaunchGame}
+                className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all"
+              >
+                实战演练
+              </button>
               <button 
                 onClick={handleShowLibrary}
                 className="px-4 py-2 text-sm font-medium text-stone-700 hover:text-primary-red hover:bg-red-50 rounded-lg transition-all"
@@ -362,90 +516,101 @@ const App: React.FC = () => {
       </nav>
 
       {/* Hero Section - Level 1 (Paper) */}
-      <main className="bg-[#F7F4ED]">
-        <section className="max-w-7xl mx-auto px-6 py-24 md:py-32">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-6 tracking-tight font-serif">
-              基层治理的<br/>
-              <span className="text-[#B94047]">
-                沉浸式演练场
-              </span>
-            </h1>
-            <p className="text-xl text-[#2C2C2C]/80 leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
-              在这里，你不仅是观察者，更是决策者。<br/>
-              面对两难抉择，平衡经济、民生、生态与乡风。<br/>
-              体验真实基层工作的复杂与温度。
-            </p>
+<main className="relative min-h-[80vh] flex items-center justify-center bg-[#F7F4ED]">
+  {/* 简洁像素背景 */}
+  <PixelBackground />
+  
+  <section className="max-w-6xl mx-auto px-6 py-12 md:py-20 relative z-10 w-full">
+    <div className="text-center">
+      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#2C2C2C] mb-6 tracking-tight font-serif">
+        基层治理的<br className="hidden sm:block" />
+        <span className="text-[#B94047] block mt-2">
+          沉浸式演练场
+        </span>
+      </h1>
+      
+      <p className="text-xl md:text-2xl text-[#2C2C2C]/80 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-12 font-sans">
+        在这里，你不仅是观察者，更是决策者。
+        <br className="hidden md:block" />
+        面对两难抉择，平衡经济、民生、生态与乡风。
+        <br className="hidden md:block" />
+        体验真实基层工作的复杂与温度。
+      </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <button 
-                onClick={handleLaunchGame}
-                className="px-8 py-4 bg-[#B94047] text-white rounded-lg text-lg font-bold shadow-lg hover:bg-[#A0353C] hover:shadow-xl transition-all active:scale-95 transform"
-              >
-                🎮 进入实战演练
-              </button>
-              <button 
-                onClick={handleLaunchEditor}
-                className="px-8 py-4 bg-white/90 backdrop-blur-sm text-[#2C2C2C] border-2 border-[#2C2C2C]/10 rounded-lg text-lg font-bold shadow-md hover:border-[#B94047] hover:bg-[#B94047]/5 transition-all active:scale-95 transform"
-              >
-                🛠️ 创作者工坊
-              </button>
-            </div>
+      <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center mb-12">
+        <button 
+          onClick={handleLaunchGame}
+          className="px-8 py-4 bg-[#B94047] text-white rounded-lg text-lg font-bold shadow-lg hover:bg-[#A0353C] hover:shadow-xl transition-all active:scale-95 transform"
+        >
+          🎮 进入实战演练
+        </button>
+        <button 
+          onClick={handleLaunchEditor}
+          className="px-8 py-4 bg-white text-[#2C2C2C] border-2 border-[#2C2C2C]/10 rounded-lg text-lg font-bold shadow-md hover:border-[#B94047] hover:bg-[#B94047]/5 transition-all active:scale-95 transform"
+        >
+          🛠️ 创作者工坊
+        </button>
+      </div>
 
-            <div className="flex items-center justify-center gap-8 text-sm text-[#2C2C2C]/70">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">📊</span>
-                <span>已收录 <strong className="text-[#B94047]">380+</strong> 个真实案例</span>
-              </div>
-              <div className="w-px h-6 bg-[#2C2C2C]/20"></div>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🏢</span>
-                <span>调研笔记 <strong className="text-[#B94047]">22万</strong> 字</span>
-              </div>
-            </div>
-          </div>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm md:text-base text-[#2C2C2C]/70">
+        <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-lg">
+          <span className="text-2xl">📊</span>
+          <span>已收录 <strong className="text-[#B94047]">380+</strong> 个真实案例</span>
+        </div>
+        <div className="hidden sm:block w-px h-6 bg-[#2C2C2C]/20"></div>
+        <div className="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-lg">
+          <span className="text-2xl">🏢</span>
+          <span>调研笔记 <strong className="text-[#B94047]">22万</strong> 字</span>
+        </div>
+      </div>
+    </div>
 
-          {/* 功能入口 Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <button
-              onClick={handleShowLibrary}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform"
-            >
-              <div className="text-5xl mb-4">📚</div>
-              <h3 className="text-xl font-bold text-[#2C2C2C] mb-2 font-serif">资料库</h3>
-              <p className="text-[#2C2C2C]/70 text-sm mb-4 font-sans">
-                丰富的政策法规和典型案例，为学习提供参考
-              </p>
-              <span className="text-[#B94047] font-bold text-sm">查看资料库 →</span>
-            </button>
+    {/* 功能入口 Bento Grid */}
+    <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <button
+        onClick={handleShowLibrary}
+        className="bg-white rounded-xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform group"
+      >
+        <div className="text-5xl md:text-6xl mb-4 group-hover:scale-110 transition-transform">📚</div>
+        <h3 className="text-xl md:text-2xl font-bold text-[#2C2C2C] mb-3 font-serif">资料库</h3>
+        <p className="text-[#2C2C2C]/70 text-sm md:text-base mb-4 font-sans">
+          丰富的政策法规和典型案例，为学习提供参考
+        </p>
+        <span className="text-[#B94047] font-bold text-sm md:text-base inline-flex items-center gap-2">
+          查看资料库 <span className="group-hover:translate-x-1 transition-transform">→</span>
+        </span>
+      </button>
 
-            <button
-              onClick={handleShowUGC}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform"
-            >
-              <div className="text-5xl mb-4">📝</div>
-              <h3 className="text-xl font-bold text-[#2C2C2C] mb-2 font-serif">UGC投稿</h3>
-              <p className="text-[#2C2C2C]/70 text-sm mb-4 font-sans">
-                分享您的真实经验，共同建设基层治理知识库
-              </p>
-              <span className="text-[#B94047] font-bold text-sm">立即投稿 →</span>
-            </button>
+      <button
+        onClick={handleShowUGC}
+        className="bg-white rounded-xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform group"
+      >
+        <div className="text-5xl md:text-6xl mb-4 group-hover:scale-110 transition-transform">📝</div>
+        <h3 className="text-xl md:text-2xl font-bold text-[#2C2C2C] mb-3 font-serif">UGC投稿</h3>
+        <p className="text-[#2C2C2C]/70 text-sm md:text-base mb-4 font-sans">
+          分享您的真实经验，共同建设基层治理知识库
+        </p>
+        <span className="text-[#B94047] font-bold text-sm md:text-base inline-flex items-center gap-2">
+          立即投稿 <span className="group-hover:translate-x-1 transition-transform">→</span>
+        </span>
+      </button>
 
-            <button
-              onClick={handleShowAIAgent}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform"
-            >
-              <div className="text-5xl mb-4">🤖</div>
-              <h3 className="text-xl font-bold text-[#2C2C2C] mb-2 font-serif">AI智能体</h3>
-              <p className="text-[#2C2C2C]/70 text-sm mb-4 font-sans">
-                基于RAG检索的AI助手，基于案例库提供专业咨询
-              </p>
-              <span className="text-[#B94047] font-bold text-sm">开始对话 →</span>
-            </button>
-          </div>
-        </section>
-      </main>
-
+      <button
+        onClick={handleShowAIAgent}
+        className="bg-white rounded-xl shadow-lg p-6 md:p-8 hover:shadow-xl transition-all border border-[#2C2C2C]/10 hover:-translate-y-1 transform group"
+      >
+        <div className="text-5xl md:text-6xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
+        <h3 className="text-xl md:text-2xl font-bold text-[#2C2C2C] mb-3 font-serif">AI智能体</h3>
+        <p className="text-[#2C2C2C]/70 text-sm md:text-base mb-4 font-sans">
+          基于RAG检索的AI助手，基于案例库提供专业咨询
+        </p>
+        <span className="text-[#B94047] font-bold text-sm md:text-base inline-flex items-center gap-2">
+          开始对话 <span className="group-hover:translate-x-1 transition-transform">→</span>
+        </span>
+      </button>
+    </div>
+  </section>
+</main>
       {/* Vision Section - Level 2 (White) */}
       <section className="bg-white py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6">
@@ -569,6 +734,219 @@ const App: React.FC = () => {
           </div>
         </div>
       </section>
+
+       {/* 真实人物案例 Section */}
+<section className="bg-white py-20 md:py-32">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      {/* 左侧文字内容 */}
+      <div>
+        <h2 className="text-4xl md:text-5xl font-bold text-[#2C2C2C] mb-6 font-serif">
+          📚 真实人物案例
+        </h2>
+        <p className="text-lg md:text-xl text-[#2C2C2C]/80 leading-relaxed mb-8 font-sans">
+          每一个决策背后，都是真实的基层故事。
+          <br />
+          我们的游戏脚本源于全国各地430+个真实案例，
+          <br />
+          人物性格鲜明，情感丰富，让演练不再纸上谈兵。
+        </p>
+        
+        <div className="flex items-center gap-4 text-sm text-[#2C2C2C]/70">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-[#B94047]/10 flex items-center justify-center">
+              <span className="text-[#B94047] text-lg">📖</span>
+            </div>
+            <span>22万字真实调研</span>
+          </div>
+          <div className="w-px h-6 bg-[#2C2C2C]/20"></div>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-[#B94047]/10 flex items-center justify-center">
+              <span className="text-[#B94047] text-lg">🗣️</span>
+            </div>
+            <span>1对1深度访谈</span>
+          </div>
+        </div>
+      </div>
+      
+      {/* 右侧三列滚动展示 */}
+      <div className="relative h-[500px] md:h-[600px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#F7F4ED] to-[#F7F4ED]/50 p-6 border border-[#2C2C2C]/10">
+        
+        {/* 三列容器 */}
+        <div className="flex justify-between gap-6 h-full">
+          
+          {/* 第一列 - 展示人物1-7，滚动最慢 */}
+          <div className="flex-1">
+            <div className="relative h-full overflow-hidden rounded-xl">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent z-10"></div>
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white/70 to-transparent z-10"></div>
+              
+              <div className="animate-scroll-slow space-y-6 pt-4">
+                {/* 第一组：人物1-7 */}
+                {[1, 2, 3, 4, 5, 6, 7].map((index) => (
+                  <div 
+                    key={`col1-${index}`}
+                    className="relative group"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border-4 border-white shadow-lg bg-white">
+                      <img
+                        src={`/images/avatars/avatar${index}.png`}
+                        alt={`真实案例 ${index}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                          target.parentElement.innerHTML = `
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500 font-bold">
+                              ${index}
+                            </div>
+                          `;
+                        }}
+                      />
+                      {/* 像素边框效果 */}
+                      <div className="absolute inset-0 border border-black/10"></div>
+                      <div className="absolute inset-1 border border-white/50"></div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* 重复一遍实现无缝滚动 */}
+                {[1, 2, 3, 4, 5, 6, 7].map((index) => (
+                  <div 
+                    key={`col1-duplicate-${index}`}
+                    className="relative group"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border-4 border-white shadow-lg bg-white">
+                      <img
+                        src={`/images/avatars/avatar${index}.png`}
+                        alt={`真实案例 ${index}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 border border-black/10"></div>
+                      <div className="absolute inset-1 border border-white/50"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* 第二列 - 展示人物8-14，滚动中等速度 */}
+          <div className="flex-1 mt-12">
+            <div className="relative h-full overflow-hidden rounded-xl">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent z-10"></div>
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white/70 to-transparent z-10"></div>
+              
+              <div className="animate-scroll-medium space-y-6 pt-4">
+                {/* 第二组：人物8-14 */}
+                {[8, 9, 10, 11, 12, 13, 14].map((index) => (
+                  <div 
+                    key={`col2-${index}`}
+                    className="relative group"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border-4 border-white shadow-lg bg-white">
+                      <img
+                        src={`/images/avatars/avatar${index}.png`}
+                        alt={`真实案例 ${index}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                          target.parentElement.innerHTML = `
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500 font-bold">
+                              ${index}
+                            </div>
+                          `;
+                        }}
+                      />
+                      <div className="absolute inset-0 border border-black/10"></div>
+                      <div className="absolute inset-1 border border-white/50"></div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* 重复一遍实现无缝滚动 */}
+                {[8, 9, 10, 11, 12, 13, 14].map((index) => (
+                  <div 
+                    key={`col2-duplicate-${index}`}
+                    className="relative group"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border-4 border-white shadow-lg bg-white">
+                      <img
+                        src={`/images/avatars/avatar${index}.png`}
+                        alt={`真实案例 ${index}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 border border-black/10"></div>
+                      <div className="absolute inset-1 border border-white/50"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* 第三列 - 展示人物15-21，滚动最快 */}
+          <div className="flex-1 mt-24">
+            <div className="relative h-full overflow-hidden rounded-xl">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent z-10"></div>
+              <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white/70 to-transparent z-10"></div>
+              
+              <div className="animate-scroll-fast space-y-6 pt-4">
+                {/* 第三组：人物15-21 */}
+                {[15, 16, 17, 18, 19, 20, 21].map((index) => (
+                  <div 
+                    key={`col3-${index}`}
+                    className="relative group"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border-4 border-white shadow-lg bg-white">
+                      <img
+                        src={`/images/avatars/avatar${index}.png`}
+                        alt={`真实案例 ${index}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                          target.parentElement.innerHTML = `
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 text-gray-500 font-bold">
+                              ${index}
+                            </div>
+                          `;
+                        }}
+                      />
+                      <div className="absolute inset-0 border border-black/10"></div>
+                      <div className="absolute inset-1 border border-white/50"></div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* 重复一遍实现无缝滚动 */}
+                {[15, 16, 17, 18, 19, 20, 21].map((index) => (
+                  <div 
+                    key={`col3-duplicate-${index}`}
+                    className="relative group"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden rounded-lg border-4 border-white shadow-lg bg-white">
+                      <img
+                        src={`/images/avatars/avatar${index}.png`}
+                        alt={`真实案例 ${index}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 border border-black/10"></div>
+                      <div className="absolute inset-1 border border-white/50"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>       
+
 
       {/* AI Crisis Section - Level 3 (Dark) */}
       <section className="bg-[#2C2C2C] text-white py-24 md:py-32">
@@ -713,6 +1091,21 @@ const App: React.FC = () => {
         </div>
       </section>
 
+            {/* 极简提示条 */}
+      <div className="bg-white border-t border-stone-200">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex items-center justify-center gap-3 text-lg text-[#2C2C2C]">
+            <span className="text-2xl">💡</span>
+            <span>详细介绍可参阅</span>
+            <button
+              onClick={handleShowAbout}
+              className="text-[#B94047] font-bold hover:text-[#A0353C] underline underline-offset-4 transition-colors text-xl"
+            >
+              关于界面
+            </button>
+          </div>
+        </div>
+      </div>
       {/* Footer - Level 3 (Darker) */}
       <footer className="bg-[#1F1F1F] text-white py-12">
         <div className="max-w-7xl mx-auto px-6 text-center">

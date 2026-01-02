@@ -1,8 +1,10 @@
 /**
- * 游戏常量数据（从新项目迁移）
+ * 游戏常量数据（完整版 - 包含83条剧情）
+ * 从小程序项目迁移而来
  */
 
 import { MetricType } from '@/utils/gameAdapter';
+import { getImageByNpcId } from '@/utils/imageAssets';
 
 export const INITIAL_METRICS: Record<MetricType, number> = {
   economy: 50,
@@ -34,6 +36,55 @@ export interface PhaseConfig {
   randomPool: string[]; // IDs to sample from
   randomCount: number; // How many randoms to pick
 }
+
+// 辅助函数：根据NPC名称匹配图片路径
+// 将小程序的NPC名称映射到当前项目的NPC ID，然后获取图片
+const getImageByNpcName = (name: string, npcId?: string): string => {
+  // 如果提供了npcId，优先使用
+  if (npcId) {
+    return getImageByNpcId(npcId);
+  }
+  
+  // 根据NPC名称映射到NPC ID
+  const nameToNpcIdMap: Record<string, string> = {
+    '县里领导': 'npc_secretary',
+    '司机老陈': 'npc_secretary',
+    '村支书杨国富': 'npc_secretary',
+    '寨老黄公': 'npc_old_party',
+    '专干小马': 'npc_wangxiao',
+    '技术员': 'npc_wangxiao',
+    '韦家兴': 'npc_zhangfu',
+    '老果农': 'npc_zhangfu',
+    '老支书王永贵': 'npc_old_party',
+    '委员黄秀英': 'npc_liumei',
+    '盘阿伯': 'npc_zhangfu',
+    '李大山': 'npc_zhangfu',
+    '返乡青年': 'npc_wangxiao',
+    '民警': 'npc_secretary',
+    '汉族村民': 'npc_zhangfu',
+    '监督局干部': 'npc_secretary',
+    '镇卫生院医生': 'npc_he',
+    '韦家兴儿子': 'npc_wangxiao',
+    '镇长': 'npc_secretary',
+    '护林员': 'npc_he',
+  };
+  
+  // 尝试匹配NPC名称
+  for (const [key, value] of Object.entries(nameToNpcIdMap)) {
+    if (name.includes(key)) {
+      return getImageByNpcId(value);
+    }
+  }
+  
+  // 默认返回第一个像素小人
+  return getImageByNpcId('npc_secretary');
+};
+
+// 辅助函数：生成 NPC ID
+const getNpcId = (name: string, index: number): string => {
+  // 简单起见，使用 name + index 组合，确保唯一性
+  return `npc_${index}_${encodeURIComponent(name)}`;
+};
 
 // 卡片数据库（简化的示例数据，实际应该从目标项目的config中转换）
 export const CARD_DATABASE: Record<string, UICard> = {

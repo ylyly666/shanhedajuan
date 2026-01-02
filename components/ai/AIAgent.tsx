@@ -209,20 +209,57 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              <div>
-                <h3 className="text-sm font-bold text-stone-700 mb-2">案例背景与问题</h3>
-                <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
-                  {selectedCase.content}
-                </p>
-              </div>
-
-              {selectedCase.key_lesson && (
-                <div className="bg-stone-50 border-l-4 border-red-800 p-4 rounded">
-                  <h3 className="text-sm font-bold text-stone-700 mb-2">处理结果与经验</h3>
-                  <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
-                    {selectedCase.key_lesson}
-                  </p>
-                </div>
+              {/* 优先使用full_details结构化信息 */}
+              {selectedCase.full_details ? (
+                <>
+                  <div>
+                    <h3 className="text-sm font-bold text-stone-700 mb-2">背景摘要</h3>
+                    <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                      {selectedCase.full_details.summary}
+                    </p>
+                  </div>
+                  {selectedCase.full_details.conflict && (
+                    <div>
+                      <h3 className="text-sm font-bold text-stone-700 mb-2">矛盾详情</h3>
+                      <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                        {selectedCase.full_details.conflict}
+                      </p>
+                    </div>
+                  )}
+                  {selectedCase.full_details.solution && (
+                    <div className="bg-stone-50 border-l-4 border-red-800 p-4 rounded">
+                      <h3 className="text-sm font-bold text-stone-700 mb-2">解决方案</h3>
+                      <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                        {selectedCase.full_details.solution}
+                      </p>
+                    </div>
+                  )}
+                  {selectedCase.full_details.expert_comment && (
+                    <div className="bg-red-50 border-l-4 border-red-600 p-4 rounded">
+                      <h3 className="text-sm font-bold text-stone-700 mb-2">专家点评</h3>
+                      <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                        {selectedCase.full_details.expert_comment}
+                      </p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-sm font-bold text-stone-700 mb-2">案例背景与问题</h3>
+                    <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                      {selectedCase.content}
+                    </p>
+                  </div>
+                  {selectedCase.key_lesson && (
+                    <div className="bg-stone-50 border-l-4 border-red-800 p-4 rounded">
+                      <h3 className="text-sm font-bold text-stone-700 mb-2">处理结果与经验</h3>
+                      <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+                        {selectedCase.key_lesson}
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>

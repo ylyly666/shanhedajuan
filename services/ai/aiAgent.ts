@@ -11,8 +11,15 @@ export interface KnowledgeBaseCase {
   title: string;
   tags: string[];
   category: string;
+  uploader?: string;
   content: string;
   key_lesson: string;
+  full_details?: {
+    summary: string;
+    conflict: string;
+    solution: string;
+    expert_comment: string;
+  };
 }
 
 export interface AIResponse {
@@ -29,8 +36,10 @@ function convertToKnowledgeBaseCase(caseItem: KnowledgeCase): KnowledgeBaseCase 
     title: caseItem.title,
     tags: caseItem.tags,
     category: caseItem.category,
+    uploader: caseItem.uploader,
     content: caseItem.content,
     key_lesson: caseItem.key_lesson,
+    full_details: caseItem.full_details,
   };
 }
 
@@ -67,35 +76,98 @@ export const generateResponseWithRAG = async (
 **重要：你必须明确引用案例库中的案例！**
 
 回答规则：
-1. **必须引用案例**：如果案例库中有相关案例，你必须在回答中明确引用，格式为"案例X：案例标题"（X为序号，如"案例1：牛油果引种决策"）
-2. **列举案例**：如果用户问"有什么XX案例"、"推荐XX案例"等，你需要明确列举相关案例，每个案例都要说明：
-   - 案例标题
-   - 简要背景（来自content字段）
-   - 处理结果/经验（来自key_lesson字段）
-3. **引用格式**：在回答中引用案例时，使用"根据案例X"、"参考案例X"、"如案例X所示"等明确表述
-4. **具体可操作**：结合案例的处理结果和经验总结（key_lesson），给出针对性建议
-5. **语言风格**：专业但易懂，符合基层治理实际，贴近乡村振兴场景`;
+1. **强制引用格式**：如果案例库中有相关案例，你必须在回答中使用以下固定格式引用：
+   【参考案例：{{案例标题}}】
+   例如：【参考案例：雨露计划25000元发放】
+   
+2. **矛盾对比分析**：在引用案例时，必须对比用户当前问题与案例中"矛盾详情"（conflict字段）的相似性，说明：
+   - 用户问题与案例矛盾的相似点
+   - 案例是如何解决类似矛盾的
+   
+3. **方法论迁移**：必须提炼案例中"专家点评"（expert_comment字段）的核心治理逻辑，并将其转化为对用户当前局面的"三步走"建议：
+   - 第一步：识别问题本质
+   - 第二步：采取具体措施
+   - 第三步：建立长效机制
+   
+4. **列举案例**：如果用户问"有什么XX案例"、"推荐XX案例"等，你需要明确列举相关案例，每个案例都要说明：
+   - 案例标题（使用【参考案例：标题】格式）
+   - 背景摘要（summary）
+   - 矛盾详情（conflict）
+   - 解决方案（solution）
+   - 专家点评（expert_comment）
+   
+5. **容错处理**：如果案例没有full_details字段，则使用content和key_lesson字段，通过正则提取结构化信息
+
+6. **语言风格**：专业但易懂，符合基层治理实际，贴近乡村振兴场景`;
+
+  // 从content和key_lesson中提取结构化信息的辅助函数
+  const extractFromContent = (content: string, keyLesson: string) => {
+    // 尝试从content中提取【背景摘要】和【矛盾详情】
+    const summaryMatch = content.match(/【背景摘要】\s*([^【]+)/);
+    const conflictMatch = content.match(/【矛盾详情】\s*([^【]+)/);
+    
+    // 尝试从key_lesson中提取【解决结果】和【专家点评】
+    const solutionMatch = keyLesson.match(/【解决结果】\s*([^【]+)/);
+    const expertMatch = keyLesson.match(/【专家点评】\s*([^【]+)/);
+    
+    return {
+      summary: summaryMatch ? summaryMatch[1].trim() : content.split('\n')[0] || content.substring(0, 100),
+      conflict: conflictMatch ? conflictMatch[1].trim() : '',
+      solution: solutionMatch ? solutionMatch[1].trim() : keyLesson.split('\n')[0] || keyLesson.substring(0, 100),
+      expert_comment: expertMatch ? expertMatch[1].trim() : '',
+    };
+  };
 
   let casesContext = '';
+  let totalContextLength = 0;
+  
   if (relatedCases.length > 0) {
     casesContext = '\n\n=== 相关案例库内容（基于真实乡村振兴实践） ===\n';
     relatedCases.forEach((c, idx) => {
       casesContext += `\n【案例${idx + 1}】${c.title}\n`;
       casesContext += `类别：${c.category}\n`;
-      casesContext += `案例背景与问题：\n${c.content}\n`;
-      casesContext += `处理结果与经验：\n${c.key_lesson}\n`;
+      if (c.uploader) {
+        casesContext += `来源：${c.uploader}\n`;
+      }
+      
+      // 优先使用full_details结构化信息，如果没有则从content和key_lesson中提取
+      let caseDetails: { summary: string; conflict: string; solution: string; expert_comment: string };
+      
+      if (c.full_details) {
+        caseDetails = c.full_details;
+      } else {
+        // 容错处理：从content和key_lesson中提取
+        caseDetails = extractFromContent(c.content, c.key_lesson);
+      }
+      
+      casesContext += `背景摘要：${caseDetails.summary}\n`;
+      casesContext += `矛盾详情：${caseDetails.conflict}\n`;
+      casesContext += `解决方案：${caseDetails.solution}\n`;
+      if (caseDetails.expert_comment) {
+        casesContext += `专家点评：${caseDetails.expert_comment}\n`;
+      }
+      
+      // 解析并显示标签（提取#标签）
       if (c.tags && c.tags.length > 0) {
-        casesContext += `标签：${c.tags.join('、')}\n`;
+        const tagWords = c.tags
+          .flatMap(tag => tag.replace(/#/g, ' ').split(/\s+/).filter(w => w.trim()))
+          .filter((v, i, a) => a.indexOf(v) === i); // 去重
+        casesContext += `标签：${tagWords.join('、')}\n`;
       }
       casesContext += '---\n';
     });
+    
+    totalContextLength = casesContext.length;
+    
     casesContext += `\n**重要提示**：
 - 以上案例库中找到了 ${relatedCases.length} 个相关案例
-- 你必须在回答中明确引用这些案例，使用"案例1"、"案例2"等格式
-- 如果用户询问案例推荐，请逐个列举这些案例，说明每个案例的背景（content）和处理经验（key_lesson）
-- 不要只是泛泛而谈，必须引用具体的案例内容\n`;
+- 你必须在回答中使用【参考案例：{{案例标题}}】格式明确引用这些案例
+- 必须对比用户问题与案例"矛盾详情"的相似性
+- 必须提炼"专家点评"中的核心治理逻辑，转化为"三步走"建议
+- 不要只是泛泛而谈，必须引用具体的案例内容和数据\n`;
   } else {
     casesContext = '\n\n注意：案例库中未找到直接相关的案例，请基于一般性基层治理知识回答，但应尽量结合乡村振兴的实际场景。';
+    totalContextLength = casesContext.length;
   }
 
   // 判断是否是询问案例的问题
@@ -109,14 +181,36 @@ ${relatedCases.map((c, idx) => `案例${idx + 1}：${c.title}`).join('\n')}
 
 请在你的回答中：
 1. 明确说明找到了${relatedCases.length}个相关案例
-2. 逐个介绍每个案例，包括：
-   - 案例标题
-   - 案例背景与问题（来自content字段）
-   - 处理结果与经验（来自key_lesson字段）
-3. 每个案例都要使用"案例X"格式明确标注
+2. 逐个介绍每个案例，使用【参考案例：{{案例标题}}】格式
+3. 对每个案例，必须说明：
+   - 背景摘要（summary）
+   - 矛盾详情（conflict），并对比与用户问题的相似性
+   - 解决方案（solution）
+   - 专家点评（expert_comment），并提炼为"三步走"建议
 4. 结合案例的处理结果，给出针对性的建议或总结\n`;
   } else {
-    userPrompt += `请基于以上案例库内容回答用户问题。**如果案例库中有相关案例，你必须明确引用，使用"案例X"格式（如"案例1"、"案例2"等）。**\n`;
+    userPrompt += `请基于以上案例库内容回答用户问题。
+
+**必须遵守以下规则：**
+1. 如果案例库中有相关案例，必须使用【参考案例：{{案例标题}}】格式明确引用
+2. 必须对比用户问题"${userQuery}"与案例中"矛盾详情"的相似性
+3. 必须提炼案例中"专家点评"的核心治理逻辑，转化为对用户当前局面的"三步走"建议：
+   - 第一步：识别问题本质
+   - 第二步：采取具体措施  
+   - 第三步：建立长效机制\n`;
+  }
+
+  // 调试信息：显示最终提取内容长度
+  const totalPromptLength = userPrompt.length;
+  const systemPromptLength = systemPrompt.length;
+  
+  if (import.meta.env.DEV) {
+    console.log('[AI智能体] Prompt统计:');
+    console.log(`  - System Prompt长度: ${systemPromptLength} 字符`);
+    console.log(`  - User Prompt长度: ${totalPromptLength} 字符`);
+    console.log(`  - 案例上下文长度: ${totalContextLength} 字符`);
+    console.log(`  - 总Token估算: ~${Math.ceil((systemPromptLength + totalPromptLength) / 4)} tokens`);
+    console.log(`  - 检索到案例数: ${relatedCases.length}`);
   }
 
   // 3) 调用 AI

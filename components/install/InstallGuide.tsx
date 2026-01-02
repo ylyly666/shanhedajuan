@@ -18,9 +18,8 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // 生成二维码（使用当前页面URL）
-  const qrCodeUrl = window.location.href;
-  const qrCodeImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrCodeUrl)}`;
+  // 使用本地二维码图片
+  const qrCodeImageUrl = '/images/二维码.png';
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] relative overflow-hidden">
@@ -74,10 +73,10 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
           {!isMobile && (
             <div className="flex flex-col items-center">
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-stone-200 w-full max-w-sm">
-                <div className="aspect-square bg-white rounded-xl border-2 border-stone-300 flex items-center justify-center mb-6 overflow-hidden">
+                <div className="aspect-square bg-white rounded-xl border-2 border-stone-300 flex items-center justify-center mb-6 overflow-hidden p-4">
                   <img 
                     src={qrCodeImageUrl} 
-                    alt="扫描二维码访问" 
+                    alt="扫描二维码访问 https://shanhedajuan.netlify.app/" 
                     className="w-full h-full object-contain"
                   />
                 </div>

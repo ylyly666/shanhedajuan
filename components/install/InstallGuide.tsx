@@ -114,7 +114,7 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
                   </div>
                 </div>
                 <button
-                  onClick={onEnterWeb || onBack}
+                  onClick={() => window.open('https://shanhedajuan.netlify.app/', '_blank')}
                   className="w-full py-4 bg-gradient-to-r from-[#B91C1C] to-[#A0353C] text-white font-bold rounded-xl hover:shadow-xl transition-all shadow-lg"
                   style={{ letterSpacing: '0.5px' }}
                 >
@@ -131,7 +131,7 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
           {isMobile && (
             <div className="mb-8">
               <button
-                onClick={onEnterWeb || onBack}
+                onClick={() => window.open('https://shanhedajuan.netlify.app/', '_blank')}
                 className="w-full py-4 bg-gradient-to-r from-[#B91C1C] to-[#A0353C] text-white font-bold rounded-xl hover:shadow-xl transition-all shadow-lg"
                 style={{ letterSpacing: '0.5px' }}
               >

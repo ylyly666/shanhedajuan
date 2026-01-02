@@ -490,7 +490,8 @@ const App: React.FC = () => {
   }
 
   if (mode === 'install-guide') {
-    return <InstallGuide onBack={() => setMode('landing')} onEnterWeb={() => setMode('game')} />;
+    // onEnterWeb 不再需要，按钮直接打开外部链接
+    return <InstallGuide onBack={() => setMode('landing')} />;
   }
 
   if (mode === 'profile') {

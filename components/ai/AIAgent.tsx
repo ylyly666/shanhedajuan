@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { searchSimilarCases, getCasesFromSupabase, KnowledgeBaseCase } from '@/services/database/supabase';
-import { generateResponseWithRAG } from '@/services/ai/aiAgent';
-import { StatKey } from '@/types';
+import { generateResponseWithRAG, KnowledgeBaseCase } from '@/services/ai/aiAgent';
 
 interface AIAgentProps {
   onBack: () => void;
@@ -14,20 +12,6 @@ interface Message {
   relatedCases?: KnowledgeBaseCase[];
   timestamp: Date;
 }
-
-const categoryMap: Record<StatKey, string> = {
-  economy: '经济发展',
-  people: '民生保障',
-  environment: '生态环保',
-  civility: '乡风民俗',
-};
-
-const sourceMap: Record<string, string> = {
-  official_report: '官方报告',
-  field_experience: '实地经验',
-  user_upload: '用户上传',
-  expert_contribution: '专家贡献',
-};
 
 const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
   const [messages, setMessages] = useState<Message[]>([
@@ -165,7 +149,7 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
                             {caseItem.title}
                           </div>
                           <div className="text-xs text-stone-600 line-clamp-2">
-                            {caseItem.context_summary}
+                            {caseItem.content.substring(0, 100)}...
                           </div>
                         </div>
                       ))}
@@ -207,10 +191,7 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
                 <h2 className="text-xl font-bold text-stone-900 mb-2">{selectedCase.title}</h2>
                 <div className="flex gap-2 flex-wrap text-xs text-stone-500">
                   <span className="bg-stone-100 px-2 py-1 rounded">
-                    {categoryMap[selectedCase.category] || selectedCase.category}
-                  </span>
-                  <span className="bg-stone-100 px-2 py-1 rounded">
-                    {sourceMap[selectedCase.source] || selectedCase.source}
+                    {selectedCase.category}
                   </span>
                   {selectedCase.tags && selectedCase.tags.map((tag, idx) => (
                     <span key={idx} className="bg-red-50 text-red-700 px-2 py-1 rounded">
@@ -229,35 +210,17 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
 
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               <div>
-                <h3 className="text-sm font-bold text-stone-700 mb-2">背景摘要</h3>
+                <h3 className="text-sm font-bold text-stone-700 mb-2">案例背景与问题</h3>
                 <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
-                  {selectedCase.context_summary}
+                  {selectedCase.content}
                 </p>
               </div>
 
-              {selectedCase.conflict_detail && (
-                <div>
-                  <h3 className="text-sm font-bold text-stone-700 mb-2">冲突详情</h3>
-                  <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
-                    {selectedCase.conflict_detail}
-                  </p>
-                </div>
-              )}
-
-              {selectedCase.resolution_outcome && (
-                <div>
-                  <h3 className="text-sm font-bold text-stone-700 mb-2">解决方案与结果</h3>
-                  <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
-                    {selectedCase.resolution_outcome}
-                  </p>
-                </div>
-              )}
-
-              {selectedCase.expert_comment && (
+              {selectedCase.key_lesson && (
                 <div className="bg-stone-50 border-l-4 border-red-800 p-4 rounded">
-                  <h3 className="text-sm font-bold text-stone-700 mb-2">专家点评</h3>
+                  <h3 className="text-sm font-bold text-stone-700 mb-2">处理结果与经验</h3>
                   <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
-                    {selectedCase.expert_comment}
+                    {selectedCase.key_lesson}
                   </p>
                 </div>
               )}

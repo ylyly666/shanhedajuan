@@ -19,29 +19,8 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
   }, []);
 
   // 使用本地二维码图片
-  // 中文文件名需要URL编码，但Vite的public目录可能不需要编码
-  // 尝试两种路径，优先使用未编码的（Vite通常会自动处理）
-  const qrCodeImageUrl1 = '/images/二维码.png';
-  const qrCodeImageUrl2 = '/images/' + encodeURIComponent('二维码.png');
-  const [qrCodeImageUrl, setQrCodeImageUrl] = useState<string>(qrCodeImageUrl1);
-  
-  // 如果第一个路径加载失败，尝试编码后的路径
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.target as HTMLImageElement;
-    if (qrCodeImageUrl === qrCodeImageUrl1) {
-      // 第一次失败，尝试编码路径
-      console.log('尝试URL编码路径:', qrCodeImageUrl2);
-      setQrCodeImageUrl(qrCodeImageUrl2);
-    } else {
-      // 两种路径都失败，显示占位符
-      console.error('二维码图片加载失败，两种路径都尝试过了');
-      target.style.display = 'none';
-      const placeholder = target.parentElement?.querySelector('.qr-placeholder') as HTMLElement;
-      if (placeholder) {
-        placeholder.classList.remove('hidden');
-      }
-    }
-  };
+  // 参考其他页面的做法，直接使用路径，不需要URL编码
+  const qrCodeImageUrl = '/images/二维码.png';
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] relative overflow-hidden">
@@ -97,11 +76,20 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-stone-200 w-full max-w-sm">
                 <div className="aspect-square bg-white rounded-xl border-2 border-stone-300 flex items-center justify-center mb-6 overflow-hidden p-4 relative">
                   <img 
-                    key={qrCodeImageUrl} // 使用key强制重新加载
                     src={qrCodeImageUrl} 
                     alt="扫描二维码访问 https://shanhedajuan.netlify.app/" 
                     className="w-full h-full object-contain"
-                    onError={handleImageError}
+                    onError={(e) => {
+                      console.error('二维码图片加载失败，路径:', qrCodeImageUrl);
+                      console.error('请检查文件是否存在: public/images/二维码.png');
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      // 显示占位符
+                      const placeholder = target.parentElement?.querySelector('.qr-placeholder') as HTMLElement;
+                      if (placeholder) {
+                        placeholder.classList.remove('hidden');
+                      }
+                    }}
                   />
                   {/* 加载失败时的占位符 */}
                   <div className="qr-placeholder absolute inset-0 flex items-center justify-center text-center text-stone-400 hidden">

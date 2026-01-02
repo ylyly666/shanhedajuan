@@ -259,7 +259,7 @@ export async function searchKnowledgeCases(
   
   if (useFuzzyMode) {
     console.warn(`[知识库检索] 最高分 ${topScore.toFixed(1)} < 15，触发模糊模式，扩大检索范围...`);
-    // 模糊模式：重新计算，搜索full_details中的全文字段，降低阈值
+    // 模糊模式：重新计算，搜索full_details中的全文字段
     const fuzzyCases = filteredCases.map(caseItem => {
       let fuzzyScore = 0;
       const factors: MatchFactor[] = [];
@@ -309,37 +309,72 @@ export async function searchKnowledgeCases(
     casesWithScore.splice(0, casesWithScore.length, ...fuzzyCases);
   }
 
-  // 同类合并：如果同一category有多个案例，优先选择tags匹配度更高的
-  const categoryGroups = new Map<string, typeof casesWithScore>();
-  casesWithScore.forEach(item => {
-    const category = item.case.category;
-    if (!categoryGroups.has(category)) {
-      categoryGroups.set(category, []);
-    }
-    categoryGroups.get(category)!.push(item);
+  // 先过滤：设置合理的最低分数阈值，确保只有真正相关的案例被返回
+  // 精确模式：至少要有标签匹配或标题匹配（分数>=8）
+  // 模糊模式：至少要有内容匹配（分数>=3），且必须包含查询词
+  const queryLower = query.toLowerCase();
+  const relevanceThreshold = useFuzzyMode ? 3 : 8;
+  
+  const relevantCases = casesWithScore.filter(item => {
+    if (item.score < relevanceThreshold) return false;
+    
+    // 额外检查：确保案例中真正包含查询词（防止误匹配）
+    const hasQueryInTitle = item.case.title.toLowerCase().includes(queryLower);
+    const tagWords = extractTagWords(item.case.tags);
+    const hasQueryInTags = tagWords.some(tag => 
+      tag.toLowerCase().includes(queryLower) || queryLower.includes(tag.toLowerCase())
+    );
+    const hasQueryInContent = item.case.content.toLowerCase().includes(queryLower) ||
+                              item.case.key_lesson.toLowerCase().includes(queryLower);
+    const hasQueryInDetails = item.case.full_details ? (
+      item.case.full_details.summary.toLowerCase().includes(queryLower) ||
+      item.case.full_details.conflict.toLowerCase().includes(queryLower) ||
+      item.case.full_details.solution.toLowerCase().includes(queryLower) ||
+      item.case.full_details.expert_comment.toLowerCase().includes(queryLower)
+    ) : false;
+    
+    // 必须至少在一个字段中包含查询词
+    return hasQueryInTitle || hasQueryInTags || hasQueryInContent || hasQueryInDetails;
   });
 
-  // 对每个category，如果案例数>=2，只保留tags匹配度最高的
+  // 同类合并：只在分数相近的案例中进行（分数差<10），避免不同相关度的案例被错误合并
   const deduplicatedCases: typeof casesWithScore = [];
-  categoryGroups.forEach((group, category) => {
-    if (group.length >= 2) {
+  const processedIds = new Set<string>();
+  
+  relevantCases.forEach(item => {
+    if (processedIds.has(item.case.id)) return;
+    
+    // 找到同一category且分数相近的案例（分数差<10）
+    const sameCategoryCases = relevantCases.filter(other => 
+      other.case.category === item.case.category &&
+      Math.abs(other.score - item.score) < 10 &&
+      !processedIds.has(other.case.id)
+    );
+    
+    if (sameCategoryCases.length > 1) {
       // 计算每个案例的tags匹配度
-      const tagWords = extractTagWords(group[0].case.tags);
       const queryLower = query.toLowerCase();
-      
-      group.forEach(item => {
-        const itemTagWords = extractTagWords(item.case.tags);
+      sameCategoryCases.forEach(c => {
+        const itemTagWords = extractTagWords(c.case.tags);
         const tagMatchCount = itemTagWords.filter(tag => 
           tag.toLowerCase().includes(queryLower) || queryLower.includes(tag.toLowerCase())
         ).length;
-        (item as any).tagMatchCount = tagMatchCount;
+        (c as any).tagMatchCount = tagMatchCount;
       });
       
-      // 按tags匹配度排序，只保留最高的
-      group.sort((a, b) => (b as any).tagMatchCount - (a as any).tagMatchCount);
-      deduplicatedCases.push(group[0]);
+      // 按tags匹配度排序，优先选择tags匹配度更高的
+      sameCategoryCases.sort((a, b) => {
+        const tagDiff = (b as any).tagMatchCount - (a as any).tagMatchCount;
+        if (tagDiff !== 0) return tagDiff;
+        return b.score - a.score; // 如果tags匹配度相同，按分数排序
+      });
+      
+      // 只保留tags匹配度最高的一个
+      deduplicatedCases.push(sameCategoryCases[0]);
+      sameCategoryCases.forEach(c => processedIds.add(c.case.id));
     } else {
-      deduplicatedCases.push(...group);
+      deduplicatedCases.push(item);
+      processedIds.add(item.case.id);
     }
   });
 
@@ -364,22 +399,23 @@ export async function searchKnowledgeCases(
     });
   }
 
-  // 过滤最低分数
-  const minScore = options?.minScore ?? (useFuzzyMode ? 0 : 1);
+  // 应用用户指定的最低分数（如果提供），但不会低于相关性阈值
+  const minScore = options?.minScore 
+    ? Math.max(options.minScore, relevanceThreshold)
+    : relevanceThreshold;
   const filtered = deduplicatedCases.filter(item => item.score >= minScore);
 
   // 限制结果数量
   const maxResults = options?.maxResults || 5;
   const results = filtered.slice(0, maxResults).map(item => item.case);
 
-  // 如果结果为空但查询词明显（长度>=2），尝试更宽松的匹配
-  if (results.length === 0 && query.trim().length >= 2) {
-    console.warn(`[知识库检索] 未找到匹配案例，尝试最宽松的匹配...`);
-    const relaxedResults = deduplicatedCases
-      .filter(item => item.score > 0)
-      .slice(0, maxResults)
-      .map(item => item.case);
-    return relaxedResults;
+  // 如果结果为空但查询词明显（长度>=2），且最高分>0，尝试返回最高分的案例
+  if (results.length === 0 && query.trim().length >= 2 && deduplicatedCases.length > 0) {
+    const topCase = deduplicatedCases[0];
+    if (topCase.score > 0) {
+      console.warn(`[知识库检索] 未找到满足阈值的案例，返回最高分案例: ${topCase.case.title} (分数: ${topCase.score.toFixed(1)})`);
+      return [topCase.case];
+    }
   }
 
   return results;

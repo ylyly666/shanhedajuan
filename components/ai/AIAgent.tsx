@@ -77,10 +77,9 @@ const AIAgent: React.FC<AIAgentProps> = ({ onBack }) => {
 
   // 快速问题模版
   const quickQuestions = [
-    '如何平衡经济发展与环境保护？',
-    '村民矛盾调解有哪些经验？',
-    '乡村振兴中的典型案例',
-    '乡风民俗建设的最佳实践',
+    '有什么和雨露计划相关的典型案例',
+    '如何处理公益岗位分配问题',
+    '介绍下耕地保护相关政策措施',
   ];
 
   const handleQuickQuestion = (question: string) => {

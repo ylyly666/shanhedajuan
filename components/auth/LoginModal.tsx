@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { signUp, signIn } from '@/utils/authHelper';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface LoginModalProps {
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, onSignUp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,19 +24,89 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, onSig
     setIsLoading(true);
 
     try {
-      if (isSignUp && onSignUp) {
-        await onSignUp(email, password);
+      if (isSignUp) {
+        // 注册
+        if (!email.trim() || !password.trim()) {
+          setError('请输入邮箱和密码');
+          setIsLoading(false);
+          return;
+        }
+
+        if (password.length < 6) {
+          setError('密码至少需要6个字符');
+          setIsLoading(false);
+          return;
+        }
+
+        const { user, session, error: signUpError, requiresEmailConfirmation } = await signUp(
+          email.trim(), 
+          password, 
+          nickname.trim() || undefined
+        );
+        
+        if (signUpError) {
+          setError(signUpError.message || '注册失败，请重试');
+          setIsLoading(false);
+          return;
+        }
+
+        if (user) {
+          if (session) {
+            // 有 session，说明注册成功且已自动登录（未启用邮箱验证）
+            if (onSignUp) {
+              await onSignUp(email, password);
+            }
+            // 登录成功后重置表单并关闭
+            setEmail('');
+            setPassword('');
+            setNickname('');
+            setError('');
+            onClose();
+          } else if (requiresEmailConfirmation) {
+            // 需要邮箱验证
+            alert('注册成功！\n\n请检查您的邮箱并点击验证链接完成注册，然后使用注册的账号密码登录。');
+            // 切换到登录模式，方便用户验证后登录
+            setIsSignUp(false);
+            setError('');
+            setPassword(''); // 清空密码，让用户重新输入
+            setIsLoading(false);
+          } else {
+            // 其他情况，提示用户登录
+            alert('注册成功！\n\n请使用注册的账号密码登录。');
+            setIsSignUp(false);
+            setError('');
+            setPassword('');
+            setIsLoading(false);
+          }
+        }
       } else {
-        await onLogin(email, password);
+        // 登录
+        if (!email.trim() || !password.trim()) {
+          setError('请输入邮箱和密码');
+          setIsLoading(false);
+          return;
+        }
+
+        const { user, error: signInError } = await signIn(email.trim(), password);
+        
+        if (signInError) {
+          setError(signInError.message || '登录失败，请检查邮箱和密码');
+          setIsLoading(false);
+          return;
+        }
+
+        if (user) {
+          // 登录成功，调用父组件的onLogin
+          await onLogin(email, password);
+          // 登录成功后重置表单并关闭
+          setEmail('');
+          setPassword('');
+          setError('');
+          onClose();
+        }
       }
-      // 登录成功后重置表单并关闭
-      setEmail('');
-      setPassword('');
-      setError('');
-      onClose();
     } catch (err: any) {
-      setError(err.message || '登录失败，请重试');
-    } finally {
+      setError(err.message || '操作失败，请重试');
       setIsLoading(false);
     }
   };
@@ -61,6 +133,23 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, onSig
             </div>
           )}
 
+          {isSignUp && (
+            <div>
+              <label className="block text-sm font-bold text-stone-700 mb-2">
+                昵称（可选）
+              </label>
+              <input
+                type="text"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                maxLength={20}
+                disabled={isLoading}
+                className="w-full px-4 py-2 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-primary-red"
+                placeholder="请输入昵称（可选）"
+              />
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-bold text-stone-700 mb-2">
               邮箱地址
@@ -70,6 +159,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, onSig
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={isLoading}
               className="w-full px-4 py-2 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-primary-red"
               placeholder="请输入邮箱"
             />
@@ -85,6 +175,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, onSig
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
+              disabled={isLoading}
               className="w-full px-4 py-2 border-2 border-stone-300 rounded-lg focus:outline-none focus:border-primary-red"
               placeholder="请输入密码（至少6位）"
             />
@@ -104,18 +195,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin, onSig
               onClick={() => {
                 setIsSignUp(!isSignUp);
                 setError('');
+                setNickname('');
               }}
-              className="text-sm text-primary-red hover:underline font-bold"
+              disabled={isLoading}
+              className="text-sm text-primary-red hover:underline font-bold disabled:opacity-50"
             >
               {isSignUp ? '已有账号？立即登录' : '还没有账号？立即注册'}
             </button>
-          </div>
-
-          {/* 演示模式提示 */}
-          <div className="pt-4 border-t border-stone-200">
-            <p className="text-xs text-stone-500 text-center">
-              提示：当前为演示模式，您可以使用任意邮箱和密码登录
-            </p>
           </div>
         </form>
       </div>

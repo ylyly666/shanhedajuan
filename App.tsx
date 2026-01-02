@@ -215,60 +215,127 @@ const App: React.FC = () => {
   const handleShowAbout = () => setMode('about');
   const handleShowProfile = () => setMode('profile');
 
-  // 登录处理（演示模式：本地存储）
+  // 登录处理（使用 Supabase Auth）
   const handleLogin = async (email: string, password: string) => {
-    // 演示模式：简单验证后存储到localStorage
-    if (!email || !password) {
-      throw new Error('请输入邮箱和密码');
-    }
-    if (password.length < 6) {
-      throw new Error('密码至少需要6位');
-    }
+    const { getCurrentUser, getSession } = await import('@/utils/authHelper');
     
-    // 模拟登录延迟
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // 获取当前用户信息（LoginModal已经处理了登录，这里只需要获取用户信息）
+    const authUser = await getCurrentUser();
+    const session = await getSession();
+    
+    if (!authUser || !session) {
+      throw new Error('登录失败，请检查邮箱和密码');
+    }
     
     // 判断是否为管理员（邮箱包含 "admin" 关键字）
     const isAdminUser = email.toLowerCase().includes('admin') || email.toLowerCase().includes('@admin');
     
     const userData: User = { 
-      email, 
+      email: authUser.email || email, 
       name: email.split('@')[0],
       role: isAdminUser ? 'admin' : 'user',
       createdAt: new Date().toISOString()
     };
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    // 不再使用localStorage存储，Supabase会自动管理session
   };
 
-  // 注册处理（演示模式）
+  // 注册处理（使用 Supabase Auth）
   const handleSignUp = async (email: string, password: string) => {
-    // 演示模式：与登录相同
-    await handleLogin(email, password);
+    // 注册逻辑已经在LoginModal中处理，这里只需要获取用户信息
+    const { getCurrentUser, getSession } = await import('@/utils/authHelper');
+    
+    // 等待一下，确保注册完成
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const authUser = await getCurrentUser();
+    const session = await getSession();
+    
+    if (!authUser || !session) {
+      // 可能需要邮箱验证，这里不抛出错误，让用户知道需要验证
+      return;
+    }
+    
+    // 判断是否为管理员
+    const isAdminUser = email.toLowerCase().includes('admin') || email.toLowerCase().includes('@admin');
+    
+    const userData: User = { 
+      email: authUser.email || email, 
+      name: email.split('@')[0],
+      role: isAdminUser ? 'admin' : 'user',
+      createdAt: new Date().toISOString()
+    };
+    setUser(userData);
   };
 
   // 更新用户信息
   const handleUpdateUser = (updatedUser: User) => {
     setUser(updatedUser);
-    localStorage.setItem('user', JSON.stringify(updatedUser));
+    // Supabase会自动管理用户信息，这里只更新本地状态
   };
 
-  // 登出处理
-  const handleLogout = () => {
+  // 登出处理（使用 Supabase Auth）
+  const handleLogout = async () => {
+    const { signOut } = await import('@/utils/authHelper');
+    await signOut();
     setUser(null);
-    localStorage.removeItem('user');
   };
 
-  // 初始化：从localStorage恢复登录状态
+  // 初始化：从Supabase恢复登录状态
   React.useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (e) {
-        // 忽略解析错误
+    const initAuth = async () => {
+      const { getCurrentUser, getSession } = await import('@/utils/authHelper');
+      const { supabase } = await import('@/utils/supabaseClient');
+      
+      // 检查是否有session
+      const session = await getSession();
+      if (session) {
+        const authUser = await getCurrentUser();
+        if (authUser && authUser.email) {
+          // 判断是否为管理员
+          const isAdminUser = authUser.email.toLowerCase().includes('admin') || 
+                             authUser.email.toLowerCase().includes('@admin');
+          
+          const userData: User = { 
+            email: authUser.email, 
+            name: authUser.email.split('@')[0],
+            role: isAdminUser ? 'admin' : 'user',
+            createdAt: new Date().toISOString()
+          };
+          setUser(userData);
+        }
       }
-    }
+      
+      // 监听认证状态变化
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.id);
+        if (session?.user) {
+          // 用户登录或session恢复
+          const authUser = await getCurrentUser();
+          if (authUser && authUser.email) {
+            const isAdminUser = authUser.email.toLowerCase().includes('admin') || 
+                               authUser.email.toLowerCase().includes('@admin');
+            
+            const userData: User = { 
+              email: authUser.email, 
+              name: authUser.email.split('@')[0],
+              role: isAdminUser ? 'admin' : 'user',
+              createdAt: new Date().toISOString()
+            };
+            setUser(userData);
+          }
+        } else {
+          // 用户登出
+          setUser(null);
+        }
+      });
+      
+      return () => {
+        subscription.unsubscribe();
+      };
+    };
+    
+    initAuth();
   }, []);
 
   // 如果访问个人主页但未登录，重定向到首页

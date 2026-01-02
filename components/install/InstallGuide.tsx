@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// 尝试使用src目录下的图片（如果存在）
-// import qrCodeImage from '@/assets/qrcode.png';
 
 interface InstallGuideProps {
   onBack: () => void;
@@ -20,34 +18,8 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // 使用本地二维码图片
-  // 直接使用路径，与其他页面保持一致
-  // 如果直接路径不工作，尝试使用URL编码
-  const qrCodeImageUrl = '/images/二维码.png';
-  
-  // 调试：在开发环境输出详细信息
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      console.log('🔍 二维码图片调试信息:');
-      console.log('  - 路径:', qrCodeImageUrl);
-      console.log('  - URL编码路径:', '/images/' + encodeURIComponent('二维码.png'));
-      console.log('  - 完整URL:', window.location.origin + qrCodeImageUrl);
-      
-      // 测试图片是否能加载
-      const img = new Image();
-      img.onload = () => {
-        console.log('✅ 二维码图片可以加载');
-      };
-      img.onerror = () => {
-        console.error('❌ 二维码图片加载失败');
-        console.error('  请检查:');
-        console.error('  1. 文件是否存在: public/images/二维码.png');
-        console.error('  2. 开发服务器是否正在运行');
-        console.error('  3. 浏览器控制台Network标签查看实际请求URL');
-      };
-      img.src = qrCodeImageUrl;
-    }
-  }, []);
+  // 使用本地二维码图片（已重命名为英文名qrcode.png以避免中文文件名问题）
+  const qrCodeImageUrl = '/images/qrcode.png';
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] relative overflow-hidden">

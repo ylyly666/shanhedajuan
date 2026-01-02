@@ -35,9 +35,10 @@ import {
 
 interface AboutPageProps {
   onBack: () => void;
+  onShowInstallGuide?: () => void;
 }
 
-const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
+const AboutPage: React.FC<AboutPageProps> = ({ onBack, onShowInstallGuide }) => {
   const [activeSection, setActiveSection] = useState<string>('overview');
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
   const [stats, setStats] = useState({
@@ -322,7 +323,10 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
                 </button>
 
                 <button 
-                  onClick={() => window.open('https://whu.kdocs.cn/l/ccBbtdGXFDrv', '_blank')}
+                  onClick={() => {
+                    // window.open('https://whu.kdocs.cn/l/ccBbtdGXFDrv', '_blank')
+                    if (onShowInstallGuide) onShowInstallGuide();
+                  }}
                   className="hidden md:flex items-center space-x-2 px-4 py-2 bg-primary-red text-white rounded-lg hover:bg-red-700 transition-all shadow-md hover:shadow-lg"
                 >
                   <Play className="w-4 h-4" />
@@ -360,7 +364,10 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
 
                 <div className="flex flex-wrap gap-4 mb-12">
                   <button 
-                    onClick={() => window.open('https://whu.kdocs.cn/l/ccBbtdGXFDrv', '_blank')}
+                    onClick={() => {
+                      // window.open('https://whu.kdocs.cn/l/ccBbtdGXFDrv', '_blank')
+                      if (onShowInstallGuide) onShowInstallGuide();
+                    }}
                     className="px-8 py-4 bg-primary-red text-white font-semibold rounded-xl hover:bg-red-700 transition-all shadow-xl hover:shadow-2xl hover:scale-105 flex items-center space-x-2"
                   >
                     <Play className="w-5 h-5" />

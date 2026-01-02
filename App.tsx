@@ -21,10 +21,12 @@ import LoginModal from './components/auth/LoginModal';
 import AboutPage from './components/about/AboutPage';
 // @ts-ignore
 import ProfilePage from './components/profile/ProfilePage';
+// @ts-ignore
+import InstallGuide from './components/install/InstallGuide';
 import { GameConfig } from './types';
 import { EDITOR_SAMPLE_CONFIG } from './constants';
 
-type AppMode = 'landing' | 'editor' | 'game' | 'game-preview' | 'library' | 'ugc' | 'admin' | 'admin-review' | 'admin-batch-import' | 'ai-agent' | 'about' | 'profile';
+type AppMode = 'landing' | 'editor' | 'game' | 'game-preview' | 'library' | 'ugc' | 'admin' | 'admin-review' | 'admin-batch-import' | 'ai-agent' | 'about' | 'profile' | 'install-guide';
 
 interface User {
   email: string;
@@ -184,7 +186,7 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  const handleLaunchGame = () => setMode('game');
+  const handleLaunchGame = () => setMode('install-guide');
   const handleLaunchEditor = () => setMode('editor');
   const handleExitGame = () => setMode('landing');
   const handleShowLibrary = () => setMode('library');
@@ -484,7 +486,11 @@ const App: React.FC = () => {
   }
 
   if (mode === 'about') {
-    return <AboutPage onBack={() => setMode('landing')} />;
+    return <AboutPage onBack={() => setMode('landing')} onShowInstallGuide={() => setMode('install-guide')} />;
+  }
+
+  if (mode === 'install-guide') {
+    return <InstallGuide onBack={() => setMode('landing')} onEnterWeb={() => setMode('game')} />;
   }
 
   if (mode === 'profile') {

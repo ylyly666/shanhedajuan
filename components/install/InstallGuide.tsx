@@ -108,7 +108,7 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
                     className="w-full h-full object-contain"
                     onError={(e) => {
                       console.error('二维码图片加载失败，路径:', qrCodeImageUrl);
-                      console.error('请检查文件是否存在: public/images/二维码.png');
+                      console.error('请检查文件是否存在: public/images/qrcode.png');
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       // 显示占位符

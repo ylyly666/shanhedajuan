@@ -19,6 +19,7 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
   }, []);
 
   // 使用本地二维码图片
+  // 在Vite中，public目录下的文件可以直接用绝对路径访问
   const qrCodeImageUrl = '/images/二维码.png';
 
   return (
@@ -78,6 +79,21 @@ const InstallGuide: React.FC<InstallGuideProps> = ({ onBack, onEnterWeb }) => {
                     src={qrCodeImageUrl} 
                     alt="扫描二维码访问 https://shanhedajuan.netlify.app/" 
                     className="w-full h-full object-contain"
+                    onError={(e) => {
+                      console.error('二维码图片加载失败:', qrCodeImageUrl);
+                      // 如果加载失败，显示占位符
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      if (target.parentElement) {
+                        target.parentElement.innerHTML = `
+                          <div class="text-center text-stone-400">
+                            <div class="text-6xl mb-2">📱</div>
+                            <p class="text-sm">二维码加载中...</p>
+                            <p class="text-xs mt-1">请访问: https://shanhedajuan.netlify.app/</p>
+                          </div>
+                        `;
+                      }
+                    }}
                   />
                 </div>
                 <button
